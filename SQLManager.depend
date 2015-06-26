@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1385320476 source:c:\users\josele\documents\c_c++\dll\sqlmanager\resource.rc
+1435312868 source:c:\users\josele\documents\c_c++\dll\sqlmanager\resource.rc
 	"wx/msw/wx.rc"
 
 1412631244 c:\wxwidgets-3.0.2\include\wx\msw\wx.rc
@@ -19,12 +19,12 @@
 
 1412631244 c:\wxwidgets-3.0.2\include\wx\msw\rcdefs.h
 
-1435309314 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagerapp.cpp
+1435312868 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagerapp.cpp
 	"SQLManagerApp.h"
 	"SQLManagerMain.h"
 	<wx/image.h>
 
-1435309313 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagerapp.h
+1435312868 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagerapp.h
 	<wx/app.h>
 
 1412631242 c:\wxwidgets-3.0.2\include\wx\app.h
@@ -1710,11 +1710,12 @@
 1412631244 c:\wxwidgets-3.0.2\include\wx\univ\theme.h
 	"wx/string.h"
 
-1435310215 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
+1435313900 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
 	<wx/menu.h>
 	<wx/filedlg.h>
 	<wx/frame.h>
 	<wx/statusbr.h>
+	<string.h>
 	"sqlite3.h"
 
 1412631244 c:\wxwidgets-3.0.2\include\wx\notebook.h
@@ -2137,7 +2138,7 @@
 	"wx/bookctrl.h"
 	"wx/containr.h"
 
-1396003530 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlite3.h
+1435312868 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlite3.h
 	<stdarg.h>
 
 1412631242 c:\wxwidgets-3.0.2\include\wx\filedlg.h
@@ -2296,7 +2297,7 @@
 
 1412631244 c:\wxwidgets-3.0.2\include\wx\os2\filedlg.h
 
-1435311766 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
+1435312905 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
 	"SQLManagerMain.h"
 	<wx/msgdlg.h>
 	<windows.h>

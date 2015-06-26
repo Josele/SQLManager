@@ -16,12 +16,13 @@
 #include <wx/frame.h>
 #include <wx/statusbr.h>
 //*)
+#include <string.h>
 #include "sqlite3.h"
 
 class SQLManagerFrame: public wxFrame
 {
     sqlite3* db ;
-
+    std::basic_string<TCHAR> FilePath ;
     public:
 
         SQLManagerFrame(wxWindow* parent,wxWindowID id = -1);

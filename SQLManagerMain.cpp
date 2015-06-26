@@ -99,9 +99,9 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     //*)
 
      db =0;
-   std::basic_string<TCHAR> FilePath = TEXT("SQLDLL.dll");
+   FilePath=TEXT("SQLDLL.dll");
     CreateDirectoryW(FilePath.c_str(), NULL);
-    histDLL= LoadLibrary(FilePath.c_str());
+
 
 }
 
@@ -127,7 +127,7 @@ void SQLManagerFrame::OnClose(wxCloseEvent& event)
 {
     sqlite3_close(db);
     FreeLibrary(histDLL);
-
+    wxWindow::Destroy();
 }
 
 
@@ -144,7 +144,7 @@ void SQLManagerFrame::OnMenuNewSelected(wxCommandEvent& event)
 
 void SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent& event)
 {
-
+histDLL= LoadLibrary(FilePath.c_str());
 
     Myfunc mifunc(0);
     int result;
@@ -156,8 +156,7 @@ void SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent& event)
        mifunc=(Myfunc)GetProcAddress(histDLL,"CreateDatabase");
        (mifunc)(&db,dbname);
     }
-    sqlite3_close(db);
-    FreeLibrary(histDLL);
+FreeLibrary(histDLL);
 }
 
 
