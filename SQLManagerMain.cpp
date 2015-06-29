@@ -9,7 +9,7 @@
 
 #include "SQLManagerMain.h"
 #include <wx/msgdlg.h>
-
+#include <wx/filedlg.h>
 #include <windows.h>
 //(*InternalHeaders(SQLManagerFrame)
 #include <wx/intl.h>
@@ -114,7 +114,6 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     StatusBar1->SetFieldsCount(1,__wxStatusBarWidths_1);
     StatusBar1->SetStatusStyles(1,__wxStatusBarStyles_1);
     SetStatusBar(StatusBar1);
-    FileDialog1 = new wxFileDialog(this, _("Select file"), wxEmptyString, wxEmptyString, wxFileSelectorDefaultWildcardStr, wxFD_OPEN, wxDefaultPosition, wxDefaultSize, _T("wxFileDialog"));
     FlexGridSizer1->Fit(this);
     FlexGridSizer1->SetSizeHints(this);
 
@@ -165,8 +164,7 @@ void SQLManagerFrame::OnClose(wxCloseEvent& event)
 *   Return: void
 **/
 void SQLManagerFrame::OnMenuNewSelected(wxCommandEvent& event)
-{ wxFileDialog
-        SaveFileDialog(this, _("Save db file"), "", "",
+{ wxFileDialog  SaveFileDialog(this, _("Save db file"), "", "",
                        "*.db", wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
     Myfunc mifunc(0);
     string dbname;
@@ -174,28 +172,36 @@ void SQLManagerFrame::OnMenuNewSelected(wxCommandEvent& event)
         if (SaveFileDialog.ShowModal() == wxID_OK){
         dbname=SaveFileDialog.GetPath();
         mifunc=(Myfunc)GetProcAddress(histDLL,"CreateDatabase");
-    (mifunc)(&db,dbname);
+        (mifunc)(&db,dbname);
     }
-
-FreeLibrary(histDLL);
+    FreeLibrary(histDLL);
 }
 
+/**
+*   Description: Pops up a Filedialog windows and call de DLL and open a new database
+*   Parms: An Event
+*   Return: void
+**/
 void SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent& event)
-{
+{   wxFileDialog
+        OpenFileDialog(this, _("Open db file"), "", "",
+                       "db files (*.db)", wxFD_OPEN|wxFD_FILE_MUST_EXIST);
     Myfunc mifunc(0);
     int result;
     string dbname;
     histDLL= LoadLibrary(FilePath.c_str());
-
-    result=FileDialog1->ShowModal();
-
+    result=OpenFileDialog.ShowModal();
     if(result==wxID_OK)
     {
-       dbname=FileDialog1->GetPath();
+       dbname=OpenFileDialog.GetPath();
        mifunc=(Myfunc)GetProcAddress(histDLL,"CreateDatabase");
-       (mifunc)(&db,dbname);
+       if(mifunc)(&db,dbname)>0)
+       {
+       // call error selector
+       }
+
     }
-FreeLibrary(histDLL);
+    FreeLibrary(histDLL);
 }
 
 
