@@ -16,6 +16,7 @@
 #include <wx/textctrl.h>
 #include <wx/listbox.h>
 #include <wx/statline.h>
+#include <wx/filedlg.h>
 #include <wx/button.h>
 #include <wx/frame.h>
 #include <wx/statusbr.h>
@@ -59,6 +60,7 @@ class SQLManagerFrame: public wxFrame
 
         //(*Declarations(SQLManagerFrame)
         wxMenuItem* MenuItem4;
+        wxFileDialog* FileDialog1;
         wxButton* Save;
         wxButton* Delete;
         wxMenuItem* MenuItem3;

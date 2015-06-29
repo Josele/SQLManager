@@ -1710,12 +1710,13 @@
 1412631244 c:\wxwidgets-3.0.2\include\wx\univ\theme.h
 	"wx/string.h"
 
-1435548259 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
+1435547661 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
 	<wx/sizer.h>
 	<wx/menu.h>
 	<wx/textctrl.h>
 	<wx/listbox.h>
 	<wx/statline.h>
+	<wx/filedlg.h>
 	<wx/button.h>
 	<wx/frame.h>
 	<wx/statusbr.h>
