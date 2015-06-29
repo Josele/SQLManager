@@ -1710,9 +1710,14 @@
 1412631244 c:\wxwidgets-3.0.2\include\wx\univ\theme.h
 	"wx/string.h"
 
-1435313900 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
+1435546448 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
+	<wx/sizer.h>
 	<wx/menu.h>
+	<wx/textctrl.h>
+	<wx/listbox.h>
+	<wx/statline.h>
 	<wx/filedlg.h>
+	<wx/button.h>
 	<wx/frame.h>
 	<wx/statusbr.h>
 	<string.h>
@@ -2297,7 +2302,7 @@
 
 1412631244 c:\wxwidgets-3.0.2\include\wx\os2\filedlg.h
 
-1435312905 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
+1435544053 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
 	"SQLManagerMain.h"
 	<wx/msgdlg.h>
 	<windows.h>
@@ -2422,4 +2427,38 @@
 1412631242 c:\wxwidgets-3.0.2\include\wx\generic\laywin.h
 	"wx/sashwin.h"
 	"wx/event.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\sizer.h
+	"wx/defs.h"
+	"wx/window.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\statline.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/univ/statline.h"
+	"wx/msw/statline.h"
+	"wx/gtk/statline.h"
+	"wx/gtk1/statline.h"
+	"wx/os2/statline.h"
+	"wx/osx/statline.h"
+	"wx/cocoa/statline.h"
+	"wx/generic/statline.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\univ\statline.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\msw\statline.h
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\statline.h
+	"wx/defs.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\statline.h
+	"wx/defs.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\os2\statline.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\osx\statline.h
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\statline.h
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\generic\statline.h
 
