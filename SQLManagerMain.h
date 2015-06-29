@@ -16,7 +16,6 @@
 #include <wx/textctrl.h>
 #include <wx/listbox.h>
 #include <wx/statline.h>
-#include <wx/filedlg.h>
 #include <wx/button.h>
 #include <wx/frame.h>
 #include <wx/statusbr.h>
@@ -42,12 +41,13 @@ class SQLManagerFrame: public wxFrame
         void OnMenuNewSelected(wxCommandEvent& event);
         void OnMenuLoadSelected(wxCommandEvent& event);
         void OnListBox1Select(wxCommandEvent& event);
+        void OnTextCtrl1Text(wxCommandEvent& event);
         //*)
-
+        void lb_reload();
         //(*Identifiers(SQLManagerFrame)
-        static const long ID_LISTBOX1;
+        static const long ID_LISTBOX;
         static const long ID_STATICLINE1;
-        static const long ID_TEXTCTRL1;
+        static const long ID_BigBox;
         static const long ID_deleteitem;
         static const long ID_Save;
         static const long ID_Run;
@@ -60,15 +60,14 @@ class SQLManagerFrame: public wxFrame
 
         //(*Declarations(SQLManagerFrame)
         wxMenuItem* MenuItem4;
-        wxFileDialog* FileDialog1;
         wxButton* Save;
         wxButton* Delete;
         wxMenuItem* MenuItem3;
         wxStatusBar* StatusBar1;
+        wxTextCtrl* BigBox;
         wxStaticLine* StaticLine1;
-        wxTextCtrl* TextCtrl1;
         wxButton* Run;
-        wxListBox* ListBox1;
+        wxListBox* ListBox;
         //*)
 
         DECLARE_EVENT_TABLE()
