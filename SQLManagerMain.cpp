@@ -86,7 +86,7 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     FlexGridSizer1->Add(TextCtrl1, 1, wxALL|wxALIGN_RIGHT|wxALIGN_TOP, 5);
     Delete = new wxButton(this, ID_deleteitem, _("Delete"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_deleteitem"));
     FlexGridSizer1->Add(Delete, 1, wxALL|wxALIGN_BOTTOM|wxALIGN_CENTER_HORIZONTAL, 5);
-    FlexGridSizer1->Add(0,0,1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    FlexGridSizer1->Add(-1,-1,1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
     Save = new wxButton(this, ID_Save, _("Save"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_Save"));
     BoxSizer1->Add(Save, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
@@ -114,7 +114,7 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     StatusBar1->SetFieldsCount(1,__wxStatusBarWidths_1);
     StatusBar1->SetStatusStyles(1,__wxStatusBarStyles_1);
     SetStatusBar(StatusBar1);
-    FileDialog1 = new wxFileDialog(this, _("Select file"), wxEmptyString, wxEmptyString, wxFileSelectorDefaultWildcardStr, wxFD_DEFAULT_STYLE, wxDefaultPosition, wxDefaultSize, _T("wxFileDialog"));
+    FileDialog1 = new wxFileDialog(this, _("Select file"), wxEmptyString, wxEmptyString, wxFileSelectorDefaultWildcardStr, wxFD_OPEN, wxDefaultPosition, wxDefaultSize, _T("wxFileDialog"));
     FlexGridSizer1->Fit(this);
     FlexGridSizer1->SetSizeHints(this);
 
@@ -160,24 +160,35 @@ void SQLManagerFrame::OnClose(wxCloseEvent& event)
 
 
 /**
-*   Description: Pops up a new windows and call de DLL and create a new database
+*   Description: Pops up a Filedialog windows and call de DLL and create a new database
 *   Parms: An Event
 *   Return: void
 **/
 void SQLManagerFrame::OnMenuNewSelected(wxCommandEvent& event)
-{
+{ wxFileDialog
+        SaveFileDialog(this, _("Save db file"), "", "",
+                       "*.db", wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+    Myfunc mifunc(0);
+    string dbname;
+    histDLL= LoadLibrary(FilePath.c_str());
+        if (SaveFileDialog.ShowModal() == wxID_OK){
+        dbname=SaveFileDialog.GetPath();
+        mifunc=(Myfunc)GetProcAddress(histDLL,"CreateDatabase");
+    (mifunc)(&db,dbname);
+    }
 
-
+FreeLibrary(histDLL);
 }
 
 void SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent& event)
 {
-histDLL= LoadLibrary(FilePath.c_str());
-
     Myfunc mifunc(0);
     int result;
     string dbname;
+    histDLL= LoadLibrary(FilePath.c_str());
+
     result=FileDialog1->ShowModal();
+
     if(result==wxID_OK)
     {
        dbname=FileDialog1->GetPath();
