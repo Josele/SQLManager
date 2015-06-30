@@ -1710,7 +1710,7 @@
 1412631244 c:\wxwidgets-3.0.2\include\wx\univ\theme.h
 	"wx/string.h"
 
-1435569623 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
+1435653149 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
 	<wx/sizer.h>
 	<wx/menu.h>
 	<wx/textctrl.h>
@@ -1722,82 +1722,110 @@
 	<string.h>
 	"sqlite3.h"
 
-1412631244 c:\wxwidgets-3.0.2\include\wx\notebook.h
+1412631244 c:\wxwidgets-3.0.2\include\wx\sizer.h
 	"wx/defs.h"
-	"wx/bookctrl.h"
-	"wx/univ/notebook.h"
-	"wx/msw/notebook.h"
-	"wx/generic/notebook.h"
-	"wx/gtk/notebook.h"
-	"wx/gtk1/notebook.h"
-	"wx/osx/notebook.h"
-	"wx/cocoa/notebook.h"
-	"wx/os2/notebook.h"
+	"wx/window.h"
 
-1412631242 c:\wxwidgets-3.0.2\include\wx\bookctrl.h
+1412631244 c:\wxwidgets-3.0.2\include\wx\menu.h
 	"wx/defs.h"
-	"wx/control.h"
+	"wx/list.h"
+	"wx/window.h"
+	"wx/menuitem.h"
+	"wx/univ/menu.h"
+	"wx/msw/menu.h"
+	"wx/motif/menu.h"
+	"wx/gtk/menu.h"
+	"wx/gtk1/menu.h"
+	"wx/osx/menu.h"
+	"wx/cocoa/menu.h"
+	"wx/os2/menu.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\menuitem.h
+	"wx/defs.h"
+	"wx/object.h"
+	"wx/univ/menuitem.h"
+	"wx/msw/menuitem.h"
+	"wx/motif/menuitem.h"
+	"wx/gtk/menuitem.h"
+	"wx/gtk1/menuitem.h"
+	"wx/osx/menuitem.h"
+	"wx/cocoa/menuitem.h"
+	"wx/os2/menuitem.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\univ\menuitem.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\msw\menuitem.h
+	"wx/ownerdrw.h"
+	"wx/bitmap.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\ownerdrw.h
+	"wx/defs.h"
+	"wx/font.h"
+	"wx/colour.h"
+	"wx/msw/ownerdrw.h"
+	"wx/os2/ownerdrw.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\msw\ownerdrw.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\os2\ownerdrw.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\motif\menuitem.h
+	"wx/bitmap.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\menuitem.h
+	"wx/bitmap.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\menuitem.h
+	"wx/bitmap.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\osx\menuitem.h
+	"wx/defs.h"
+	"wx/bitmap.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\menuitem.h
+	"wx/hashmap.h"
+	"wx/bitmap.h"
+	"wx/cocoa/ObjcRef.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\os2\menuitem.h
+	"wx/defs.h"
+	"wx/os2/private.h"
+	"wx/ownerdrw.h"
+	"wx/bitmap.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\univ\menu.h
+	"wx/accel.h"
 	"wx/dynarray.h"
-	"wx/withimages.h"
-	"wx/notebook.h"
-	"wx/choicebk.h"
 
-1412631244 c:\wxwidgets-3.0.2\include\wx\withimages.h
-	"wx/defs.h"
-	"wx/icon.h"
-	"wx/imaglist.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\choicebk.h
-	"wx/defs.h"
-	"wx/bookctrl.h"
-	"wx/choice.h"
-	"wx/containr.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\choice.h
-	"wx/defs.h"
-	"wx/ctrlsub.h"
-	"wx/univ/choice.h"
-	"wx/msw/wince/choicece.h"
-	"wx/msw/choice.h"
-	"wx/motif/choice.h"
-	"wx/gtk/choice.h"
-	"wx/gtk1/choice.h"
-	"wx/osx/choice.h"
-	"wx/cocoa/choice.h"
-	"wx/os2/choice.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\ctrlsub.h
-	"wx/defs.h"
+1412631244 c:\wxwidgets-3.0.2\include\wx\msw\menu.h
+	"wx/accel.h"
+	"wx/dynarray.h"
 	"wx/arrstr.h"
-	"wx/control.h"
-	"wx/msw/ctrlsub.h"
-	"wx/motif/ctrlsub.h"
 
-1412631244 c:\wxwidgets-3.0.2\include\wx\msw\ctrlsub.h
+1412631244 c:\wxwidgets-3.0.2\include\wx\motif\menu.h
+	"wx/colour.h"
+	"wx/font.h"
+	"wx/arrstr.h"
 
-1412631244 c:\wxwidgets-3.0.2\include\wx\motif\ctrlsub.h
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\menu.h
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\menu.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\osx\menu.h
+	"wx/arrstr.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\menu.h
+	"wx/cocoa/NSMenu.h"
+	"wx/accel.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\nsmenu.h
+	"wx/hashmap.h"
+	"wx/cocoa/ObjcAssociate.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\os2\menu.h
+	"wx/accel.h"
+	"wx/list.h"
 	"wx/dynarray.h"
-	"wx/generic/ctrlsub.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\generic\ctrlsub.h
-	"wx/dynarray.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\univ\choice.h
-	"wx/combobox.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\combobox.h
-	"wx/defs.h"
-	"wx/textctrl.h"
-	"wx/ctrlsub.h"
-	"wx/textentry.h"
-	"wx/univ/combobox.h"
-	"wx/msw/combobox.h"
-	"wx/motif/combobox.h"
-	"wx/gtk/combobox.h"
-	"wx/gtk1/combobox.h"
-	"wx/osx/combobox.h"
-	"wx/cocoa/combobox.h"
-	"wx/os2/combobox.h"
 
 1412631244 c:\wxwidgets-3.0.2\include\wx\textctrl.h
 	"wx/defs.h"
@@ -1907,256 +1935,118 @@
 
 1412631244 c:\wxwidgets-3.0.2\include\wx\os2\textctrl.h
 
-1412631244 c:\wxwidgets-3.0.2\include\wx\univ\combobox.h
-	"wx/combo.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\combo.h
+1412631244 c:\wxwidgets-3.0.2\include\wx\listbox.h
 	"wx/defs.h"
+	"wx/ctrlsub.h"
+	"wx/univ/listbox.h"
+	"wx/msw/listbox.h"
+	"wx/motif/listbox.h"
+	"wx/gtk/listbox.h"
+	"wx/gtk1/listbox.h"
+	"wx/osx/listbox.h"
+	"wx/os2/listbox.h"
+	"wx/cocoa/listbox.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\ctrlsub.h
+	"wx/defs.h"
+	"wx/arrstr.h"
 	"wx/control.h"
-	"wx/renderer.h"
-	"wx/bitmap.h"
-	"wx/textentry.h"
-	"wx/msw/combo.h"
-	"wx/generic/combo.h"
+	"wx/msw/ctrlsub.h"
+	"wx/motif/ctrlsub.h"
 
-1412631244 c:\wxwidgets-3.0.2\include\wx\renderer.h
-	"wx/gdicmn.h"
-	"wx/colour.h"
-	"wx/font.h"
-	"wx/bitmap.h"
-	"wx/string.h"
+1412631244 c:\wxwidgets-3.0.2\include\wx\msw\ctrlsub.h
 
-1412631244 c:\wxwidgets-3.0.2\include\wx\msw\combo.h
-	"wx/timer.h"
+1412631244 c:\wxwidgets-3.0.2\include\wx\motif\ctrlsub.h
+	"wx/dynarray.h"
+	"wx/generic/ctrlsub.h"
 
-1412631242 c:\wxwidgets-3.0.2\include\wx\generic\combo.h
-	"wx/dcbuffer.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\dcbuffer.h
-	"wx/dcmemory.h"
-	"wx/dcclient.h"
-	"wx/window.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\dcmemory.h
-	"wx/dc.h"
-	"wx/bitmap.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\dcclient.h
-	"wx/dc.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\msw\combobox.h
-	"wx/choice.h"
-	"wx/textentry.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\motif\combobox.h
-	"wx/choice.h"
-	"wx/textentry.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\combobox.h
-	"wx/choice.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\combobox.h
-	"wx/defs.h"
-	"wx/object.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\osx\combobox.h
-	"wx/containr.h"
-	"wx/choice.h"
-	"wx/textctrl.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\combobox.h
-	"wx/hashmap.h"
-	"wx/cocoa/ObjcAssociate.h"
-	"wx/textctrl.h"
+1412631242 c:\wxwidgets-3.0.2\include\wx\generic\ctrlsub.h
 	"wx/dynarray.h"
 
-1412631244 c:\wxwidgets-3.0.2\include\wx\os2\combobox.h
-	"wx/choice.h"
-	"wx/textentry.h"
+1412631244 c:\wxwidgets-3.0.2\include\wx\univ\listbox.h
+	"wx/scrolwin.h"
+	"wx/dynarray.h"
+	"wx/arrstr.h"
 
-1412631244 c:\wxwidgets-3.0.2\include\wx\msw\wince\choicece.h
-	"wx/defs.h"
+1412631244 c:\wxwidgets-3.0.2\include\wx\msw\listbox.h
 	"wx/dynarray.h"
 
-1412631244 c:\wxwidgets-3.0.2\include\wx\msw\choice.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\motif\choice.h
+1412631244 c:\wxwidgets-3.0.2\include\wx\motif\listbox.h
+	"wx/ctrlsub.h"
 	"wx/clntdata.h"
-	"wx/dynarray.h"
 
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\choice.h
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\listbox.h
 
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\choice.h
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\listbox.h
+	"wx/list.h"
 
-1412631244 c:\wxwidgets-3.0.2\include\wx\osx\choice.h
-	"wx/control.h"
+1412631244 c:\wxwidgets-3.0.2\include\wx\osx\listbox.h
 	"wx/dynarray.h"
 	"wx/arrstr.h"
 
-1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\choice.h
-	"wx/cocoa/NSMenu.h"
+1412631244 c:\wxwidgets-3.0.2\include\wx\os2\listbox.h
+	"wx/dynarray.h"
 
-1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\nsmenu.h
+1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\listbox.h
+	"wx/cocoa/NSTableView.h"
+	"wx/dynarray.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\nstableview.h
 	"wx/hashmap.h"
 	"wx/cocoa/ObjcAssociate.h"
 
-1412631244 c:\wxwidgets-3.0.2\include\wx\os2\choice.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\univ\notebook.h
-	"wx/arrstr.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\msw\notebook.h
+1412631244 c:\wxwidgets-3.0.2\include\wx\statline.h
+	"wx/defs.h"
 	"wx/control.h"
+	"wx/univ/statline.h"
+	"wx/msw/statline.h"
+	"wx/gtk/statline.h"
+	"wx/gtk1/statline.h"
+	"wx/os2/statline.h"
+	"wx/osx/statline.h"
+	"wx/cocoa/statline.h"
+	"wx/generic/statline.h"
 
-1412631242 c:\wxwidgets-3.0.2\include\wx\generic\notebook.h
-	"wx/event.h"
-	"wx/control.h"
+1412631244 c:\wxwidgets-3.0.2\include\wx\univ\statline.h
 
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\notebook.h
-	"wx/list.h"
+1412631244 c:\wxwidgets-3.0.2\include\wx\msw\statline.h
 
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\notebook.h
-	"wx/list.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\osx\notebook.h
-	"wx/event.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\notebook.h
-	"wx/cocoa/NSTabView.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\nstabview.h
-	"wx/hashmap.h"
-	"wx/cocoa/ObjcAssociate.h"
-	"wx/cocoa/ObjcRef.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\os2\notebook.h
-	"wx/control.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\menu.h
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\statline.h
 	"wx/defs.h"
-	"wx/list.h"
-	"wx/window.h"
-	"wx/menuitem.h"
-	"wx/univ/menu.h"
-	"wx/msw/menu.h"
-	"wx/motif/menu.h"
-	"wx/gtk/menu.h"
-	"wx/gtk1/menu.h"
-	"wx/osx/menu.h"
-	"wx/cocoa/menu.h"
-	"wx/os2/menu.h"
 
-1412631244 c:\wxwidgets-3.0.2\include\wx\menuitem.h
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\statline.h
 	"wx/defs.h"
-	"wx/object.h"
-	"wx/univ/menuitem.h"
-	"wx/msw/menuitem.h"
-	"wx/motif/menuitem.h"
-	"wx/gtk/menuitem.h"
-	"wx/gtk1/menuitem.h"
-	"wx/osx/menuitem.h"
-	"wx/cocoa/menuitem.h"
-	"wx/os2/menuitem.h"
 
-1412631244 c:\wxwidgets-3.0.2\include\wx\univ\menuitem.h
+1412631244 c:\wxwidgets-3.0.2\include\wx\os2\statline.h
 
-1412631244 c:\wxwidgets-3.0.2\include\wx\msw\menuitem.h
-	"wx/ownerdrw.h"
-	"wx/bitmap.h"
+1412631244 c:\wxwidgets-3.0.2\include\wx\osx\statline.h
 
-1412631244 c:\wxwidgets-3.0.2\include\wx\ownerdrw.h
-	"wx/defs.h"
-	"wx/font.h"
-	"wx/colour.h"
-	"wx/msw/ownerdrw.h"
-	"wx/os2/ownerdrw.h"
+1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\statline.h
 
-1412631244 c:\wxwidgets-3.0.2\include\wx\msw\ownerdrw.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\os2\ownerdrw.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\motif\menuitem.h
-	"wx/bitmap.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\menuitem.h
-	"wx/bitmap.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\menuitem.h
-	"wx/bitmap.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\osx\menuitem.h
-	"wx/defs.h"
-	"wx/bitmap.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\menuitem.h
-	"wx/hashmap.h"
-	"wx/bitmap.h"
-	"wx/cocoa/ObjcRef.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\os2\menuitem.h
-	"wx/defs.h"
-	"wx/os2/private.h"
-	"wx/ownerdrw.h"
-	"wx/bitmap.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\univ\menu.h
-	"wx/accel.h"
-	"wx/dynarray.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\msw\menu.h
-	"wx/accel.h"
-	"wx/dynarray.h"
-	"wx/arrstr.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\motif\menu.h
-	"wx/colour.h"
-	"wx/font.h"
-	"wx/arrstr.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\menu.h
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\menu.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\osx\menu.h
-	"wx/arrstr.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\menu.h
-	"wx/cocoa/NSMenu.h"
-	"wx/accel.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\os2\menu.h
-	"wx/accel.h"
-	"wx/list.h"
-	"wx/dynarray.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\sashwin.h
-	"wx/generic/sashwin.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\generic\sashwin.h
-	"wx/defs.h"
-	"wx/window.h"
-	"wx/string.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\listbook.h
-	"wx/defs.h"
-	"wx/bookctrl.h"
-	"wx/containr.h"
+1412631242 c:\wxwidgets-3.0.2\include\wx\generic\statline.h
 
 1435312868 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlite3.h
 	<stdarg.h>
 
-1412631242 c:\wxwidgets-3.0.2\include\wx\filedlg.h
+1435657227 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
+	"SQLManagerMain.h"
+	<wx/msgdlg.h>
+	<wx/filedlg.h>
+	<windows.h>
+	<wx/intl.h>
+	<wx/string.h>
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\msgdlg.h
 	"wx/defs.h"
 	"wx/dialog.h"
-	"wx/arrstr.h"
-	"wx/generic/filedlgg.h"
-	"wx/msw/filedlg.h"
-	"wx/motif/filedlg.h"
-	"wx/gtk/filedlg.h"
-	"wx/gtk1/filedlg.h"
-	"wx/osx/filedlg.h"
-	"wx/cocoa/filedlg.h"
-	"wx/os2/filedlg.h"
+	"wx/stockitem.h"
+	"wx/generic/msgdlgg.h"
+	"wx/cocoa/msgdlg.h"
+	"wx/msw/msgdlg.h"
+	"wx/motif/msgdlg.h"
+	"wx/gtk/msgdlg.h"
+	"wx/osx/msgdlg.h"
+	"wx/os2/msgdlg.h"
 
 1412631242 c:\wxwidgets-3.0.2\include\wx\dialog.h
 	"wx/toplevel.h"
@@ -2207,6 +2097,41 @@
 
 1412631244 c:\wxwidgets-3.0.2\include\wx\os2\dialog.h
 	"wx/panel.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\stockitem.h
+	"wx/defs.h"
+	"wx/chartype.h"
+	"wx/string.h"
+	"wx/accel.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\generic\msgdlgg.h
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\msgdlg.h
+	"wx/msgdlg.h"
+	"wx/generic/msgdlgg.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\msw\msgdlg.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\motif\msgdlg.h
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\msgdlg.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\osx\msgdlg.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\os2\msgdlg.h
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\filedlg.h
+	"wx/defs.h"
+	"wx/dialog.h"
+	"wx/arrstr.h"
+	"wx/generic/filedlgg.h"
+	"wx/msw/filedlg.h"
+	"wx/motif/filedlg.h"
+	"wx/gtk/filedlg.h"
+	"wx/gtk1/filedlg.h"
+	"wx/osx/filedlg.h"
+	"wx/cocoa/filedlg.h"
+	"wx/os2/filedlg.h"
 
 1412631242 c:\wxwidgets-3.0.2\include\wx\generic\filedlgg.h
 	"wx/listctrl.h"
@@ -2300,165 +2225,4 @@
 1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\filedlg.h
 
 1412631244 c:\wxwidgets-3.0.2\include\wx\os2\filedlg.h
-
-1435571638 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
-	"SQLManagerMain.h"
-	<wx/msgdlg.h>
-	<wx/filedlg.h>
-	<windows.h>
-	<wx/intl.h>
-	<wx/string.h>
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\msgdlg.h
-	"wx/defs.h"
-	"wx/dialog.h"
-	"wx/stockitem.h"
-	"wx/generic/msgdlgg.h"
-	"wx/cocoa/msgdlg.h"
-	"wx/msw/msgdlg.h"
-	"wx/motif/msgdlg.h"
-	"wx/gtk/msgdlg.h"
-	"wx/osx/msgdlg.h"
-	"wx/os2/msgdlg.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\stockitem.h
-	"wx/defs.h"
-	"wx/chartype.h"
-	"wx/string.h"
-	"wx/accel.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\generic\msgdlgg.h
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\msgdlg.h
-	"wx/msgdlg.h"
-	"wx/generic/msgdlgg.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\msw\msgdlg.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\motif\msgdlg.h
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\msgdlg.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\osx\msgdlg.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\os2\msgdlg.h
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\checklst.h
-	"wx/defs.h"
-	"wx/listbox.h"
-	"wx/univ/checklst.h"
-	"wx/msw/wince/checklst.h"
-	"wx/msw/checklst.h"
-	"wx/motif/checklst.h"
-	"wx/gtk/checklst.h"
-	"wx/gtk1/checklst.h"
-	"wx/osx/checklst.h"
-	"wx/cocoa/checklst.h"
-	"wx/os2/checklst.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\listbox.h
-	"wx/defs.h"
-	"wx/ctrlsub.h"
-	"wx/univ/listbox.h"
-	"wx/msw/listbox.h"
-	"wx/motif/listbox.h"
-	"wx/gtk/listbox.h"
-	"wx/gtk1/listbox.h"
-	"wx/osx/listbox.h"
-	"wx/os2/listbox.h"
-	"wx/cocoa/listbox.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\univ\listbox.h
-	"wx/scrolwin.h"
-	"wx/dynarray.h"
-	"wx/arrstr.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\msw\listbox.h
-	"wx/dynarray.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\motif\listbox.h
-	"wx/ctrlsub.h"
-	"wx/clntdata.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\listbox.h
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\listbox.h
-	"wx/list.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\osx\listbox.h
-	"wx/dynarray.h"
-	"wx/arrstr.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\os2\listbox.h
-	"wx/dynarray.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\listbox.h
-	"wx/cocoa/NSTableView.h"
-	"wx/dynarray.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\nstableview.h
-	"wx/hashmap.h"
-	"wx/cocoa/ObjcAssociate.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\univ\checklst.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\msw\wince\checklst.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\msw\checklst.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\motif\checklst.h
-	"wx/listbox.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\checklst.h
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\checklst.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\osx\checklst.h
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\checklst.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\os2\checklst.h
-	<stddef.h>
-	"wx/defs.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\laywin.h
-	"wx/generic/laywin.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\generic\laywin.h
-	"wx/sashwin.h"
-	"wx/event.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\sizer.h
-	"wx/defs.h"
-	"wx/window.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\statline.h
-	"wx/defs.h"
-	"wx/control.h"
-	"wx/univ/statline.h"
-	"wx/msw/statline.h"
-	"wx/gtk/statline.h"
-	"wx/gtk1/statline.h"
-	"wx/os2/statline.h"
-	"wx/osx/statline.h"
-	"wx/cocoa/statline.h"
-	"wx/generic/statline.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\univ\statline.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\msw\statline.h
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\statline.h
-	"wx/defs.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\statline.h
-	"wx/defs.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\os2\statline.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\osx\statline.h
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\statline.h
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\generic\statline.h
 

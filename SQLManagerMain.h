@@ -22,7 +22,7 @@
 //*)
 #include <string.h>
 #include "sqlite3.h"
-
+using std::string;
 class SQLManagerFrame: public wxFrame
 {
     sqlite3* db ;
@@ -31,6 +31,9 @@ class SQLManagerFrame: public wxFrame
 
         SQLManagerFrame(wxWindow* parent,wxWindowID id = -1);
         virtual ~SQLManagerFrame();
+      static  string algo;
+      void callback( int argc, char **argv, char **azColName);
+      static int c_callback(void* Used, int argc, char **argv, char **azColName);
 
     private:
 
@@ -43,7 +46,11 @@ class SQLManagerFrame: public wxFrame
         void OnListBox1Select(wxCommandEvent& event);
         void OnTextCtrl1Text(wxCommandEvent& event);
         //*)
-        void lb_reload();
+
+        void lb_reload(string tbname,string tcname);
+        void LoadDll();
+        void FreeDll();
+
         //(*Identifiers(SQLManagerFrame)
         static const long ID_LISTBOX;
         static const long ID_STATICLINE1;
@@ -57,7 +64,7 @@ class SQLManagerFrame: public wxFrame
         static const long idMenuAbout;
         static const long ID_STATUSBAR1;
         //*)
-
+        string stream;
         //(*Declarations(SQLManagerFrame)
         wxMenuItem* MenuItem4;
         wxButton* Save;

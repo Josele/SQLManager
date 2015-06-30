@@ -15,14 +15,14 @@
 #include <wx/intl.h>
 #include <wx/string.h>
 //*)
-using std::string;
 HINSTANCE histDLL;
 //helper functions
 //try to work with an array
 typedef int (*Myfunc) (sqlite3**,string);
+typedef int (*Callback)(void*,int,char**,char**);
 typedef int (*Myfunc2) (sqlite3*,string);
 typedef int (*Myfunc3) (sqlite3*,string,char*  );
-typedef int (*Myfunc4) (sqlite3* , string ,string );
+typedef int (*Myfunc4) (sqlite3* , string ,string,int (*callback)(void*,int,char**,char**),void*  );
 enum wxbuildinfoformat {
     short_f, long_f };
 
@@ -161,14 +161,90 @@ void SQLManagerFrame::OnClose(wxCloseEvent& event)
 
 }
 
+// Parameters are:
+//      argc -- the number of rows in the resultset
+//      argv[] -- the data for each row
+//      azColName -- the name of each column
+  void SQLManagerFrame::callback( int argc, char **argv, char **azColName){
+  int i;
+
+  stream="";
+  for(i=0; i<argc; i++){
+    stream=+ azColName[i];
+          stream=+ " = ";
+    if( argv[i] )
+        stream=+ argv[i];
+    else
+        stream=+ "NULL";
+     stream=+ "\n";
+  }
+  //stream.flush();
+
+}
+// Parameters are:
+//      argc -- the number of rows in the resultset
+//      argv[] -- the data for each row
+//      azColName -- the name of each column
+   int SQLManagerFrame::c_callback(void* Used, int argc, char **argv, char **azColName){
+  int i;
+
+    string* hola = static_cast<string*>(Used);
+    *hola="hola";
+
+    /*
+ for(i=0; i<argc; i++){
+    *stream=+ azColName[i];
+          *stream=+ " = ";
+    if( argv[i] )
+        *stream=+ argv[i];
+    else
+        *stream=+ "NULL";
+     *stream=+ "\n";
+ }
+*/
+return 0;
+  //stream.flush();
+
+}
+/**
+*   Description: Load histDLL attribute
+*   Parms: void
+*   Return: void
+**/
+void SQLManagerFrame::LoadDll()
+{
+ histDLL= LoadLibrary(FilePath.c_str());
+}
+/**
+*   Description: Free histDLL attribute
+*   Parms: void
+*   Return: void
+**/
+void SQLManagerFrame::FreeDll()
+{
+FreeLibrary(histDLL);
+}
+
+
+
 /**
 *   Description: Fills the listbox
 *   Parms: void
 *   Return: void
 **/
-void SQLManagerFrame::lb_reload()
+void SQLManagerFrame::lb_reload(string tbname, string tcname )
 {
+string answer;
+int result;
+ LoadDll();
+Myfunc4 mifunc4(0);
+mifunc4=(Myfunc4)GetProcAddress(histDLL,"discol");
+result=(mifunc4)(db,tbname,tcname,c_callback,&answer);
+std::ostream stream(BigBox);
+stream << answer<<result;
+stream.flush();
 
+FreeDll();
 }
 
 
@@ -187,15 +263,16 @@ void SQLManagerFrame::OnMenuNewSelected(wxCommandEvent& event)
     char* db_err=0;
     int result;
     int result2;
-    histDLL= LoadLibrary(FilePath.c_str());
+    LoadDll();
     if (SaveFileDialog.ShowModal() != wxID_OK)
         return;
     dbname=SaveFileDialog.GetPath();
+    //si hay una igual, la borramos
     mifunc=(Myfunc)GetProcAddress(histDLL,"CreateDatabase");
     result=(mifunc)(&db,dbname);
     mifunc3=(Myfunc3)GetProcAddress(histDLL,"CreateTable");
     result2=(mifunc3)(db,tbname,db_err);
-    FreeLibrary(histDLL);
+    FreeDll();
     if(result!=0||result2!=0)
     {
         BigBox->Clear();
@@ -207,7 +284,7 @@ void SQLManagerFrame::OnMenuNewSelected(wxCommandEvent& event)
         return;
     }
     BigBox->Clear();
-   lb_reload();
+
 
 }
 
@@ -223,14 +300,14 @@ void SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent& event)
     Myfunc mifunc(0);
     int result;
     string dbname;
-    histDLL= LoadLibrary(FilePath.c_str());
+    LoadDll();
     result=OpenFileDialog.ShowModal();
     if(result!=wxID_OK)
         return;
     dbname=OpenFileDialog.GetPath();
     mifunc=(Myfunc)GetProcAddress(histDLL,"CreateDatabase");
     result=(mifunc)(&db,dbname);
-    FreeLibrary(histDLL);
+    FreeDll();
     if(result!=0)
        {
         BigBox->Clear();
@@ -241,7 +318,10 @@ void SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent& event)
         return;
         }
 
-     BigBox->Clear();
+    BigBox->Clear();
+    lb_reload("datos","name");
+
+
 }
 
 
