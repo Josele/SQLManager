@@ -23,6 +23,10 @@ typedef int (*Callback)(void*,int,char**,char**);
 typedef int (*Myfunc2) (sqlite3*,string);
 typedef int (*Myfunc3) (sqlite3*,string,char*  );
 typedef int (*Myfunc4) (sqlite3* , string ,string,int (*callback)(void*,int,char**,char**),void*  );
+typedef int (*Myfunc7) (sqlite3* , string ,string,string,int (*callback)(void*,int,char**,char**),void*  );
+typedef int (*Myfunc5) (sqlite3* , string,int (*callback)(void*,int,char**,char**),void*  );
+typedef int (*Myfunc6) (sqlite3*,int );
+
 enum wxbuildinfoformat {
     short_f, long_f };
 
@@ -188,8 +192,13 @@ void SQLManagerFrame::OnClose(wxCloseEvent& event)
    int SQLManagerFrame::c_callback(void* Used, int argc, char **argv, char **azColName){
   int i;
 
-    string* hola = static_cast<string*>(Used);
-    *hola="hola";
+    string* cont = static_cast<string*>(Used);
+
+
+    for(i=0; i<argc; i++){
+    *cont=*cont + string(argv[i])+ " ";
+    }
+
 
     /*
  for(i=0; i<argc; i++){
@@ -234,14 +243,19 @@ FreeLibrary(histDLL);
 **/
 void SQLManagerFrame::lb_reload(string tbname, string tcname )
 {
+
+Myfunc7 mifunc7(0);
+char * dup;
+char * token;
 string answer;
-int result;
+string result;
  LoadDll();
-Myfunc4 mifunc4(0);
-mifunc4=(Myfunc4)GetProcAddress(histDLL,"discol");
-result=(mifunc4)(db,tbname,tcname,c_callback,&answer);
+
+mifunc7=(Myfunc7)GetProcAddress(histDLL,"row");
+result=(mifunc7)(db,tbname,tcname,"1",c_callback,&answer);
+
 std::ostream stream(BigBox);
-stream << answer<<result;
+stream<<answer <<result;
 stream.flush();
 
 FreeDll();
@@ -319,7 +333,7 @@ void SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent& event)
         }
 
     BigBox->Clear();
-    lb_reload("datos","name");
+    lb_reload("datos","*");
 
 
 }
