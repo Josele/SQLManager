@@ -47,7 +47,8 @@ class SQLManagerFrame: public wxFrame
         void OnTextCtrl1Text(wxCommandEvent& event);
         //*)
 
-        void lb_reload(string tbname,string tcname);
+        string lb_reload(string tbname,string tcname, int id );
+        int cont_col(string tbname);
         void LoadDll();
         void FreeDll();
 

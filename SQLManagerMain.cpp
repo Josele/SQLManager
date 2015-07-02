@@ -23,9 +23,9 @@ typedef int (*Callback)(void*,int,char**,char**);
 typedef int (*Myfunc2) (sqlite3*,string);
 typedef int (*Myfunc3) (sqlite3*,string,char*  );
 typedef int (*Myfunc4) (sqlite3* , string ,string,int (*callback)(void*,int,char**,char**),void*  );
-typedef int (*Myfunc7) (sqlite3* , string ,string,string,int (*callback)(void*,int,char**,char**),void*  );
+typedef int (*Myfunc7) (sqlite3* , string ,string,string,int (*callback)(void*,int,char**,char**),void* );
 typedef int (*Myfunc5) (sqlite3* , string,int (*callback)(void*,int,char**,char**),void*  );
-typedef int (*Myfunc6) (sqlite3*,int );
+
 
 enum wxbuildinfoformat {
     short_f, long_f };
@@ -237,28 +237,46 @@ FreeLibrary(histDLL);
 
 
 /**
-*   Description: Fills the listbox
+*   Description:Get a row from db
 *   Parms: void
 *   Return: void
 **/
-void SQLManagerFrame::lb_reload(string tbname, string tcname )
+string SQLManagerFrame::lb_reload(string tbname, string tcname, int id )
 {
 
 Myfunc7 mifunc7(0);
-char * dup;
-char * token;
 string answer;
 string result;
- LoadDll();
-
+char  num[2000];
+itoa(id,num,10);
+LoadDll();
 mifunc7=(Myfunc7)GetProcAddress(histDLL,"row");
-result=(mifunc7)(db,tbname,tcname,"1",c_callback,&answer);
-
-std::ostream stream(BigBox);
-stream<<answer <<result;
-stream.flush();
-
+result=(mifunc7)(db,tbname,tcname,string(num),c_callback,&answer );
 FreeDll();
+return answer;
+
+
+}
+
+/**
+*   Description: Get the number of members in a column
+*   Parms: string
+*   Return: int
+**/
+int SQLManagerFrame::cont_col(string tbname)
+{
+string answer;
+int result;
+Myfunc5 mifunc5(0);
+
+ LoadDll();
+mifunc5=(Myfunc5)GetProcAddress(histDLL,"n_row");
+result=(mifunc5)(db,tbname,c_callback,&answer );
+FreeDll();
+result = atoi(answer.c_str());
+return result;
+
+
 }
 
 
@@ -313,6 +331,7 @@ void SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent& event)
                        "*.db", wxFD_OPEN|wxFD_FILE_MUST_EXIST);
     Myfunc mifunc(0);
     int result;
+    int i;
     string dbname;
     LoadDll();
     result=OpenFileDialog.ShowModal();
@@ -333,9 +352,16 @@ void SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent& event)
         }
 
     BigBox->Clear();
-    lb_reload("datos","*");
+    result=cont_col("datos");
+    std::ostream stream(BigBox);
+    wxString str ;
+    for(i=0;i<result;i++){
+    str=lb_reload("datos","name",i);
+     if (str.Len() > 0)
+    ListBox->Append(str);
+     }
 
-
+ stream.flush();
 }
 
 
