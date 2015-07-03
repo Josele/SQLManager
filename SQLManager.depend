@@ -170,7 +170,7 @@
 	"wx/cpp.h"
 	"wx/dlimpexp.h"
 
-1412631242 c:\wxwidgets-3.0.2\include\wx\chartype.h
+1435906107 c:\wxwidgets-3.0.2\include\wx\chartype.h
 	"wx/platform.h"
 	<sys/types.h>
 	<wchar.h>
@@ -1710,8 +1710,9 @@
 1412631244 c:\wxwidgets-3.0.2\include\wx\univ\theme.h
 	"wx/string.h"
 
-1435826219 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
+1435906913 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
 	<wx/sizer.h>
+	<wx/stattext.h>
 	<wx/menu.h>
 	<wx/textctrl.h>
 	<wx/listbox.h>
@@ -1720,6 +1721,7 @@
 	<wx/frame.h>
 	<wx/statusbr.h>
 	<string.h>
+	<stdio.h>
 	"sqlite3.h"
 
 1412631244 c:\wxwidgets-3.0.2\include\wx\sizer.h
@@ -2028,11 +2030,14 @@
 1435312868 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlite3.h
 	<stdarg.h>
 
-1435814511 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
+1435916217 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
 	"SQLManagerMain.h"
 	<wx/msgdlg.h>
 	<wx/filedlg.h>
+	<wx/textdlg.h>
 	<windows.h>
+	<exception>
+	<stdexcept>
 	<wx/intl.h>
 	<wx/string.h>
 
@@ -2225,4 +2230,51 @@
 1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\filedlg.h
 
 1412631244 c:\wxwidgets-3.0.2\include\wx\os2\filedlg.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\stattext.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/univ/stattext.h"
+	"wx/msw/stattext.h"
+	"wx/motif/stattext.h"
+	"wx/gtk/stattext.h"
+	"wx/gtk1/stattext.h"
+	"wx/osx/stattext.h"
+	"wx/cocoa/stattext.h"
+	"wx/os2/stattext.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\univ\stattext.h
+	"wx/generic/stattextg.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\generic\stattextg.h
+	"wx/stattext.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\msw\stattext.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\motif\stattext.h
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\stattext.h
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\stattext.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\osx\stattext.h
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\stattext.h
+	"wx/cocoa/NSTextField.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\os2\stattext.h
+	"wx/control.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\textdlg.h
+	"wx/generic/textdlgg.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\generic\textdlgg.h
+	"wx/defs.h"
+	"wx/dialog.h"
+	"wx/valtext.h"
+	"wx/textctrl.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\valtext.h
+	"wx/defs.h"
+	"wx/validate.h"
 

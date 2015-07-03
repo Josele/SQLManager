@@ -12,6 +12,7 @@
 
 //(*Headers(SQLManagerFrame)
 #include <wx/sizer.h>
+#include <wx/stattext.h>
 #include <wx/menu.h>
 #include <wx/textctrl.h>
 #include <wx/listbox.h>
@@ -21,6 +22,7 @@
 #include <wx/statusbr.h>
 //*)
 #include <string.h>
+#include <stdio.h>
 #include "sqlite3.h"
 using std::string;
 class SQLManagerFrame: public wxFrame
@@ -45,14 +47,17 @@ class SQLManagerFrame: public wxFrame
         void OnMenuLoadSelected(wxCommandEvent& event);
         void OnListBox1Select(wxCommandEvent& event);
         void OnTextCtrl1Text(wxCommandEvent& event);
+        void OnListBoxDClick(wxCommandEvent& event);
         //*)
 
         string lb_reload(string tbname,string tcname, int id );
         int cont_col(string tbname);
         void LoadDll();
         void FreeDll();
-
+        void excep_dialog(string e);
         //(*Identifiers(SQLManagerFrame)
+        static const long ID_STATICTEXT1;
+        static const long ID_STATICTEXT2;
         static const long ID_LISTBOX;
         static const long ID_STATICLINE1;
         static const long ID_BigBox;
@@ -67,7 +72,9 @@ class SQLManagerFrame: public wxFrame
         //*)
         string stream;
         //(*Declarations(SQLManagerFrame)
+        wxStaticText* StaticText2;
         wxMenuItem* MenuItem4;
+        wxStaticText* StaticText1;
         wxButton* Save;
         wxButton* Delete;
         wxMenuItem* MenuItem3;
