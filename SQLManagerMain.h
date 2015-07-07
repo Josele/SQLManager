@@ -29,13 +29,14 @@ class SQLManagerFrame: public wxFrame
 {
     sqlite3* db ;
     std::basic_string<TCHAR> FilePath ;
+    int selected;
     public:
 
         SQLManagerFrame(wxWindow* parent,wxWindowID id = -1);
         virtual ~SQLManagerFrame();
-      static  string algo;
-      void callback( int argc, char **argv, char **azColName);
-      static int c_callback(void* Used, int argc, char **argv, char **azColName);
+        static  string algo;
+        void callback( int argc, char **argv, char **azColName);
+        static int c_callback(void* Used, int argc, char **argv, char **azColName);
 
     private:
 
@@ -48,8 +49,11 @@ class SQLManagerFrame: public wxFrame
         void OnListBox1Select(wxCommandEvent& event);
         void OnTextCtrl1Text(wxCommandEvent& event);
         void OnListBoxDClick(wxCommandEvent& event);
+        void OnDeleteClick(wxCommandEvent& event);
+        void OnSaveClick(wxCommandEvent& event);
         //*)
-
+        void insert_text(string text);
+        void ClearAll();
         string lb_reload(string tbname,string tcname, int id );
         int cont_col(string tbname);
         void LoadDll();

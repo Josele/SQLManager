@@ -24,9 +24,11 @@ HINSTANCE histDLL;
 //helper functions
 //try to work with an array
 typedef int (*Myfunc) (sqlite3**,string);
-typedef int (*Callback)(void*,int,char**,char**);
+typedef int (*Callblback)(void*,int,char**,char**);
 typedef int (*CreateTable) (sqlite3*,string,char*  );
 typedef int (*add_item) (sqlite3* db, string ,string ,string );
+typedef int (*add_text) (sqlite3* db, string ,string ,string,string );
+typedef int (*del_item) (sqlite3* db, string  ,string );
 typedef int (*Getrow) (sqlite3* , string ,string,string,int (*callback)(void*,int,char**,char**),void* );
 typedef int (*Nrow) (sqlite3* , string,int (*callback)(void*,int,char**,char**),void*  );
 
@@ -99,7 +101,7 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     FlexGridSizer1->Add(ListBox, 1, wxALL|wxEXPAND|wxFIXED_MINSIZE|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     StaticLine1 = new wxStaticLine(this, ID_STATICLINE1, wxDefaultPosition, wxSize(1,208), wxLI_VERTICAL, _T("ID_STATICLINE1"));
     FlexGridSizer1->Add(StaticLine1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    BigBox = new wxTextCtrl(this, ID_BigBox, _("Text"), wxDefaultPosition, wxDLG_UNIT(this,wxSize(532,228)), wxTE_AUTO_SCROLL|wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_MULTILINE|wxVSCROLL, wxDefaultValidator, _T("ID_BigBox"));
+    BigBox = new wxTextCtrl(this, ID_BigBox, _("Text"), wxDefaultPosition, wxDLG_UNIT(this,wxSize(532,228)), wxTE_AUTO_SCROLL|wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_MULTILINE|wxTE_RICH2|wxVSCROLL, wxDefaultValidator, _T("ID_BigBox"));
     FlexGridSizer1->Add(BigBox, 1, wxALL|wxEXPAND|wxFIXED_MINSIZE|wxALIGN_RIGHT|wxALIGN_TOP, 5);
     Delete = new wxButton(this, ID_deleteitem, _("Delete"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_deleteitem"));
     FlexGridSizer1->Add(Delete, 1, wxALL|wxFIXED_MINSIZE|wxALIGN_BOTTOM|wxALIGN_CENTER_HORIZONTAL, 5);
@@ -137,17 +139,18 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     Connect(ID_LISTBOX,wxEVT_COMMAND_LISTBOX_SELECTED,(wxObjectEventFunction)&SQLManagerFrame::OnListBox1Select);
     Connect(ID_LISTBOX,wxEVT_COMMAND_LISTBOX_DOUBLECLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnListBoxDClick);
     Connect(ID_BigBox,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&SQLManagerFrame::OnTextCtrl1Text);
+    Connect(ID_deleteitem,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnDeleteClick);
+    Connect(ID_Save,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnSaveClick);
     Connect(ID_MenuNew,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SQLManagerFrame::OnMenuNewSelected);
     Connect(idMenuLoad,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SQLManagerFrame::OnMenuLoadSelected);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SQLManagerFrame::OnQuit);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SQLManagerFrame::OnAbout);
     //*)
 
-     db =0;
-   FilePath=TEXT("SQLDLL.dll");
+    db =0;
+    FilePath=TEXT("SQLDLL.dll");
     CreateDirectoryW(FilePath.c_str(), NULL);
-
-
+    selected=-1;
 }
 
 SQLManagerFrame::~SQLManagerFrame()
@@ -202,11 +205,8 @@ void SQLManagerFrame::OnClose(wxCloseEvent& event)
 //      argv[] -- the data for each row
 //      azColName -- the name of each column
    int SQLManagerFrame::c_callback(void* Used, int argc, char **argv, char **azColName){
-  int i;
-
+    int i;
     string* cont = static_cast<string*>(Used);
-
-
     for(i=0; i<argc; i++){
     *cont=*cont + string(argv[i])+ " ";
     }
@@ -256,18 +256,23 @@ FreeLibrary(histDLL);
 string SQLManagerFrame::lb_reload(string tbname, string tcname, int id )
 {
 
-Getrow mifunc7(0);
+Getrow mifunc(0);
 string answer;
 string result;
 char  num[2000];
 itoa(id,num,10);
 LoadDll();
-mifunc7=(Getrow)GetProcAddress(histDLL,"row");
-result=(mifunc7)(db,tbname,tcname,string(num),c_callback,&answer );
+try
+{
+    mifunc=(Getrow)GetProcAddress(histDLL,"row");
+    result=(mifunc)(db,tbname,tcname,string(num),c_callback,&answer );
+}
+catch (std::exception& e)
+{
+    excep_dialog(string(e.what()));
+}
 FreeDll();
 return answer;
-
-
 }
 
 /**
@@ -282,8 +287,15 @@ int result;
 Nrow mifunc5(0);
 
  LoadDll();
-mifunc5=(Nrow)GetProcAddress(histDLL,"n_row");
-result=(mifunc5)(db,tbname,c_callback,&answer );
+ try
+ {
+    mifunc5=(Nrow)GetProcAddress(histDLL,"n_row");
+    result=(mifunc5)(db,tbname,c_callback,&answer );
+ }
+catch (std::exception& e)
+{
+    excep_dialog(string(e.what()));
+}
 FreeDll();
 result = atoi(answer.c_str());
 return result;
@@ -301,33 +313,40 @@ void SQLManagerFrame::OnMenuNewSelected(wxCommandEvent& event)
 { wxFileDialog  SaveFileDialog(this, _("Save db file"), "", "",
                        "*.db", wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
     Myfunc mifunc(0);
+    struct stat info;
     CreateTable mifunc3(0);
     string dbname;
     string tbname="datos";
     char* db_err=0;
-
+    selected=-1;
     LoadDll();
     if (SaveFileDialog.ShowModal() != wxID_OK)
         return;
 
     dbname=SaveFileDialog.GetPath();
-    if( remove( dbname.c_str() ) != 0 )
+    if(db!=0)
+        {
+            sqlite3_close(db);
+        }
+    if( !stat(dbname.c_str(),&info)&&remove( dbname.c_str() ) != 0 )
+        {
     excep_dialog( "Error deleting file" );
-
-    //si hay una igual, la borramos
-     try
+        }
+    try
   {
     mifunc=(Myfunc)GetProcAddress(histDLL,"CreateDatabase");
     (mifunc)(&db,dbname);
     mifunc3=(CreateTable)GetProcAddress(histDLL,"CreateTable");
     (mifunc3)(db,tbname,db_err);
+
     FreeDll();
     }catch (std::exception& e)
     {
     excep_dialog(string(e.what()));
     }
 
-
+    ClearAll();
+    ListBox->Append("New");
 
 }
 
@@ -343,6 +362,30 @@ void SQLManagerFrame::excep_dialog(string e)
     dial->ShowModal();
 
 }
+/**
+*   Description: Insert text in the big box.
+*   Parms: string
+*   Return: void
+**/
+void SQLManagerFrame::insert_text(string text)
+{
+        BigBox->Clear();
+        BigBox->SetForegroundColour(wxColour(0,0,0));
+        BigBox->AppendText(text);
+
+}
+
+/**
+*   Description: clear text in the big box and listbox.
+*   Parms: void
+*   Return: void
+**/
+void SQLManagerFrame::ClearAll()
+{
+        BigBox->Clear();
+        ListBox->Clear();
+
+}
 
 
 
@@ -352,41 +395,43 @@ void SQLManagerFrame::excep_dialog(string e)
 *   Return: void
 **/
 void SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent& event)
-{   wxFileDialog
-        OpenFileDialog(this, _("Open db file"), "", "",
-                       "*.db", wxFD_OPEN|wxFD_FILE_MUST_EXIST);
-    Myfunc mifunc(0);
+{   int i;
     int result;
-    int i;
     string dbname;
-    LoadDll();
+    wxString str;
+    Myfunc mifunc(0);
+    wxFileDialog OpenFileDialog(this, _("Open db file"), "", "","*.db", wxFD_OPEN|wxFD_FILE_MUST_EXIST);
+    selected=-1;
     result=OpenFileDialog.ShowModal();
     if(result!=wxID_OK)
         return;
     dbname=OpenFileDialog.GetPath();
+
+    LoadDll();
+    try
+    {
     mifunc=(Myfunc)GetProcAddress(histDLL,"CreateDatabase");
     result=(mifunc)(&db,dbname);
+    }
+    catch (std::exception& e)
+    {
+    excep_dialog(string(e.what()));
+    }
     FreeDll();
     if(result!=0)
        {
-        BigBox->Clear();
-        BigBox->SetForegroundColour(wxColour(247,34,34));
-        std::ostream stream(BigBox);
-        stream << " Sqlite3 code error :" << result << "\n";
-        stream.flush();
+        insert_text((" Sqlite3 code error :"));
         return;
         }
-    ListBox->Clear();
-    BigBox->Clear();
+    ClearAll();
     result=cont_col("datos");
-    wxString str ;
-    for(i=0;i<result;i++){
-    str=lb_reload("datos","name",i);
-     if (str.Len() > 0)
-    ListBox->Append(str);
-     }
-ListBox->Append("New");
-
+    for(i=0;i<result;i++)
+        {
+            str=lb_reload("datos","name",i);
+            if (str.Len() > 0)
+            ListBox->Append(str.substr(0,str.length()-1));
+        }
+    ListBox->Append("New");
 }
 
 
@@ -402,26 +447,137 @@ void SQLManagerFrame::OnTextCtrl1Text(wxCommandEvent& event)
 
 void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
 {
-    add_item myfunc(0);
+    string answer;
+    string resp;
+    Getrow getrow(0);
+    add_item additem(0);
     wxString text;
     wxString renamed;
-    LoadDll();
     int sel = ListBox->GetSelection();
-    if (sel != -1&&(ListBox->GetCount()==(sel+1)))
+    if (sel == -1)
         {
-        text = ListBox->GetString(sel);
+        return;
+        }
+    else if(ListBox->GetCount()==(sel+1))
+        {
+        text ="New item";
+        do{
         renamed = wxGetTextFromUser(wxT("Name of the item"),wxT("New item"), text);
+        }while(renamed.IsSameAs("new")||renamed.IsSameAs("New")||renamed.IsSameAs("NEW"));
+
+        if (renamed.IsEmpty())
+            {
+                return;
+            }
+            ListBox->Delete(sel);
+            ListBox->Insert(renamed, sel);
+            ListBox->Append("New");
+            LoadDll();
+            try
+            {
+            additem=(add_item)GetProcAddress(histDLL,"add_item");
+            (additem)(db,"datos","name",renamed.ToStdString());
+            }catch (std::exception& e)
+            {
+            excep_dialog(string(e.what()));
+            }
+
+            FreeDll();
+            selected=sel;
+        }
+    else
+        {
+
+            if(selected==sel)
+                return;
+            text = ListBox->GetString(sel);
+            LoadDll();
+            try
+            {
+             getrow=(Getrow)GetProcAddress(histDLL,"id_row");
+            (getrow)(db,"datos","name",text.ToStdString(),c_callback,&resp);
+            getrow=(Getrow)GetProcAddress(histDLL,"row");
+            (getrow)(db,"datos","ref",resp,c_callback,&answer );
+            }
+            catch (std::exception& e)
+            {
+            excep_dialog(string(e.what()));
+            }
+            FreeDll();
+            insert_text(answer.substr(0,answer.length()-1));
+            selected=sel;
         }
 
-    if (!renamed.IsEmpty())
+}
+
+void SQLManagerFrame::OnDeleteClick(wxCommandEvent& event)
+{
+    Getrow getid(0);
+    string resp;
+    wxString text;
+    wxString renamed;
+    del_item delitem(0);
+    char  num[2000];
+    if(selected==-1)
         {
-        ListBox->Delete(sel);
-        ListBox->Insert(renamed, sel);
-        ListBox->Append("New");
-        //call the database an add the new one
-        myfunc=(add_item)GetProcAddress(histDLL,"add_item");
-        (myfunc)(db,"datos","name",renamed.ToStdString());
+        return;
         }
+
+    text = ListBox->GetString(selected);
+    wxMessageDialog *dial = new wxMessageDialog(NULL,string("Are you sure you want to delete: " +text ), wxT("Delete"), wxYES_NO);
+    if(dial->ShowModal()==wxNO)
+        return;
+    //Query to delete
+    itoa(selected,num,10);
+    LoadDll();
+    try
+    {
+        getid=(Getrow)GetProcAddress(histDLL,"id_row");
+        (getid)(db,"datos","name",text.ToStdString(),c_callback,&resp);
+        delitem=(del_item)GetProcAddress(histDLL,"del_item");
+        (delitem)(db,"datos",resp);
+        ListBox->Delete(selected);
+     }catch (std::exception& e)
+    {
+        excep_dialog(string(e.what()));
+    }
+    FreeDll();
+    BigBox->Clear();
+
+}
+
+void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
+{
+    int i;
+    add_text addtext(0);
+    Getrow getid(0);
+    string resp;
+    string text;
+    char  num[2000];
+    if(selected==-1)
+        return;
+    string name=ListBox->GetString(selected).ToStdString();
+    wxMessageDialog *dial = new wxMessageDialog(NULL,string("Are you sure you want to overwrite: " +text ), wxT("Save"), wxYES_NO);
+    if(dial->ShowModal()==wxNO)
+        return;
+    //Query to delete
+    itoa(selected,num,10);
+    text="";
+    int n_lines=BigBox->GetNumberOfLines();
+    for(i=0;i<n_lines;i++)
+        text=text+BigBox->GetLineText(i).ToStdString()+"\n";
+    LoadDll();
+    try
+    {
+
+        getid=(Getrow)GetProcAddress(histDLL,"id_row");
+        (getid)(db,"datos","name",name,c_callback,&resp);
+        addtext=(add_text)GetProcAddress(histDLL,"add_text");
+        (addtext)(db,"datos","ref",resp,text);
+     }catch (std::exception& e)
+    {
+        excep_dialog(string(e.what()));
+    }
     FreeDll();
 
 }

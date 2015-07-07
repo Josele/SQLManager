@@ -59,6 +59,7 @@
 			<object class="sizeritem">
 				<object class="wxButton" name="ID_deleteitem" variable="Delete" member="yes">
 					<label>Delete</label>
+					<handler function="OnDeleteClick" entry="EVT_BUTTON" />
 				</object>
 				<flag>wxALL|wxFIXED_MINSIZE|wxALIGN_BOTTOM|wxALIGN_CENTER_HORIZONTAL</flag>
 				<border>5</border>
@@ -74,6 +75,7 @@
 					<object class="sizeritem">
 						<object class="wxButton" name="ID_Save" variable="Save" member="yes">
 							<label>Save</label>
+							<handler function="OnSaveClick" entry="EVT_BUTTON" />
 						</object>
 						<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 						<border>5</border>
