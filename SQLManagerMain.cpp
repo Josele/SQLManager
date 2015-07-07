@@ -569,11 +569,11 @@ void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
     LoadDll();
     try
     {
-
         getid=(Getrow)GetProcAddress(histDLL,"id_row");
         (getid)(db,"datos","name",name,c_callback,&resp);
         addtext=(add_text)GetProcAddress(histDLL,"add_text");
         (addtext)(db,"datos","ref",resp,text);
+
      }catch (std::exception& e)
     {
         excep_dialog(string(e.what()));

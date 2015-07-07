@@ -2030,7 +2030,7 @@
 1435312868 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlite3.h
 	<stdarg.h>
 
-1436255324 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
+1436258822 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
 	"SQLManagerMain.h"
 	<wx/msgdlg.h>
 	<wx/filedlg.h>
