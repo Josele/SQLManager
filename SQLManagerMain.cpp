@@ -101,7 +101,7 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     FlexGridSizer1->Add(ListBox, 1, wxALL|wxEXPAND|wxFIXED_MINSIZE|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     StaticLine1 = new wxStaticLine(this, ID_STATICLINE1, wxDefaultPosition, wxSize(1,208), wxLI_VERTICAL, _T("ID_STATICLINE1"));
     FlexGridSizer1->Add(StaticLine1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    BigBox = new wxTextCtrl(this, ID_BigBox, _("Text"), wxDefaultPosition, wxDLG_UNIT(this,wxSize(532,228)), wxTE_AUTO_SCROLL|wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_MULTILINE|wxTE_RICH2|wxVSCROLL, wxDefaultValidator, _T("ID_BigBox"));
+    BigBox = new wxTextCtrl(this, ID_BigBox, wxEmptyString, wxDefaultPosition, wxDLG_UNIT(this,wxSize(532,228)), wxTE_AUTO_SCROLL|wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_MULTILINE|wxTE_RICH2|wxVSCROLL, wxDefaultValidator, _T("ID_BigBox"));
     FlexGridSizer1->Add(BigBox, 1, wxALL|wxEXPAND|wxFIXED_MINSIZE|wxALIGN_RIGHT|wxALIGN_TOP, 5);
     Delete = new wxButton(this, ID_deleteitem, _("Delete"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_deleteitem"));
     FlexGridSizer1->Add(Delete, 1, wxALL|wxFIXED_MINSIZE|wxALIGN_BOTTOM|wxALIGN_CENTER_HORIZONTAL, 5);
@@ -151,6 +151,7 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     FilePath=TEXT("SQLDLL.dll");
     CreateDirectoryW(FilePath.c_str(), NULL);
     selected=-1;
+    BigBox->SetEditable(0);
 }
 
 SQLManagerFrame::~SQLManagerFrame()
@@ -347,6 +348,7 @@ void SQLManagerFrame::OnMenuNewSelected(wxCommandEvent& event)
 
     ClearAll();
     ListBox->Append("New");
+    BigBoxSetStatus();
 
 }
 
@@ -432,6 +434,8 @@ void SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent& event)
             ListBox->Append(str.substr(0,str.length()-1));
         }
     ListBox->Append("New");
+    BigBoxSetStatus();
+
 }
 
 
@@ -443,6 +447,20 @@ void SQLManagerFrame::OnListBox1Select(wxCommandEvent& event)
 
 void SQLManagerFrame::OnTextCtrl1Text(wxCommandEvent& event)
 {
+    if(selected==-1)
+        return;
+    ListBox->SetSelection(selected);
+
+}
+
+void SQLManagerFrame::BigBoxSetStatus()
+{
+    if(selected==-1)
+    {
+     BigBox->SetEditable(0);
+     return;
+    }
+     BigBox->SetEditable(1);
 }
 
 void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
@@ -494,7 +512,7 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
             LoadDll();
             try
             {
-             getrow=(Getrow)GetProcAddress(histDLL,"id_row");
+            getrow=(Getrow)GetProcAddress(histDLL,"id_row");
             (getrow)(db,"datos","name",text.ToStdString(),c_callback,&resp);
             getrow=(Getrow)GetProcAddress(histDLL,"row");
             (getrow)(db,"datos","ref",resp,c_callback,&answer );
@@ -504,11 +522,14 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
             excep_dialog(string(e.what()));
             }
             FreeDll();
-            insert_text(answer.substr(0,answer.length()-1));
             selected=sel;
+            insert_text(answer.substr(0,answer.length()-1));
+
         }
+    BigBoxSetStatus();
 
 }
+
 
 void SQLManagerFrame::OnDeleteClick(wxCommandEvent& event)
 {
@@ -543,7 +564,8 @@ void SQLManagerFrame::OnDeleteClick(wxCommandEvent& event)
     }
     FreeDll();
     BigBox->Clear();
-
+    selected=-1;
+    BigBoxSetStatus();
 }
 
 void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
@@ -579,5 +601,6 @@ void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
         excep_dialog(string(e.what()));
     }
     FreeDll();
+    BigBoxSetStatus();
 
 }

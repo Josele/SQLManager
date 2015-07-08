@@ -47,9 +47,8 @@
 			</object>
 			<object class="sizeritem">
 				<object class="wxTextCtrl" name="ID_BigBox" variable="BigBox" member="yes">
-					<value>Text</value>
 					<size>532,228d</size>
-					<style>wxTE_AUTO_SCROLL|wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_MULTILINE|wxVSCROLL</style>
+					<style>wxTE_AUTO_SCROLL|wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_MULTILINE|wxTE_RICH2|wxVSCROLL</style>
 					<handler function="OnTextCtrl1Text" entry="EVT_TEXT" />
 				</object>
 				<flag>wxALL|wxEXPAND|wxFIXED_MINSIZE|wxALIGN_RIGHT|wxALIGN_TOP</flag>
