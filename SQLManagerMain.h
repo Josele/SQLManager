@@ -24,6 +24,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "sqlite3.h"
+
 using std::string;
 class SQLManagerFrame: public wxFrame
 {
@@ -51,6 +52,7 @@ class SQLManagerFrame: public wxFrame
         void OnListBoxDClick(wxCommandEvent& event);
         void OnDeleteClick(wxCommandEvent& event);
         void OnSaveClick(wxCommandEvent& event);
+        void OnRunClick(wxCommandEvent& event);
         //*)
         void insert_text(string text);
         void ClearAll();

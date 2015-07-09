@@ -14,6 +14,7 @@
 #include <windows.h>
 #include <exception>
 #include <stdexcept>
+#include <fstream>
 
 
 //(*InternalHeaders(SQLManagerFrame)
@@ -141,6 +142,7 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     Connect(ID_BigBox,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&SQLManagerFrame::OnTextCtrl1Text);
     Connect(ID_deleteitem,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnDeleteClick);
     Connect(ID_Save,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnSaveClick);
+    Connect(ID_Run,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnRunClick);
     Connect(ID_MenuNew,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SQLManagerFrame::OnMenuNewSelected);
     Connect(idMenuLoad,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SQLManagerFrame::OnMenuLoadSelected);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SQLManagerFrame::OnQuit);
@@ -181,26 +183,7 @@ void SQLManagerFrame::OnClose(wxCloseEvent& event)
 
 }
 
-// Parameters are:
-//      argc -- the number of rows in the resultset
-//      argv[] -- the data for each row
-//      azColName -- the name of each column
-  void SQLManagerFrame::callback( int argc, char **argv, char **azColName){
-  int i;
 
-  stream="";
-  for(i=0; i<argc; i++){
-    stream=+ azColName[i];
-          stream=+ " = ";
-    if( argv[i] )
-        stream=+ argv[i];
-    else
-        stream=+ "NULL";
-     stream=+ "\n";
-  }
-  //stream.flush();
-
-}
 // Parameters are:
 //      argc -- the number of rows in the resultset
 //      argv[] -- the data for each row
@@ -500,8 +483,24 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
             excep_dialog(string(e.what()));
             }
 
-            FreeDll();
             selected=sel;
+            ListBox->SetSelection(selected);
+            text = ListBox->GetString(sel);
+
+          try
+            {
+            getrow=(Getrow)GetProcAddress(histDLL,"id_row");
+            (getrow)(db,"datos","name",text.ToStdString(),c_callback,&resp);
+            getrow=(Getrow)GetProcAddress(histDLL,"row");
+            (getrow)(db,"datos","ref",resp,c_callback,&answer );
+            }
+            catch (std::exception& e)
+            {
+            excep_dialog(string(e.what()));
+            }
+            FreeDll();
+            insert_text(answer.substr(0,answer.length()-1));
+
         }
     else
         {
@@ -524,7 +523,7 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
             FreeDll();
             selected=sel;
             insert_text(answer.substr(0,answer.length()-1));
-
+            BigBox->SetModified(0);
         }
     BigBoxSetStatus();
 
@@ -546,7 +545,7 @@ void SQLManagerFrame::OnDeleteClick(wxCommandEvent& event)
 
     text = ListBox->GetString(selected);
     wxMessageDialog *dial = new wxMessageDialog(NULL,string("Are you sure you want to delete: " +text ), wxT("Delete"), wxYES_NO);
-    if(dial->ShowModal()==wxNO)
+    if(dial->ShowModal()==wxID_NO)
         return;
     //Query to delete
     itoa(selected,num,10);
@@ -579,9 +578,13 @@ void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
     if(selected==-1)
         return;
     string name=ListBox->GetString(selected).ToStdString();
+    if(event.GetId()!=ID_Run)
+    {
     wxMessageDialog *dial = new wxMessageDialog(NULL,string("Are you sure you want to overwrite: " +text ), wxT("Save"), wxYES_NO);
     if(dial->ShowModal()==wxNO)
         return;
+
+    }
     //Query to delete
     itoa(selected,num,10);
     text="";
@@ -602,5 +605,25 @@ void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
     }
     FreeDll();
     BigBoxSetStatus();
+    BigBox->SetModified(0);
 
+}
+
+void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
+{
+    if(selected==-1)
+        return;
+    if(BigBox->IsModified())
+        {
+        wxMessageDialog *dial = new wxMessageDialog(NULL,string("Before running, you need to save it: " +ListBox->GetString(selected).ToStdString() ), wxT("Delete"), wxYES_NO);
+        if(dial->ShowModal()==wxID_NO)
+            return;
+        }
+    OnSaveClick(event);
+    std::ofstream myfile;
+    string cont=ListBox->GetString(selected).ToStdString()+".cpp";
+    myfile.open (cont.c_str());
+    myfile << "Writing this to a file.\n";
+    myfile.close();
+    system(cont.c_str());
 }
