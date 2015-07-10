@@ -17,6 +17,7 @@
 #include <wx/textctrl.h>
 #include <wx/listbox.h>
 #include <wx/statline.h>
+#include <wx/panel.h>
 #include <wx/button.h>
 #include <wx/frame.h>
 #include <wx/statusbr.h>
@@ -53,6 +54,9 @@ class SQLManagerFrame: public wxFrame
         void OnDeleteClick(wxCommandEvent& event);
         void OnSaveClick(wxCommandEvent& event);
         void OnRunClick(wxCommandEvent& event);
+        void OnPanel1Paint(wxPaintEvent& event);
+        void OnPanel1Paint1(wxPaintEvent& event);
+        void LoadFile(wxCommandEvent& event);
         //*)
         void insert_text(string text);
         void ClearAll();
@@ -69,8 +73,10 @@ class SQLManagerFrame: public wxFrame
         static const long ID_STATICLINE1;
         static const long ID_BigBox;
         static const long ID_deleteitem;
+        static const long ID_BUTTON1;
         static const long ID_Save;
         static const long ID_Run;
+        static const long ID_PANEL1;
         static const long ID_MenuNew;
         static const long idMenuLoad;
         static const long idMenuQuit;
@@ -80,7 +86,9 @@ class SQLManagerFrame: public wxFrame
         string stream;
         //(*Declarations(SQLManagerFrame)
         wxStaticText* StaticText2;
+        wxButton* Button1;
         wxMenuItem* MenuItem4;
+        wxPanel* Panel1;
         wxStaticText* StaticText1;
         wxButton* Save;
         wxButton* Delete;

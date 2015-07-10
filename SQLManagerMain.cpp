@@ -66,8 +66,10 @@ const long SQLManagerFrame::ID_LISTBOX = wxNewId();
 const long SQLManagerFrame::ID_STATICLINE1 = wxNewId();
 const long SQLManagerFrame::ID_BigBox = wxNewId();
 const long SQLManagerFrame::ID_deleteitem = wxNewId();
+const long SQLManagerFrame::ID_BUTTON1 = wxNewId();
 const long SQLManagerFrame::ID_Save = wxNewId();
 const long SQLManagerFrame::ID_Run = wxNewId();
+const long SQLManagerFrame::ID_PANEL1 = wxNewId();
 const long SQLManagerFrame::ID_MenuNew = wxNewId();
 const long SQLManagerFrame::idMenuLoad = wxNewId();
 const long SQLManagerFrame::idMenuQuit = wxNewId();
@@ -85,6 +87,7 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     //(*Initialize(SQLManagerFrame)
     wxMenuItem* MenuItem2;
     wxMenuItem* MenuItem1;
+    wxBoxSizer* BoxSizer2;
     wxMenu* Menu1;
     wxBoxSizer* BoxSizer1;
     wxMenuBar* MenuBar1;
@@ -92,28 +95,48 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     wxMenu* Menu2;
 
     Create(parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("wxID_ANY"));
+    SetClientSize(wxSize(525,450));
+    SetMinSize(wxSize(-1,-1));
+    Panel1 = new wxPanel(this, ID_PANEL1, wxPoint(288,216), wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL1"));
+    Panel1->SetMinSize(wxSize(400,-1));
     FlexGridSizer1 = new wxFlexGridSizer(0, 3, 0, 0);
-    StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Name"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+    FlexGridSizer1->AddGrowableCol(2);
+    FlexGridSizer1->AddGrowableRow(1);
+    StaticText1 = new wxStaticText(Panel1, ID_STATICTEXT1, _("Name"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+    StaticText1->SetMinSize(wxSize(-1,-1));
     FlexGridSizer1->Add(StaticText1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     FlexGridSizer1->Add(-1,-1,1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _("Code"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+    StaticText2 = new wxStaticText(Panel1, ID_STATICTEXT2, _("Code"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+    StaticText2->SetMinSize(wxSize(-1,-1));
     FlexGridSizer1->Add(StaticText2, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    ListBox = new wxListBox(this, ID_LISTBOX, wxDefaultPosition, wxSize(132,224), 0, 0, 0, wxDefaultValidator, _T("ID_LISTBOX"));
+    ListBox = new wxListBox(Panel1, ID_LISTBOX, wxDefaultPosition, wxSize(132,224), 0, 0, 0, wxDefaultValidator, _T("ID_LISTBOX"));
+    ListBox->SetMinSize(wxSize(-1,-1));
     FlexGridSizer1->Add(ListBox, 1, wxALL|wxEXPAND|wxFIXED_MINSIZE|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    StaticLine1 = new wxStaticLine(this, ID_STATICLINE1, wxDefaultPosition, wxSize(1,208), wxLI_VERTICAL, _T("ID_STATICLINE1"));
+    StaticLine1 = new wxStaticLine(Panel1, ID_STATICLINE1, wxDefaultPosition, wxSize(1,370), wxLI_VERTICAL, _T("ID_STATICLINE1"));
+    StaticLine1->SetMinSize(wxSize(-1,-1));
     FlexGridSizer1->Add(StaticLine1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    BigBox = new wxTextCtrl(this, ID_BigBox, wxEmptyString, wxDefaultPosition, wxDLG_UNIT(this,wxSize(532,228)), wxTE_AUTO_SCROLL|wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_MULTILINE|wxTE_RICH2|wxVSCROLL, wxDefaultValidator, _T("ID_BigBox"));
-    FlexGridSizer1->Add(BigBox, 1, wxALL|wxEXPAND|wxFIXED_MINSIZE|wxALIGN_RIGHT|wxALIGN_TOP, 5);
-    Delete = new wxButton(this, ID_deleteitem, _("Delete"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_deleteitem"));
-    FlexGridSizer1->Add(Delete, 1, wxALL|wxFIXED_MINSIZE|wxALIGN_BOTTOM|wxALIGN_CENTER_HORIZONTAL, 5);
-    FlexGridSizer1->Add(-1,-1,1, wxALL|wxEXPAND|wxFIXED_MINSIZE|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    BigBox = new wxTextCtrl(Panel1, ID_BigBox, wxEmptyString, wxDefaultPosition, wxDLG_UNIT(Panel1,wxSize(532,228)), wxTE_AUTO_SCROLL|wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_MULTILINE|wxTE_RICH2|wxVSCROLL, wxDefaultValidator, _T("ID_BigBox"));
+    BigBox->SetMinSize(wxSize(400,-1));
+    FlexGridSizer1->Add(BigBox, 1, wxALL|wxEXPAND|wxALIGN_RIGHT|wxALIGN_TOP, 5);
+    BoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
+    Delete = new wxButton(Panel1, ID_deleteitem, _("Delete"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_deleteitem"));
+    Delete->SetMinSize(wxSize(-1,-1));
+    BoxSizer2->Add(Delete, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    FlexGridSizer1->Add(BoxSizer2, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    FlexGridSizer1->Add(-1,-1,1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
-    Save = new wxButton(this, ID_Save, _("Save"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_Save"));
+    Button1 = new wxButton(Panel1, ID_BUTTON1, _("Load File"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
+    BoxSizer1->Add(Button1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    Save = new wxButton(Panel1, ID_Save, _("Save"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_Save"));
+    Save->SetMinSize(wxSize(-1,-1));
     BoxSizer1->Add(Save, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    Run = new wxButton(this, ID_Run, _("Run"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_Run"));
+    Run = new wxButton(Panel1, ID_Run, _("Run"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_Run"));
+    Run->SetMinSize(wxSize(-1,-1));
     BoxSizer1->Add(Run, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    FlexGridSizer1->Add(BoxSizer1, 1, wxALL|wxFIXED_MINSIZE|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
-    SetSizer(FlexGridSizer1);
+    FlexGridSizer1->Add(BoxSizer1, 1, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
+    Panel1->SetSizer(FlexGridSizer1);
+    FlexGridSizer1->Fit(Panel1);
+    FlexGridSizer1->SetSizeHints(Panel1);
     MenuBar1 = new wxMenuBar();
     Menu1 = new wxMenu();
     MenuItem3 = new wxMenuItem(Menu1, ID_MenuNew, _("New db\tAlt-N"), _("Create a new data base"), wxITEM_NORMAL);
@@ -134,13 +157,12 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     StatusBar1->SetFieldsCount(1,__wxStatusBarWidths_1);
     StatusBar1->SetStatusStyles(1,__wxStatusBarStyles_1);
     SetStatusBar(StatusBar1);
-    FlexGridSizer1->Fit(this);
-    FlexGridSizer1->SetSizeHints(this);
 
     Connect(ID_LISTBOX,wxEVT_COMMAND_LISTBOX_SELECTED,(wxObjectEventFunction)&SQLManagerFrame::OnListBox1Select);
     Connect(ID_LISTBOX,wxEVT_COMMAND_LISTBOX_DOUBLECLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnListBoxDClick);
     Connect(ID_BigBox,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&SQLManagerFrame::OnTextCtrl1Text);
     Connect(ID_deleteitem,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnDeleteClick);
+    Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::LoadFile);
     Connect(ID_Save,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnSaveClick);
     Connect(ID_Run,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnRunClick);
     Connect(ID_MenuNew,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SQLManagerFrame::OnMenuNewSelected);
@@ -500,13 +522,23 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
             }
             FreeDll();
             insert_text(answer.substr(0,answer.length()-1));
-
+            BigBox->SetModified(0);
         }
     else
         {
 
+
             if(selected==sel)
                 return;
+            if(BigBox->IsModified())
+            {
+            wxMessageDialog *dial = new wxMessageDialog(NULL,string("The file has been modify, do you want to save your changes: " +ListBox->GetString(selected).ToStdString() ), wxT("Save"), wxYES_NO);
+            if(dial->ShowModal()==wxID_YES){
+                OnSaveClick(event);
+                }
+
+            }
+
             text = ListBox->GetString(sel);
             LoadDll();
             try
@@ -578,9 +610,9 @@ void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
     if(selected==-1)
         return;
     string name=ListBox->GetString(selected).ToStdString();
-    if(event.GetId()!=ID_Run)
+    if(event.GetId()==ID_Save)
     {
-    wxMessageDialog *dial = new wxMessageDialog(NULL,string("Are you sure you want to overwrite: " +text ), wxT("Save"), wxYES_NO);
+    wxMessageDialog *dial = new wxMessageDialog(NULL,string("Are you sure you want to overwrite: " +name ), wxT("Save"), wxYES_NO);
     if(dial->ShowModal()==wxNO)
         return;
 
@@ -611,6 +643,10 @@ void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
 
 void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
 {
+     char command[50];
+    string resp;
+    string answer;
+    Getrow getrow(0);
     if(selected==-1)
         return;
     if(BigBox->IsModified())
@@ -620,10 +656,37 @@ void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
             return;
         }
     OnSaveClick(event);
+    string text = ListBox->GetString(selected).ToStdString();
+    LoadDll();
+    try
+    {
+            getrow=(Getrow)GetProcAddress(histDLL,"id_row");
+            (getrow)(db,"datos","name",text,c_callback,&resp);
+            getrow=(Getrow)GetProcAddress(histDLL,"row");
+            (getrow)(db,"datos","ref",resp,c_callback,&answer );
+    }
+    catch (std::exception& e)
+    {
+        excep_dialog(string(e.what()));
+    }
+    FreeDll();
     std::ofstream myfile;
-    string cont=ListBox->GetString(selected).ToStdString()+".cpp";
+    string cont=text+".cpp";
     myfile.open (cont.c_str());
-    myfile << "Writing this to a file.\n";
+    myfile << answer;
     myfile.close();
-    system(cont.c_str());
+    sprintf(command,"g++ -Wall %s.cpp  -o %s.exe & pause",text.c_str(),text.c_str());
+    system(command);
+}
+
+void SQLManagerFrame::OnPanel1Paint(wxPaintEvent& event)
+{
+}
+
+void SQLManagerFrame::OnPanel1Paint1(wxPaintEvent& event)
+{
+}
+
+void SQLManagerFrame::LoadFile(wxCommandEvent& event)
+{
 }

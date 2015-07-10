@@ -1710,13 +1710,14 @@
 1412631244 c:\wxwidgets-3.0.2\include\wx\univ\theme.h
 	"wx/string.h"
 
-1436333096 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
+1436423393 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
 	<wx/sizer.h>
 	<wx/stattext.h>
 	<wx/menu.h>
 	<wx/textctrl.h>
 	<wx/listbox.h>
 	<wx/statline.h>
+	<wx/panel.h>
 	<wx/button.h>
 	<wx/frame.h>
 	<wx/statusbr.h>
@@ -2030,7 +2031,7 @@
 1435312868 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlite3.h
 	<stdarg.h>
 
-1436325091 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
+1436431512 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
 	"SQLManagerMain.h"
 	<wx/msgdlg.h>
 	<wx/filedlg.h>
@@ -2038,6 +2039,7 @@
 	<windows.h>
 	<exception>
 	<stdexcept>
+	<fstream>
 	<wx/intl.h>
 	<wx/string.h>
 
