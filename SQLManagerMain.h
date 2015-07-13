@@ -13,6 +13,7 @@
 //(*Headers(SQLManagerFrame)
 #include <wx/sizer.h>
 #include <wx/stattext.h>
+#include <wx/radiobox.h>
 #include <wx/menu.h>
 #include <wx/textctrl.h>
 #include <wx/listbox.h>
@@ -57,8 +58,11 @@ class SQLManagerFrame: public wxFrame
         void OnPanel1Paint(wxPaintEvent& event);
         void OnPanel1Paint1(wxPaintEvent& event);
         void LoadFile(wxCommandEvent& event);
+        void OnTextCtrl2Text(wxCommandEvent& event);
         //*)
-        void insert_text(string text);
+        void insert_text_BB(string text);
+        void insert_text_P(string text);
+        void insert_text_L(string text);
         void ClearAll();
         string lb_reload(string tbname,string tcname, int id );
         int cont_col(string tbname);
@@ -66,13 +70,17 @@ class SQLManagerFrame: public wxFrame
         void FreeDll();
         void excep_dialog(string e);
         void BigBoxSetStatus();
-        void GenerateDllFiles(string N_file,string action);
+        void GenerateDllFiles(string N_file,string action, string parms,string libs,string ret);
         //(*Identifiers(SQLManagerFrame)
         static const long ID_STATICTEXT1;
         static const long ID_STATICTEXT2;
         static const long ID_LISTBOX;
         static const long ID_STATICLINE1;
+        static const long ID_STATICTEXT4;
+        static const long ID_STATICTEXT5;
+        static const long ID_STATICTEXT3;
         static const long ID_TEXTCTRL2;
+        static const long ID_RADIOBOX1;
         static const long ID_TEXTCTRL1;
         static const long ID_BigBox;
         static const long ID_deleteitem;
@@ -86,23 +94,26 @@ class SQLManagerFrame: public wxFrame
         static const long idMenuAbout;
         static const long ID_STATUSBAR1;
         //*)
-        string stream;
         //(*Declarations(SQLManagerFrame)
+        wxTextCtrl* Libraries;
         wxStaticText* StaticText2;
         wxButton* Button1;
+        wxTextCtrl* Parameters;
         wxMenuItem* MenuItem4;
         wxPanel* Panel1;
         wxStaticText* StaticText1;
+        wxStaticText* StaticText3;
+        wxRadioBox* RadioBox;
         wxButton* Save;
         wxButton* Delete;
         wxMenuItem* MenuItem3;
+        wxStaticText* StaticText5;
         wxStatusBar* StatusBar1;
         wxTextCtrl* BigBox;
         wxStaticLine* StaticLine1;
-        wxTextCtrl* TextCtrl2;
-        wxTextCtrl* TextCtrl1;
         wxButton* Run;
         wxListBox* ListBox;
+        wxStaticText* StaticText4;
         //*)
 
         DECLARE_EVENT_TABLE()

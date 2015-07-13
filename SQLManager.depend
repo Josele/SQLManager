@@ -1710,9 +1710,10 @@
 1412631244 c:\wxwidgets-3.0.2\include\wx\univ\theme.h
 	"wx/string.h"
 
-1436761491 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
+1436777263 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
 	<wx/sizer.h>
 	<wx/stattext.h>
+	<wx/radiobox.h>
 	<wx/menu.h>
 	<wx/textctrl.h>
 	<wx/listbox.h>
@@ -1728,6 +1729,44 @@
 1412631244 c:\wxwidgets-3.0.2\include\wx\sizer.h
 	"wx/defs.h"
 	"wx/window.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\stattext.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/univ/stattext.h"
+	"wx/msw/stattext.h"
+	"wx/motif/stattext.h"
+	"wx/gtk/stattext.h"
+	"wx/gtk1/stattext.h"
+	"wx/osx/stattext.h"
+	"wx/cocoa/stattext.h"
+	"wx/os2/stattext.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\univ\stattext.h
+	"wx/generic/stattextg.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\generic\stattextg.h
+	"wx/stattext.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\msw\stattext.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\motif\stattext.h
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\stattext.h
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\stattext.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\osx\stattext.h
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\stattext.h
+	"wx/cocoa/NSTextField.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\nstextfield.h
+	"wx/hashmap.h"
+	"wx/cocoa/ObjcAssociate.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\os2\stattext.h
+	"wx/control.h"
 
 1412631244 c:\wxwidgets-3.0.2\include\wx\menu.h
 	"wx/defs.h"
@@ -1932,10 +1971,6 @@
 1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\textctrl.h
 	"wx/cocoa/NSTextField.h"
 
-1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\nstextfield.h
-	"wx/hashmap.h"
-	"wx/cocoa/ObjcAssociate.h"
-
 1412631244 c:\wxwidgets-3.0.2\include\wx\os2\textctrl.h
 
 1412631244 c:\wxwidgets-3.0.2\include\wx\listbox.h
@@ -2031,7 +2066,80 @@
 1435312868 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlite3.h
 	<stdarg.h>
 
-1436760556 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
+1412631244 c:\wxwidgets-3.0.2\include\wx\radiobox.h
+	"wx/defs.h"
+	"wx/ctrlsub.h"
+	"wx/dynarray.h"
+	"wx/univ/radiobox.h"
+	"wx/msw/radiobox.h"
+	"wx/motif/radiobox.h"
+	"wx/gtk/radiobox.h"
+	"wx/gtk1/radiobox.h"
+	"wx/osx/radiobox.h"
+	"wx/cocoa/radiobox.h"
+	"wx/os2/radiobox.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\univ\radiobox.h
+	"wx/statbox.h"
+	"wx/dynarray.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\statbox.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/containr.h"
+	"wx/univ/statbox.h"
+	"wx/msw/statbox.h"
+	"wx/motif/statbox.h"
+	"wx/gtk/statbox.h"
+	"wx/gtk1/statbox.h"
+	"wx/osx/statbox.h"
+	"wx/cocoa/statbox.h"
+	"wx/os2/statbox.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\univ\statbox.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\msw\statbox.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\motif\statbox.h
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\statbox.h
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\statbox.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\osx\statbox.h
+	"wx/control.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\statbox.h
+	"wx/cocoa/NSBox.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\nsbox.h
+	"wx/hashmap.h"
+	"wx/cocoa/ObjcAssociate.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\os2\statbox.h
+	"wx/control.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\msw\radiobox.h
+	"wx/statbox.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\motif\radiobox.h
+	"wx/dynarray.h"
+	"wx/arrstr.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\radiobox.h
+	"wx/bitmap.h"
+	"wx/list.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\radiobox.h
+	"wx/bitmap.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\osx\radiobox.h
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\radiobox.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\os2\radiobox.h
+
+1436777424 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
 	"SQLManagerMain.h"
 	<wx/msgdlg.h>
 	<wx/filedlg.h>
@@ -2232,40 +2340,6 @@
 1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\filedlg.h
 
 1412631244 c:\wxwidgets-3.0.2\include\wx\os2\filedlg.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\stattext.h
-	"wx/defs.h"
-	"wx/control.h"
-	"wx/univ/stattext.h"
-	"wx/msw/stattext.h"
-	"wx/motif/stattext.h"
-	"wx/gtk/stattext.h"
-	"wx/gtk1/stattext.h"
-	"wx/osx/stattext.h"
-	"wx/cocoa/stattext.h"
-	"wx/os2/stattext.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\univ\stattext.h
-	"wx/generic/stattextg.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\generic\stattextg.h
-	"wx/stattext.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\msw\stattext.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\motif\stattext.h
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\stattext.h
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\stattext.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\osx\stattext.h
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\stattext.h
-	"wx/cocoa/NSTextField.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\os2\stattext.h
-	"wx/control.h"
 
 1412631244 c:\wxwidgets-3.0.2\include\wx\textdlg.h
 	"wx/generic/textdlgg.h"
