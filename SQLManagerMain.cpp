@@ -485,7 +485,15 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
         {
         text ="New item";
         do{
-        renamed = wxGetTextFromUser(wxT("Name of the item"),wxT("New item"), text);
+            wxTextEntryDialog  myDialog(this, _("Name of the item"), _("New item"), _(""));
+            myDialog.SetMaxLength(30);
+            if ( myDialog.ShowModal() != wxID_OK )
+                {
+                        return;
+                }
+        renamed = myDialog.GetValue();
+
+        //renamed = wxGetTextFromUser(wxT("Name of the item"),wxT("New item"), text);
         }while(renamed.IsSameAs("new")||renamed.IsSameAs("New")||renamed.IsSameAs("NEW"));
 
         if (renamed.IsEmpty())
@@ -643,7 +651,6 @@ void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
 
 void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
 {
-     char command[50];
     string resp;
     string answer;
     Getrow getrow(0);
@@ -670,13 +677,38 @@ void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
         excep_dialog(string(e.what()));
     }
     FreeDll();
+    GenerateDllFiles(text,answer);
+
+
+}
+
+void SQLManagerFrame:: GenerateDllFiles(string N_file,string action)
+{   //char command[120];
+
     std::ofstream myfile;
-    string cont=text+".cpp";
+    char *H_file =(char*) malloc((3*30*sizeof(char)+285*sizeof(char)));
+    sprintf(H_file,"#ifndef %s_H\n#define %s_H\n#ifdef __cplusplus\nextern \"C\" {\n#endif\n#ifdef BUILDING_DLL\n#define FUNCTION_DLL __declspec(dllexport)\n#else\n#define FUNCTION_DLL __declspec(dllimport)\n#endif\nvoid __stdcall FUNCTION_DLL hello(const char *s);\n#ifdef __cplusplus\n}\n#endif\n#endif"
+            ,N_file.c_str(),N_file.c_str());
+    string cont=N_file+".h";
     myfile.open (cont.c_str());
-    myfile << answer;
+    myfile << H_file;
     myfile.close();
-    sprintf(command,"g++ -Wall %s.cpp  -o %s.exe & pause",text.c_str(),text.c_str());
+    free(H_file);
+    char C_file[800];
+    sprintf(C_file,"#include <stdio.h>\n#include <windows.h>\n#include \"%s.h\"\n__stdcall void hello(const char *s)\n{"
+            ,N_file.c_str());
+    cont=N_file+".cpp";
+    myfile.open (cont.c_str());
+    myfile << C_file << action << "}";
+    myfile.close();
+    char *command =(char*) malloc((3*30*sizeof(char)+91*sizeof(char)));
+
+    sprintf(command,"g++ -Wall -c -DBUILDING_DLL %s.cpp & pause & g++ -shared -o %s.dll %s.o -Wl,--out-implib,lib%s.a & pause"
+            ,N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str());
     system(command);
+    free(command);
+
+
 }
 
 void SQLManagerFrame::OnPanel1Paint(wxPaintEvent& event)

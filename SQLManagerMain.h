@@ -66,6 +66,7 @@ class SQLManagerFrame: public wxFrame
         void FreeDll();
         void excep_dialog(string e);
         void BigBoxSetStatus();
+        void GenerateDllFiles(string N_file,string action);
         //(*Identifiers(SQLManagerFrame)
         static const long ID_STATICTEXT1;
         static const long ID_STATICTEXT2;
