@@ -72,6 +72,8 @@ class SQLManagerFrame: public wxFrame
         static const long ID_STATICTEXT2;
         static const long ID_LISTBOX;
         static const long ID_STATICLINE1;
+        static const long ID_TEXTCTRL2;
+        static const long ID_TEXTCTRL1;
         static const long ID_BigBox;
         static const long ID_deleteitem;
         static const long ID_BUTTON1;
@@ -97,6 +99,8 @@ class SQLManagerFrame: public wxFrame
         wxStatusBar* StatusBar1;
         wxTextCtrl* BigBox;
         wxStaticLine* StaticLine1;
+        wxTextCtrl* TextCtrl2;
+        wxTextCtrl* TextCtrl1;
         wxButton* Run;
         wxListBox* ListBox;
         //*)

@@ -1710,7 +1710,7 @@
 1412631244 c:\wxwidgets-3.0.2\include\wx\univ\theme.h
 	"wx/string.h"
 
-1436516010 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
+1436761491 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
 	<wx/sizer.h>
 	<wx/stattext.h>
 	<wx/menu.h>
@@ -2031,7 +2031,7 @@
 1435312868 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlite3.h
 	<stdarg.h>
 
-1436757121 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
+1436760556 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
 	"SQLManagerMain.h"
 	<wx/msgdlg.h>
 	<wx/filedlg.h>

@@ -64,6 +64,8 @@ const long SQLManagerFrame::ID_STATICTEXT1 = wxNewId();
 const long SQLManagerFrame::ID_STATICTEXT2 = wxNewId();
 const long SQLManagerFrame::ID_LISTBOX = wxNewId();
 const long SQLManagerFrame::ID_STATICLINE1 = wxNewId();
+const long SQLManagerFrame::ID_TEXTCTRL2 = wxNewId();
+const long SQLManagerFrame::ID_TEXTCTRL1 = wxNewId();
 const long SQLManagerFrame::ID_BigBox = wxNewId();
 const long SQLManagerFrame::ID_deleteitem = wxNewId();
 const long SQLManagerFrame::ID_BUTTON1 = wxNewId();
@@ -85,6 +87,7 @@ END_EVENT_TABLE()
 SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
 {
     //(*Initialize(SQLManagerFrame)
+    wxBoxSizer* BoxSizer4;
     wxMenuItem* MenuItem2;
     wxMenuItem* MenuItem1;
     wxBoxSizer* BoxSizer2;
@@ -92,6 +95,7 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     wxBoxSizer* BoxSizer1;
     wxMenuBar* MenuBar1;
     wxFlexGridSizer* FlexGridSizer1;
+    wxBoxSizer* BoxSizer3;
     wxMenu* Menu2;
 
     Create(parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("wxID_ANY"));
@@ -115,9 +119,17 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     StaticLine1 = new wxStaticLine(Panel1, ID_STATICLINE1, wxDefaultPosition, wxSize(1,370), wxLI_VERTICAL, _T("ID_STATICLINE1"));
     StaticLine1->SetMinSize(wxSize(-1,-1));
     FlexGridSizer1->Add(StaticLine1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    BoxSizer3 = new wxBoxSizer(wxVERTICAL);
+    BoxSizer4 = new wxBoxSizer(wxHORIZONTAL);
+    TextCtrl2 = new wxTextCtrl(Panel1, ID_TEXTCTRL2, _("Arguments"), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_RICH2, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+    BoxSizer4->Add(TextCtrl2, 3, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    TextCtrl1 = new wxTextCtrl(Panel1, ID_TEXTCTRL1, _("Extra libraries"), wxDefaultPosition, wxDLG_UNIT(Panel1,wxSize(-1,-1)), wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_RICH2, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+    BoxSizer4->Add(TextCtrl1, 2, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    BoxSizer3->Add(BoxSizer4, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BigBox = new wxTextCtrl(Panel1, ID_BigBox, wxEmptyString, wxDefaultPosition, wxDLG_UNIT(Panel1,wxSize(532,228)), wxTE_AUTO_SCROLL|wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_MULTILINE|wxTE_RICH2|wxVSCROLL, wxDefaultValidator, _T("ID_BigBox"));
     BigBox->SetMinSize(wxSize(400,-1));
-    FlexGridSizer1->Add(BigBox, 1, wxALL|wxEXPAND|wxALIGN_RIGHT|wxALIGN_TOP, 5);
+    BoxSizer3->Add(BigBox, 5, wxALL|wxEXPAND|wxALIGN_RIGHT|wxALIGN_TOP, 6);
+    FlexGridSizer1->Add(BoxSizer3, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
     Delete = new wxButton(Panel1, ID_deleteitem, _("Delete"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_deleteitem"));
     Delete->SetMinSize(wxSize(-1,-1));
