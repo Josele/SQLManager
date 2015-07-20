@@ -1,0 +1,130 @@
+; dlltool -z somedll.def --export-all-symbol function.dll
+EXPORTS
+	".weak.__Jv_RegisterClasses.___gcc_register_frame" @ 1 DATA
+	DeleteCriticalSection@4 @ 2
+	DllMainCRTStartup@12 @ 3
+	EnterCriticalSection@4 @ 4
+	GetLastError@0 @ 5
+	GetModuleHandleA@4 @ 6
+	GetProcAddress@8 @ 7
+	InitializeCriticalSection@4 @ 8
+	LeaveCriticalSection@4 @ 9
+	TlsGetValue@4 @ 10
+	VirtualProtect@16 @ 11
+	VirtualQuery@12 @ 12
+	_CRT_MT @ 13 DATA
+	_CTOR_LIST__ @ 14 DATA
+	_DTOR_LIST__ @ 15 DATA
+	_IAT_end__ @ 16 DATA
+	_IAT_start__ @ 17 DATA
+	_RUNTIME_PSEUDO_RELOC_LIST_END__ @ 18 DATA
+	_RUNTIME_PSEUDO_RELOC_LIST__ @ 19 DATA
+	__CTOR_LIST__ @ 20 DATA
+	__DTOR_LIST__ @ 21 DATA
+	__ImageBase @ 22 DATA
+	__RUNTIME_PSEUDO_RELOC_LIST_END__ @ 23 DATA
+	__RUNTIME_PSEUDO_RELOC_LIST__ @ 24 DATA
+	___w64_mingwthr_add_key_dtor @ 25
+	___w64_mingwthr_remove_key_dtor @ 26
+	__crt_xc_end__ @ 27 DATA
+	__crt_xc_start__ @ 28 DATA
+	__crt_xi_end__ @ 29 DATA
+	__crt_xi_start__ @ 30 DATA
+	__crt_xl_start__ @ 31 DATA
+	__crt_xp_end__ @ 32 DATA
+	__crt_xp_start__ @ 33 DATA
+	__crt_xt_end__ @ 34 DATA
+	__crt_xt_start__ @ 35 DATA
+	__dllonexit @ 36
+	__do_global_ctors @ 37
+	__do_global_dtors @ 38
+	__dyn_tls_init@12 @ 39
+	__dyn_tls_init_callback @ 40 DATA
+	__gcc_deregister_frame @ 41
+	__gcc_register_frame @ 42
+	__main @ 43
+	__mingw_TLScallback @ 44
+	__tlregdtor @ 45
+	__tls_end__ @ 46 DATA
+	__tls_start__ @ 47 DATA
+	__xl_a @ 48 DATA
+	__xl_c @ 49 DATA
+	__xl_d @ 50 DATA
+	__xl_z @ 51 DATA
+	_bss_end__ @ 52 DATA
+	_bss_start__ @ 53 DATA
+	_data_end__ @ 54 DATA
+	_data_start__ @ 55 DATA
+	_dll__ @ 56 DATA
+	_dll_characteristics__ @ 57 DATA
+	_errno @ 58
+	_file_alignment__ @ 59 DATA
+	_head_libkernel32_a @ 60 DATA
+	_head_libmsvcrt_a @ 61 DATA
+	_image_base__ @ 62 DATA
+	_imp__DeleteCriticalSection@4 @ 63 DATA
+	_imp__EnterCriticalSection@4 @ 64 DATA
+	_imp__GetLastError@0 @ 65 DATA
+	_imp__GetModuleHandleA@4 @ 66 DATA
+	_imp__GetProcAddress@8 @ 67 DATA
+	_imp__InitializeCriticalSection@4 @ 68 DATA
+	_imp__LeaveCriticalSection@4 @ 69 DATA
+	_imp__TlsGetValue@4 @ 70 DATA
+	_imp__VirtualProtect@16 @ 71 DATA
+	_imp__VirtualQuery@12 @ 72 DATA
+	_imp____dllonexit @ 73 DATA
+	_imp___errno @ 74 DATA
+	_imp___iob @ 75 DATA
+	_imp__abort @ 76 DATA
+	_imp__calloc @ 77 DATA
+	_imp__fflush @ 78 DATA
+	_imp__free @ 79 DATA
+	_imp__fwrite @ 80 DATA
+	_imp__malloc @ 81 DATA
+	_imp__memcpy @ 82 DATA
+	_imp__system @ 83 DATA
+	_imp__vfprintf @ 84 DATA
+	_libkernel32_a_iname @ 85 DATA
+	_libmsvcrt_a_iname @ 86 DATA
+	_loader_flags__ @ 87 DATA
+	_major_image_version__ @ 88 DATA
+	_major_os_version__ @ 89 DATA
+	_major_subsystem_version__ @ 90 DATA
+	_minor_image_version__ @ 91 DATA
+	_minor_os_version__ @ 92 DATA
+	_minor_subsystem_version__ @ 93 DATA
+	_onexit @ 94
+	_pei386_runtime_relocator @ 95
+	_rt_psrelocs_end @ 96 DATA
+	_rt_psrelocs_size @ 97 DATA
+	_rt_psrelocs_start @ 98 DATA
+	_section_alignment__ @ 99 DATA
+	_size_of_heap_commit__ @ 100 DATA
+	_size_of_heap_reserve__ @ 101 DATA
+	_size_of_stack_commit__ @ 102 DATA
+	_size_of_stack_reserve__ @ 103 DATA
+	_subsystem__ @ 104 DATA
+	_tls_end @ 105 DATA
+	_tls_index @ 106 DATA
+	_tls_start @ 107 DATA
+	_tls_used @ 108 DATA
+	abort @ 109
+	atexit @ 110
+	calloc @ 111
+	fflush @ 112
+	free @ 113
+	fucntion7@0 @ 114
+	function1@0 @ 115
+	function2@0 @ 116
+	function3@8 @ 117
+	function4@8 @ 118
+	function5@0 @ 119
+	fwrite @ 120
+	hola@0 @ 121
+	malloc @ 122
+	memcpy @ 123
+	mingw_initltsdrot_force @ 124 DATA
+	mingw_initltsdyn_force @ 125 DATA
+	mingw_initltssuo_force @ 126 DATA
+	system @ 127
+	vfprintf @ 128

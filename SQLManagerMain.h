@@ -58,19 +58,22 @@ class SQLManagerFrame: public wxFrame
         void OnPanel1Paint(wxPaintEvent& event);
         void OnPanel1Paint1(wxPaintEvent& event);
         void LoadFile(wxCommandEvent& event);
-        void OnTextCtrl2Text(wxCommandEvent& event);
+        void OnClose1(wxCloseEvent& event);
+        void OnRun_AllClick(wxCommandEvent& event);
         //*)
         void insert_text_BB(string text);
         void insert_text_P(string text);
         void insert_text_L(string text);
         void ClearAll();
-        string lb_reload(string tbname,string tcname, int id );
+        string lb_reload(const char* tbname,const char* tcname, int id );
         int cont_col(string tbname);
+        bool str_controler(string String);
         void LoadDll();
         void FreeDll();
         void excep_dialog(string e);
         void BigBoxSetStatus();
-        void GenerateDllFiles(string N_file,string action, string parms,string libs,string ret);
+     //   void GenerateDllFiles(string N_file,string action, string parms,string libs,string ret);
+        void GenerateDllFiles_v2(string N_file,string code, string headfuncs,string libs);
         //(*Identifiers(SQLManagerFrame)
         static const long ID_STATICTEXT1;
         static const long ID_STATICTEXT2;
@@ -87,6 +90,7 @@ class SQLManagerFrame: public wxFrame
         static const long ID_BUTTON1;
         static const long ID_Save;
         static const long ID_Run;
+        static const long ID_Run_All;
         static const long ID_PANEL1;
         static const long ID_MenuNew;
         static const long idMenuLoad;
@@ -100,6 +104,7 @@ class SQLManagerFrame: public wxFrame
         wxButton* Button1;
         wxTextCtrl* Parameters;
         wxMenuItem* MenuItem4;
+        wxButton* Run_All;
         wxPanel* Panel1;
         wxStaticText* StaticText1;
         wxStaticText* StaticText3;

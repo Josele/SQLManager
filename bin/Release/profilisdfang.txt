@@ -1,0 +1,695 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  Ts/call  Ts/call  name    
+ 66.67      0.06     0.06                             _spin_lite_lock
+ 11.11      0.07     0.01                             _Unwind_SjLj_Unregister
+ 11.11      0.08     0.01                             __pthread_self_lite
+ 11.11      0.09     0.01                             _spin_lite_unlock
+  0.00      0.09     0.00    23053     0.00     0.00  wxEvtHandler::TryValidator(wxEvent&)
+  0.00      0.09     0.00    12535     0.00     0.00  wxTopLevelWindowBase::IsTopLevel() const
+  0.00      0.09     0.00     9681     0.00     0.00  wxWindowBase::GetValidator()
+  0.00      0.09     0.00     9671     0.00     0.00  wxEvtHandler::TryParent(wxEvent&)
+  0.00      0.09     0.00     8151     0.00     0.00  wxWindowBase::IsShown() const
+  0.00      0.09     0.00     4781     0.00     0.00  SQLManagerFrame::GetEventHashTable() const
+  0.00      0.09     0.00      602     0.00     0.00  wxFrameBase::GetMenuBar() const
+  0.00      0.09     0.00      449     0.00     0.00  wxFrameBase::GetToolBar() const
+  0.00      0.09     0.00      411     0.00     0.00  wxString::~wxString()
+  0.00      0.09     0.00      389     0.00     0.00  wxWindow::ContainsHWND(HWND__*) const
+  0.00      0.09     0.00      343     0.00     0.00  wxFrame::MSWTranslateMessage(tagMSG*)
+  0.00      0.09     0.00      187     0.00     0.00  wxWindowBase::GetMinSize() const
+  0.00      0.09     0.00      157     0.00     0.00  wxWindow::MSWGetCustomBgBrush()
+  0.00      0.09     0.00      151     0.00     0.00  wxString::wxString(char const*)
+  0.00      0.09     0.00      147     0.00     0.00  wxWindowBase::GetWindowStyleFlag() const
+  0.00      0.09     0.00      125     0.00     0.00  wxWindowBase::HasCapture() const
+  0.00      0.09     0.00      125     0.00     0.00  wxWindow::HasToolTips() const
+  0.00      0.09     0.00      111     0.00     0.00  wxControl::GetDefaultAttributes() const
+  0.00      0.09     0.00       95     0.00     0.00  wxWindowBase::HasTransparentBackground()
+  0.00      0.09     0.00       63     0.00     0.00  wxWindow::MSWHasInheritableBackground() const
+  0.00      0.09     0.00       59     0.00     0.00  wxWindowBase::GetMaxSize() const
+  0.00      0.09     0.00       58     0.00     0.00  wxObjectEventFunctor::GetEvtHandler() const
+  0.00      0.09     0.00       49     0.00     0.00  wxWindow::MSWEndDeferWindowPos()
+  0.00      0.09     0.00       45     0.00     0.00  wxWindowBase::IsClientAreaChild(wxWindow const*) const
+  0.00      0.09     0.00       42     0.00     0.00  wxWindowBase::AcceptsFocusRecursively() const
+  0.00      0.09     0.00       42     0.00     0.00  wxControlBase::GetLabel() const
+  0.00      0.09     0.00       32     0.00     0.00  wxFrameBase::GetStatusBar() const
+  0.00      0.09     0.00       31     0.00     0.00  wxWindow::MSWPrintChild(HDC__*, wxWindow*)
+  0.00      0.09     0.00       31     0.00     0.00  wxWindow::MSWShouldPropagatePrintChild()
+  0.00      0.09     0.00       27     0.00     0.00  wxControlBase::GetLabelText() const
+  0.00      0.09     0.00       23     0.00     0.00  wxWindow::GetHandle() const
+  0.00      0.09     0.00       22     0.00     0.00  wxGetTranslation(wxString const&, wxString const&)
+  0.00      0.09     0.00       21     0.00     0.00  wxSizerItemList::CreateNode(wxNodeBase*, wxNodeBase*, void*, wxListKey const&)
+  0.00      0.09     0.00       21     0.00     0.00  wxObjectEventFunctor::~wxObjectEventFunctor()
+  0.00      0.09     0.00       21     0.00     0.00  wxObjectEventFunctor::~wxObjectEventFunctor()
+  0.00      0.09     0.00       19     0.00     0.00  wxWindowBase::AcceptsFocus() const
+  0.00      0.09     0.00       18     0.00     0.00  wxWindowBase::SetName(wxString const&)
+  0.00      0.09     0.00       16     0.00     0.00  wxStaticBoxBase::HasTransparentBackground()
+  0.00      0.09     0.00       15     0.00     0.00  wxNavigationEnabled<wxWindow>::AddChild(wxWindowBase*)
+  0.00      0.09     0.00       15     0.00     0.00  wxSizer::Add(wxWindow*, int, int, int, wxObject*)
+  0.00      0.09     0.00       15     0.00     0.00  wxWindowBase::AcceptsFocusFromKeyboard() const
+  0.00      0.09     0.00       14     0.00     0.00  wxWindowBase::DoGetBestClientSize() const
+  0.00      0.09     0.00       11     0.00     0.00  wxObjectEventFunctor::GetEvtMethod() const
+  0.00      0.09     0.00        8     0.00     0.00  wxControlBase::ShouldInheritColours() const
+  0.00      0.09     0.00        8     0.00     0.00  wxAnyButtonBase::GetDefaultBorder() const
+  0.00      0.09     0.00        7     0.00     0.00  wxWindowBase::CanBeFocused() const
+  0.00      0.09     0.00        6     0.00     0.00  wxNavigationEnabled<wxWindow>::OnChildFocus(wxChildFocusEvent&)
+  0.00      0.09     0.00        5     0.00     0.00  wxStaticLineBase::DoGetBestSize() const
+  0.00      0.09     0.00        4     0.00     0.00  wxMenuItemList::CreateNode(wxNodeBase*, wxNodeBase*, void*, wxListKey const&)
+  0.00      0.09     0.00        4     0.00     0.00  wxAnyButtonBase::ShouldInheritColours() const
+  0.00      0.09     0.00        3     0.00     0.00  wxTextCtrl::wxTextCtrl(wxWindow*, int, wxString const&, wxPoint const&, wxSize const&, long, wxValidator const&, wxString const&)
+  0.00      0.09     0.00        3     0.00     0.00  wxWindowBase::SetCanFocus(bool)
+  0.00      0.09     0.00        3     0.00     0.00  wxTextCtrlBase::~wxTextCtrlBase()
+  0.00      0.09     0.00        3     0.00     0.00  wxNavigationEnabled<wxWindow>::SetFocus()
+  0.00      0.09     0.00        3     0.00     0.00  wxWindowBase::GetDefaultAttributes() const
+  0.00      0.09     0.00        3     0.00     0.00  wxAppBase::IsActive() const
+  0.00      0.09     0.00        2     0.00     0.00  wxWindowBase::SetThemeEnabled(bool)
+  0.00      0.09     0.00        2     0.00     0.00  wxWindowBase::GetMainWindowOfCompositeControl()
+  0.00      0.09     0.00        2     0.00     0.00  SQLManagerFrame::lb_reload(std::string, std::string, int)
+  0.00      0.09     0.00        2     0.00     0.00  wxItemContainer::DoAppendItems(wxArrayStringsAdapter const&, void**, wxClientDataType)
+  0.00      0.09     0.00        2     0.00     0.00  wxItemContainer::SetClientDataType(wxClientDataType)
+  0.00      0.09     0.00        2     0.00     0.00  wxAppConsoleBase::OnEventLoopEnter(wxEventLoopBase*)
+  0.00      0.09     0.00        2     0.00     0.00  wxFrameBase::IsClientAreaChild(wxWindow const*) const
+  0.00      0.09     0.00        2     0.00     0.00  wxItemContainer::GetClientDataType() const
+  0.00      0.09     0.00        2     0.00     0.00  wxNavigationEnabled<wxWindow>::AcceptsFocusFromKeyboard() const
+  0.00      0.09     0.00        2     0.00     0.00  std::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  0.00      0.09     0.00        1     0.00     0.00  WinMain@16
+  0.00      0.09     0.00        1     0.00     0.00  wxCreateApp()
+  0.00      0.09     0.00        1     0.00     0.00  wxFileDialog::~wxFileDialog()
+  0.00      0.09     0.00        1     0.00     0.00  wxWindowBase::SetMinClientSize(wxSize const&)
+  0.00      0.09     0.00        1     0.00     0.00  wxWindowBase::SetAcceleratorTable(wxAcceleratorTable const&)
+  0.00      0.09     0.00        1     0.00     0.00  SQLManagerApp::OnInit()
+  0.00      0.09     0.00        1     0.00     0.00  SQLManagerApp::SQLManagerApp()
+  0.00      0.09     0.00        1     0.00     0.00  SQLManagerApp::~SQLManagerApp()
+  0.00      0.09     0.00        1     0.00     0.00  SQLManagerApp::~SQLManagerApp()
+  0.00      0.09     0.00        1     0.00     0.00  SQLManagerFrame::OnRunClick(wxCommandEvent&)
+  0.00      0.09     0.00        1     0.00     0.00  SQLManagerFrame::OnSaveClick(wxCommandEvent&)
+  0.00      0.09     0.00        1     0.00     0.00  SQLManagerFrame::BigBoxSetStatus()
+  0.00      0.09     0.00        1     0.00     0.00  SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent&)
+  0.00      0.09     0.00        1     0.00     0.00  SQLManagerFrame::OnQuit(wxCommandEvent&)
+  0.00      0.09     0.00        1     0.00     0.00  SQLManagerFrame::ClearAll()
+  0.00      0.09     0.00        1     0.00     0.00  SQLManagerFrame::LoadFile(wxCommandEvent&)
+  0.00      0.09     0.00        1     0.00     0.00  SQLManagerFrame::cont_col(std::string)
+  0.00      0.09     0.00        1     0.00     0.00  SQLManagerFrame::SQLManagerFrame(wxWindow*, int)
+  0.00      0.09     0.00        1     0.00     0.00  SQLManagerFrame::~SQLManagerFrame()
+  0.00      0.09     0.00        1     0.00     0.00  SQLManagerFrame::~SQLManagerFrame()
+  0.00      0.09     0.00        1     0.00     0.00  wxAppConsoleBase::CallOnInit()
+  0.00      0.09     0.00        1     0.00     0.00  wxAppConsoleBase::OnEventLoopExit(wxEventLoopBase*)
+  0.00      0.09     0.00        1     0.00     0.00  wxAppBase::SetTopWindow(wxWindow*)
+  0.00      0.09     0.00        1     0.00     0.00  wxWindowBase::ShouldInheritColours() const
+  0.00      0.09     0.00        1     0.00     0.00  wxStaticLineBase::GetDefaultBorder() const
+  0.00      0.09     0.00        1     0.00     0.00  wxNavigationEnabled<wxWindow>::AcceptsFocus() const
+  0.00      0.09     0.00        1     0.00     0.00  wxNavigationEnabled<wxControl>::AcceptsFocusFromKeyboard() const
+  0.00      0.09     0.00        1     0.00     0.00  wxControlWithItemsBase::ShouldInheritColours() const
+  0.00      0.09     0.00        1     0.00     0.00  wxString::ToStdString() const
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 11.11% of 0.09 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     66.7    0.06    0.00                 _spin_lite_lock [1]
+-----------------------------------------------
+                                                 <spontaneous>
+[2]     11.1    0.01    0.00                 _Unwind_SjLj_Unregister [2]
+-----------------------------------------------
+                                                 <spontaneous>
+[3]     11.1    0.01    0.00                 __pthread_self_lite [3]
+-----------------------------------------------
+                                                 <spontaneous>
+[4]     11.1    0.01    0.00                 _spin_lite_unlock [4]
+-----------------------------------------------
+                0.00    0.00   23053/23053       wxEvtHandler::ProcessEventLocally(wxEvent&) [3400]
+[6]      0.0    0.00    0.00   23053         wxEvtHandler::TryValidator(wxEvent&) [6]
+-----------------------------------------------
+                0.00    0.00       1/12535       wxWindow::DoSetClientSize(int, int) [8666]
+                0.00    0.00       1/12535       wxStatusBar::MSWGetStyle(long, unsigned long*) const [9571]
+                0.00    0.00       2/12535       EnsureParentHasControlParentStyle(wxWindow*) [1839]
+                0.00    0.00      14/12535       wxGetTopLevelParent(wxWindow*) [1556]
+                0.00    0.00      19/12535       wxWindowBase::IsEnabled() const [9872]
+                0.00    0.00      31/12535       wxWindow::HandlePrintClient(HDC__*) [8690]
+                0.00    0.00      63/12535       wxPanel::HasTransparentBackground() [8076]
+                0.00    0.00     387/12535       wxGUIEventLoop::PreProcessMessage(tagMSG*) [4388]
+                0.00    0.00    4114/12535       wxWindowBase::IsShownOnScreen() const [9826]
+                0.00    0.00    7903/12535       wxWindowBase::IsBeingDeleted() const [9823]
+[7]      0.0    0.00    0.00   12535         wxTopLevelWindowBase::IsTopLevel() const [7]
+-----------------------------------------------
+                0.00    0.00    9681/9681        wxWindowBase::TryBefore(wxEvent&) [3832]
+[8]      0.0    0.00    0.00    9681         wxWindowBase::GetValidator() [8]
+-----------------------------------------------
+                                5314             wxEvtHandler::TryParent(wxEvent&) [9]
+                0.00    0.00       1/9671        wxAppBase::SetActive(bool, wxWindow*) [8842]
+                0.00    0.00    9670/9671        wxWindowBase::TryAfter(wxEvent&) [3823]
+[9]      0.0    0.00    0.00    9671+5314    wxEvtHandler::TryParent(wxEvent&) [9]
+                                5314             wxEvtHandler::TryParent(wxEvent&) [9]
+-----------------------------------------------
+                0.00    0.00       1/8151        wxWindow::Create(wxWindow*, int, wxPoint const&, wxSize const&, long, wxString const&) [8727]
+                0.00    0.00       1/8151        wxDialog::Show(bool) [8285]
+                0.00    0.00       3/8151        wxSetFocusToChild(wxWindow*, wxWindow**) [1501]
+                0.00    0.00       3/8151        wxFrame::PositionStatusBar() [8005]
+                0.00    0.00       4/8151        wxTopLevelWindowBase::DoLayout() [6954]
+                0.00    0.00       4/8151        wxTopLevelWindowMSW::IsIconized() const [10702]
+                0.00    0.00       7/8151        wxWindowBase::CanBeFocused() const [51]
+                0.00    0.00      16/8151        wxFrame::DoGetClientSize(int*, int*) const [11199]
+                0.00    0.00      25/8151        wxWindow::DoMoveSibling(HWND__*, int, int, int, int) [8634]
+                0.00    0.00      40/8151        wxBoxSizer::CalcMin() [1871]
+                0.00    0.00      56/8151        wxSizer::AreAnyItemsShown() const [11262]
+                0.00    0.00      75/8151        wxBoxSizer::RecalcSizes() [1870]
+                0.00    0.00      86/8151        wxFlexGridSizer::FindWidthsAndHeights(int, int) [4988]
+                0.00    0.00      86/8151        wxFlexGridSizer::CalcMin() [4990]
+                0.00    0.00    7744/8151        wxWindowBase::IsShownOnScreen() const [9826]
+[10]     0.0    0.00    0.00    8151         wxWindowBase::IsShown() const [10]
+-----------------------------------------------
+                0.00    0.00    4781/4781        wxEvtHandler::TryHereOnly(wxEvent&) [3386]
+[11]     0.0    0.00    0.00    4781         SQLManagerFrame::GetEventHashTable() const [11]
+-----------------------------------------------
+                0.00    0.00       1/602         wxFrameBase::SetMenuBar(wxMenuBar*) [2732]
+                0.00    0.00       3/602         wxFrameBase::FindItemInMenuBar(int) const [9468]
+                0.00    0.00       4/602         wxFrame::MSWFindMenuFromHMENU(HMENU__*) [8009]
+                0.00    0.00       9/602         wxFrameBase::IsOneOfBars(wxWindow const*) const [9466]
+                0.00    0.00     242/602         wxFrameBase::UpdateWindowUI(long) [2748]
+                0.00    0.00     343/602         wxFrame::MSWDoTranslateMessage(wxFrame*, tagMSG*) [8010]
+[12]     0.0    0.00    0.00     602         wxFrameBase::GetMenuBar() const [12]
+-----------------------------------------------
+                0.00    0.00       1/449         wxFrame::DoSetClientSize(int, int) [8002]
+                0.00    0.00       3/449         wxFrame::PositionStatusBar() [8005]
+                0.00    0.00       4/449         wxFrame::PositionToolBar() [8003]
+                0.00    0.00       6/449         wxFrameBase::IsOneOfBars(wxWindow const*) const [9466]
+                0.00    0.00      17/449         wxFrame::DoGetClientSize(int*, int*) const [11199]
+                0.00    0.00     176/449         wxFrame::GetClientAreaOrigin() const [11202]
+                0.00    0.00     242/449         wxFrameBase::UpdateWindowUI(long) [2748]
+[13]     0.0    0.00    0.00     449         wxFrameBase::GetToolBar() const [13]
+-----------------------------------------------
+                0.00    0.00       1/411         wxApp::GetComCtl32Version() [7763]
+                0.00    0.00       2/411         wxWindow::HandleMouseMove(int, int, unsigned int) [8671]
+                0.00    0.00       2/411         wxWindow::MSWCreate(wchar_t const*, wchar_t const*, wxPoint const&, wxSize const&, unsigned long, unsigned long) [8739]
+                0.00    0.00       2/411         wxMSWImpl::SetLayout(HDC__*, unsigned long) [8913]
+                0.00    0.00       2/411         wxMSWImpl::GetLayout(HDC__*) [8912]
+                0.00    0.00       3/411         wxFileName::SetPath(wxString const&, wxPathFormat) [2058]
+                0.00    0.00       3/411         wxTextCtrlBase::~wxTextCtrlBase() [58]
+                0.00    0.00       3/411         wxLog::IsLevelEnabled(unsigned long, wxString) [7799]
+                0.00    0.00       4/411         wxMenu::UpdateAccel(wxMenuItem*) [7941]
+                0.00    0.00       6/411         wxTopLevelWindowMSW::OnActivate(wxActivateEvent&) [6620]
+                0.00    0.00       6/411         wxFileName::SplitPath(wxString const&, wxString*, wxString*, wxString*, wxString*, bool*, wxPathFormat) [2070]
+                0.00    0.00      12/411         SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent&) [84]
+                0.00    0.00      18/411         wxCheckWindowWndProc(HWND__*, int (*)()) [1568]
+                0.00    0.00      21/411         wxWindow::MSWGetStyle(long, unsigned long*) const [11484]
+                0.00    0.00      34/411         wxUxThemeEngine::Initialize() [5213]
+                0.00    0.00      53/411         wxFileName::IsMSWUniqueVolumeNamePath(wxString const&, wxPathFormat) [2043]
+                0.00    0.00      58/411         wxFileName::IsPathSeparator(wchar_t, wxPathFormat) [2028]
+                0.00    0.00      70/411         SQLManagerFrame::SQLManagerFrame(wxWindow*, int) [89]
+                0.00    0.00     111/411         wxFileName::SplitVolume(wxString const&, wxString*, wxString*, wxPathFormat) [2019]
+[14]     0.0    0.00    0.00     411         wxString::~wxString() [14]
+-----------------------------------------------
+                0.00    0.00     389/389         wxWindow::FindItemByHWND(HWND__*, bool) const [11493]
+[15]     0.0    0.00    0.00     389         wxWindow::ContainsHWND(HWND__*) const [15]
+-----------------------------------------------
+                0.00    0.00     343/343         wxGUIEventLoop::PreProcessMessage(tagMSG*) [4388]
+[16]     0.0    0.00    0.00     343         wxFrame::MSWTranslateMessage(tagMSG*) [16]
+-----------------------------------------------
+                0.00    0.00       4/187         wxWindow::HandleGetMinMaxInfo(void*) [8702]
+                0.00    0.00      34/187         wxWindowBase::GetBestSize() const [9808]
+                0.00    0.00     149/187         wxWindowBase::GetEffectiveMinSize() const [9845]
+[17]     0.0    0.00    0.00     187         wxWindowBase::GetMinSize() const [17]
+-----------------------------------------------
+                0.00    0.00     157/157         wxWindow::MSWGetBgBrushForChild(HDC__*, wxWindow*) [8714]
+[18]     0.0    0.00    0.00     157         wxWindow::MSWGetCustomBgBrush() [18]
+-----------------------------------------------
+                0.00    0.00       1/151         wxMSWImpl::SetLayout(HDC__*, unsigned long) [8913]
+                0.00    0.00       1/151         wxMSWImpl::GetLayout(HDC__*) [8912]
+                0.00    0.00       3/151         wxTopLevelWindowMSW::OnActivate(wxActivateEvent&) [6620]
+                0.00    0.00       6/151         SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent&) [84]
+                0.00    0.00      22/151         SQLManagerFrame::SQLManagerFrame(wxWindow*, int) [89]
+                0.00    0.00     118/151         wxPrintPaperDatabase::CreateDatabase() [6888]
+[19]     0.0    0.00    0.00     151         wxString::wxString(char const*) [19]
+-----------------------------------------------
+                0.00    0.00       1/147         wxWindow::SetExtraStyle(long) [8643]
+                0.00    0.00       1/147         wxStaticLine::Create(wxWindow*, int, wxPoint const&, wxSize const&, long, wxString const&) [3655]
+                0.00    0.00       1/147         wxTopLevelWindowMSW::CreateFrame(wxString const&, wxPoint const&, wxSize const&) [6621]
+                0.00    0.00       1/147         wxTopLevelWindowMSW::Create(wxWindow*, int, wxString const&, wxPoint const&, wxSize const&, long, wxString const&) [6643]
+                0.00    0.00       1/147         wxWindow::MSWGetCreateWindowFlags(unsigned long*) const [11513]
+                0.00    0.00       3/147         wxControl::MSWCreateControl(wchar_t const*, unsigned long, wxPoint const&, wxSize const&, wxString const&, unsigned long) [8851]
+                0.00    0.00       3/147         wxTextCtrl::MSWCreateText(wxString const&, wxPoint const&, wxSize const&) [2494]
+                0.00    0.00       5/147         wxStaticLineBase::DoGetBestSize() const [53]
+                0.00    0.00       9/147         wxControl::MSWCreateControl(wchar_t const*, wxString const&, wxPoint const&, wxSize const&) [8850]
+                0.00    0.00      18/147         wxTextCtrl::CanApplyThemeBorder() const [9386]
+                0.00    0.00     104/147         wxWindowBase::GetBorder() const [9871]
+[20]     0.0    0.00    0.00     147         wxWindowBase::GetWindowStyleFlag() const [20]
+-----------------------------------------------
+                0.00    0.00     125/125         wxWindow::HandleMouseMove(int, int, unsigned int) [8671]
+[21]     0.0    0.00    0.00     125         wxWindowBase::HasCapture() const [21]
+-----------------------------------------------
+                0.00    0.00     125/125         wxGUIEventLoop::PreProcessMessage(tagMSG*) [4388]
+[22]     0.0    0.00    0.00     125         wxWindow::HasToolTips() const [22]
+-----------------------------------------------
+                0.00    0.00      24/111         wxControl::MSWCreateControl(wchar_t const*, unsigned long, wxPoint const&, wxSize const&, wxString const&, unsigned long) [8851]
+                0.00    0.00      29/111         wxWindowBase::GetForegroundColour() const [9846]
+                0.00    0.00      58/111         wxWindowBase::GetBackgroundColour() const [9843]
+[23]     0.0    0.00    0.00     111         wxControl::GetDefaultAttributes() const [23]
+-----------------------------------------------
+                0.00    0.00      33/95          wxControl::MSWControlColor(HDC__*, HWND__*) [8849]
+                0.00    0.00      62/95          wxWindow::MSWGetBgBrush(HDC__*) [8639]
+[24]     0.0    0.00    0.00      95         wxWindowBase::HasTransparentBackground() [24]
+-----------------------------------------------
+                0.00    0.00      63/63          wxPanel::HasTransparentBackground() [8076]
+[25]     0.0    0.00    0.00      63         wxWindow::MSWHasInheritableBackground() const [25]
+-----------------------------------------------
+                0.00    0.00       1/59          wxTopLevelWindowBase::SetMinSize(wxSize const&) [6939]
+                0.00    0.00       2/59          wxSizer::GetMaxClientSize(wxWindow*) const [11263]
+                0.00    0.00       4/59          wxWindow::HandleGetMinMaxInfo(void*) [8702]
+                0.00    0.00      18/59          wxSizerItem::GetMaxSizeWithBorder() const [9557]
+                0.00    0.00      34/59          wxWindowBase::GetBestSize() const [9808]
+[26]     0.0    0.00    0.00      59         wxWindowBase::GetMaxSize() const [26]
+-----------------------------------------------
+                0.00    0.00      16/58          wxEvtHandler::SearchDynamicEventTable(wxEvent&) [3404]
+                0.00    0.00      21/58          wxEvtHandler::DoBind(int, int, int, wxEventFunctor*, wxObject*) [3405]
+                0.00    0.00      21/58          wxEvtHandler::~wxEvtHandler() [3414]
+[27]     0.0    0.00    0.00      58         wxObjectEventFunctor::GetEvtHandler() const [27]
+-----------------------------------------------
+                0.00    0.00      49/49          wxWindow::EndRepositioningChildren() [8717]
+[28]     0.0    0.00    0.00      49         wxWindow::MSWEndDeferWindowPos() [28]
+-----------------------------------------------
+                0.00    0.00       3/45          wxSetFocusToChild(wxWindow*, wxWindow**) [1501]
+                0.00    0.00      42/45          wxControlContainerBase::HasAnyFocusableChildren() const [10973]
+[29]     0.0    0.00    0.00      45         wxWindowBase::IsClientAreaChild(wxWindow const*) const [29]
+-----------------------------------------------
+                0.00    0.00      42/42          wxControlContainerBase::HasAnyFocusableChildren() const [10973]
+[30]     0.0    0.00    0.00      42         wxWindowBase::AcceptsFocusRecursively() const [30]
+-----------------------------------------------
+                0.00    0.00       2/42          wxStaticBox::GetBordersForSizer(int*, int*) const [9567]
+                0.00    0.00       6/42          wxControlContainer::SetLastFocus(wxWindow*) [6098]
+                0.00    0.00       7/42          wxAnyButton::DoGetBestSize() const [9443]
+                0.00    0.00      27/42          wxControlBase::GetLabelText() const [35]
+[31]     0.0    0.00    0.00      42         wxControlBase::GetLabel() const [31]
+-----------------------------------------------
+                0.00    0.00       1/32          wxFrame::DoSetClientSize(int, int) [8002]
+                0.00    0.00       1/32          wxStatusBarBase::~wxStatusBarBase() [5144]
+                0.00    0.00       4/32          wxFrameBase::DoGiveHelp(wxString const&, bool) [2730]
+                0.00    0.00       9/32          wxFrameBase::IsOneOfBars(wxWindow const*) const [9466]
+                0.00    0.00      17/32          wxFrame::DoGetClientSize(int*, int*) const [11199]
+[32]     0.0    0.00    0.00      32         wxFrameBase::GetStatusBar() const [32]
+-----------------------------------------------
+                0.00    0.00      31/31          wxWindow::HandlePrintClient(HDC__*) [8690]
+[33]     0.0    0.00    0.00      31         wxWindow::MSWPrintChild(HDC__*, wxWindow*) [33]
+-----------------------------------------------
+                0.00    0.00      31/31          wxWindow::HandlePrintClient(HDC__*) [8690]
+[34]     0.0    0.00    0.00      31         wxWindow::MSWShouldPropagatePrintChild() [34]
+-----------------------------------------------
+                0.00    0.00       7/27          wxMSWButton::ComputeBestFittingSize(wxControl*, int) [2854]
+                0.00    0.00      20/27          wxStaticText::DoGetBestClientSize() const [9785]
+[35]     0.0    0.00    0.00      27         wxControlBase::GetLabelText() const [35]
+                0.00    0.00      27/42          wxControlBase::GetLabel() const [31]
+-----------------------------------------------
+                0.00    0.00       3/23          wxControlContainerBase::DoSetFocus() [7205]
+                0.00    0.00       4/23          wxSetFocusToChild(wxWindow*, wxWindow**) [1501]
+                0.00    0.00      16/23          wxWindowBase::Destroy() [3813]
+[36]     0.0    0.00    0.00      23         wxWindow::GetHandle() const [36]
+-----------------------------------------------
+                0.00    0.00      22/22          SQLManagerFrame::SQLManagerFrame(wxWindow*, int) [89]
+[37]     0.0    0.00    0.00      22         wxGetTranslation(wxString const&, wxString const&) [37]
+-----------------------------------------------
+                0.00    0.00      21/21          wxListBase::Append(void*) [2138]
+[38]     0.0    0.00    0.00      21         wxSizerItemList::CreateNode(wxNodeBase*, wxNodeBase*, void*, wxListKey const&) [38]
+-----------------------------------------------
+                0.00    0.00      21/21          wxEvtHandler::~wxEvtHandler() [3414]
+[39]     0.0    0.00    0.00      21         wxObjectEventFunctor::~wxObjectEventFunctor() [39]
+                0.00    0.00      21/21          wxObjectEventFunctor::~wxObjectEventFunctor() [40]
+-----------------------------------------------
+                0.00    0.00      21/21          wxObjectEventFunctor::~wxObjectEventFunctor() [39]
+[40]     0.0    0.00    0.00      21         wxObjectEventFunctor::~wxObjectEventFunctor() [40]
+-----------------------------------------------
+                0.00    0.00       1/19          wxSetFocusToChild(wxWindow*, wxWindow**) [1501]
+                0.00    0.00       5/19          wxControl::MSWGetStyle(long, unsigned long*) const [11530]
+                0.00    0.00      13/19          wxControlContainerBase::HasAnyFocusableChildren() const [10973]
+[41]     0.0    0.00    0.00      19         wxWindowBase::AcceptsFocus() const [41]
+-----------------------------------------------
+                0.00    0.00      18/18          wxWindowBase::CreateBase(wxWindowBase*, int, wxPoint const&, wxSize const&, long, wxString const&) [3706]
+[42]     0.0    0.00    0.00      18         wxWindowBase::SetName(wxString const&) [42]
+-----------------------------------------------
+                0.00    0.00       7/16          wxControl::MSWControlColor(HDC__*, HWND__*) [8849]
+                0.00    0.00       9/16          wxWindow::MSWGetBgBrush(HDC__*) [8639]
+[43]     0.0    0.00    0.00      16         wxStaticBoxBase::HasTransparentBackground() [43]
+-----------------------------------------------
+                0.00    0.00      15/15          wxControlBase::CreateControl(wxWindowBase*, int, wxPoint const&, wxSize const&, long, wxValidator const&, wxString const&) [3935]
+[44]     0.0    0.00    0.00      15         wxNavigationEnabled<wxWindow>::AddChild(wxWindowBase*) [44]
+-----------------------------------------------
+                0.00    0.00      15/15          SQLManagerFrame::SQLManagerFrame(wxWindow*, int) [89]
+[45]     0.0    0.00    0.00      15         wxSizer::Add(wxWindow*, int, int, int, wxObject*) [45]
+-----------------------------------------------
+                0.00    0.00       3/15          wxSetFocusToChild(wxWindow*, wxWindow**) [1501]
+                0.00    0.00      12/15          wxControl::MSWGetStyle(long, unsigned long*) const [11530]
+[46]     0.0    0.00    0.00      15         wxWindowBase::AcceptsFocusFromKeyboard() const [46]
+-----------------------------------------------
+                0.00    0.00      14/14          wxWindowBase::GetBestSize() const [9808]
+[47]     0.0    0.00    0.00      14         wxWindowBase::DoGetBestClientSize() const [47]
+-----------------------------------------------
+                0.00    0.00      11/11          wxAppConsoleBase::CallEventHandler(wxEvtHandler*, wxEventFunctor&, wxEvent&) const [10291]
+[48]     0.0    0.00    0.00      11         wxObjectEventFunctor::GetEvtMethod() const [48]
+-----------------------------------------------
+                0.00    0.00       8/8           wxWindowBase::InheritAttributes() [3767]
+[49]     0.0    0.00    0.00       8         wxControlBase::ShouldInheritColours() const [49]
+-----------------------------------------------
+                0.00    0.00       8/8           wxWindowBase::GetBorder(long) const [9870]
+[50]     0.0    0.00    0.00       8         wxAnyButtonBase::GetDefaultBorder() const [50]
+-----------------------------------------------
+                0.00    0.00       1/7           wxWindow::MSWHandleMessage(long*, unsigned int, unsigned int, long) [8684]
+                0.00    0.00       1/7           wxWindowBase::IsFocusable() const [9809]
+                0.00    0.00       2/7           wxNavigationEnabled<wxWindow>::AcceptsFocusFromKeyboard() const [70]
+                0.00    0.00       3/7           wxSetFocusToChild(wxWindow*, wxWindow**) [1501]
+[51]     0.0    0.00    0.00       7         wxWindowBase::CanBeFocused() const [51]
+                0.00    0.00       7/8151        wxWindowBase::IsShown() const [10]
+-----------------------------------------------
+                0.00    0.00       6/6           wxAppConsoleBase::HandleEvent(wxEvtHandler*, void (wxEvtHandler::*)(wxEvent&), wxEvent&) const [10289]
+[52]     0.0    0.00    0.00       6         wxNavigationEnabled<wxWindow>::OnChildFocus(wxChildFocusEvent&) [52]
+-----------------------------------------------
+                0.00    0.00       5/5           wxWindowBase::GetBestSize() const [9808]
+[53]     0.0    0.00    0.00       5         wxStaticLineBase::DoGetBestSize() const [53]
+                0.00    0.00       5/147         wxWindowBase::GetWindowStyleFlag() const [20]
+-----------------------------------------------
+                0.00    0.00       4/4           wxListBase::Append(void*) [2138]
+[54]     0.0    0.00    0.00       4         wxMenuItemList::CreateNode(wxNodeBase*, wxNodeBase*, void*, wxListKey const&) [54]
+-----------------------------------------------
+                0.00    0.00       4/4           wxWindowBase::InheritAttributes() [3767]
+[55]     0.0    0.00    0.00       4         wxAnyButtonBase::ShouldInheritColours() const [55]
+-----------------------------------------------
+                0.00    0.00       3/3           SQLManagerFrame::SQLManagerFrame(wxWindow*, int) [89]
+[56]     0.0    0.00    0.00       3         wxTextCtrl::wxTextCtrl(wxWindow*, int, wxString const&, wxPoint const&, wxSize const&, long, wxValidator const&, wxString const&) [56]
+-----------------------------------------------
+                0.00    0.00       3/3           wxControlContainerBase::UpdateParentCanFocus() [7207]
+[57]     0.0    0.00    0.00       3         wxWindowBase::SetCanFocus(bool) [57]
+-----------------------------------------------
+                0.00    0.00       3/3           wxTextCtrl::~wxTextCtrl() [2539]
+[58]     0.0    0.00    0.00       3         wxTextCtrlBase::~wxTextCtrlBase() [58]
+                0.00    0.00       3/411         wxString::~wxString() [14]
+-----------------------------------------------
+                0.00    0.00       1/3           wxWindow::MSWHandleMessage(long*, unsigned int, unsigned int, long) [8684]
+                0.00    0.00       2/3           wxSetFocusToChild(wxWindow*, wxWindow**) [1501]
+[59]     0.0    0.00    0.00       3         wxNavigationEnabled<wxWindow>::SetFocus() [59]
+-----------------------------------------------
+                0.00    0.00       1/3           wxWindowBase::GetFont() const [9864]
+                0.00    0.00       2/3           wxWindowBase::GetBackgroundColour() const [9843]
+[60]     0.0    0.00    0.00       3         wxWindowBase::GetDefaultAttributes() const [60]
+-----------------------------------------------
+                0.00    0.00       3/3           wxButton::SetDefaultStyle(wxButton*, bool) [8176]
+[61]     0.0    0.00    0.00       3         wxAppBase::IsActive() const [61]
+-----------------------------------------------
+                0.00    0.00       1/2           wxWindowBase::SetBackgroundColour(wxColour const&) [3784]
+                0.00    0.00       1/2           wxPanelBase::Create(wxWindow*, int, wxPoint const&, wxSize const&, long, wxString const&) [2929]
+[62]     0.0    0.00    0.00       2         wxWindowBase::SetThemeEnabled(bool) [62]
+-----------------------------------------------
+                0.00    0.00       1/2           wxControlContainerBase::DoSetFocus() [7205]
+                0.00    0.00       1/2           wxWindow::MSWHandleMessage(long*, unsigned int, unsigned int, long) [8684]
+[63]     0.0    0.00    0.00       2         wxWindowBase::GetMainWindowOfCompositeControl() [63]
+-----------------------------------------------
+                0.00    0.00       2/2           SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent&) [84]
+[64]     0.0    0.00    0.00       2         SQLManagerFrame::lb_reload(std::string, std::string, int) [64]
+-----------------------------------------------
+                0.00    0.00       2/2           SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent&) [84]
+[65]     0.0    0.00    0.00       2         wxItemContainer::DoAppendItems(wxArrayStringsAdapter const&, void**, wxClientDataType) [65]
+-----------------------------------------------
+                0.00    0.00       2/2           wxItemContainer::Clear() [5021]
+[66]     0.0    0.00    0.00       2         wxItemContainer::SetClientDataType(wxClientDataType) [66]
+-----------------------------------------------
+                0.00    0.00       2/2           wxEventLoopBase::Run() [4964]
+[67]     0.0    0.00    0.00       2         wxAppConsoleBase::OnEventLoopEnter(wxEventLoopBase*) [67]
+-----------------------------------------------
+                0.00    0.00       2/2           wxSetFocusToChild(wxWindow*, wxWindow**) [1501]
+[68]     0.0    0.00    0.00       2         wxFrameBase::IsClientAreaChild(wxWindow const*) const [68]
+-----------------------------------------------
+                0.00    0.00       2/2           wxItemContainer::Clear() [5021]
+[69]     0.0    0.00    0.00       2         wxItemContainer::GetClientDataType() const [69]
+-----------------------------------------------
+                0.00    0.00       2/2           wxSetFocusToChild(wxWindow*, wxWindow**) [1501]
+[70]     0.0    0.00    0.00       2         wxNavigationEnabled<wxWindow>::AcceptsFocusFromKeyboard() const [70]
+                0.00    0.00       2/7           wxWindowBase::CanBeFocused() const [51]
+-----------------------------------------------
+                0.00    0.00       2/2           SQLManagerFrame::c_callback(void*, int, char**, char**) [4721]
+[71]     0.0    0.00    0.00       2         std::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [71]
+-----------------------------------------------
+                0.00    0.00       1/1           main [15040]
+[72]     0.0    0.00    0.00       1         WinMain@16 [72]
+-----------------------------------------------
+                0.00    0.00       1/1           wxEntryStart(int&, wchar_t**) [1324]
+[73]     0.0    0.00    0.00       1         wxCreateApp() [73]
+                0.00    0.00       1/1           SQLManagerApp::SQLManagerApp() [78]
+-----------------------------------------------
+                0.00    0.00       1/1           SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent&) [84]
+[74]     0.0    0.00    0.00       1         wxFileDialog::~wxFileDialog() [74]
+-----------------------------------------------
+                0.00    0.00       1/1           wxSizer::SetSizeHints(wxWindow*) [8083]
+[75]     0.0    0.00    0.00       1         wxWindowBase::SetMinClientSize(wxSize const&) [75]
+-----------------------------------------------
+                0.00    0.00       1/1           wxMenuBar::RebuildAccelTable() [8917]
+[76]     0.0    0.00    0.00       1         wxWindowBase::SetAcceleratorTable(wxAcceleratorTable const&) [76]
+-----------------------------------------------
+                0.00    0.00       1/1           wxAppConsoleBase::CallOnInit() [92]
+[77]     0.0    0.00    0.00       1         SQLManagerApp::OnInit() [77]
+                0.00    0.00       1/1           SQLManagerFrame::SQLManagerFrame(wxWindow*, int) [89]
+                0.00    0.00       1/1           wxAppBase::SetTopWindow(wxWindow*) [94]
+-----------------------------------------------
+                0.00    0.00       1/1           wxCreateApp() [73]
+[78]     0.0    0.00    0.00       1         SQLManagerApp::SQLManagerApp() [78]
+-----------------------------------------------
+                0.00    0.00       1/1           wxEntryCleanup() [1395]
+[79]     0.0    0.00    0.00       1         SQLManagerApp::~SQLManagerApp() [79]
+                0.00    0.00       1/1           SQLManagerApp::~SQLManagerApp() [80]
+-----------------------------------------------
+                0.00    0.00       1/1           SQLManagerApp::~SQLManagerApp() [79]
+[80]     0.0    0.00    0.00       1         SQLManagerApp::~SQLManagerApp() [80]
+-----------------------------------------------
+                0.00    0.00       1/1           wxAppConsoleBase::HandleEvent(wxEvtHandler*, void (wxEvtHandler::*)(wxEvent&), wxEvent&) const [10289]
+[81]     0.0    0.00    0.00       1         SQLManagerFrame::OnRunClick(wxCommandEvent&) [81]
+-----------------------------------------------
+                0.00    0.00       1/1           wxAppConsoleBase::HandleEvent(wxEvtHandler*, void (wxEvtHandler::*)(wxEvent&), wxEvent&) const [10289]
+[82]     0.0    0.00    0.00       1         SQLManagerFrame::OnSaveClick(wxCommandEvent&) [82]
+-----------------------------------------------
+                0.00    0.00       1/1           SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent&) [84]
+[83]     0.0    0.00    0.00       1         SQLManagerFrame::BigBoxSetStatus() [83]
+-----------------------------------------------
+                0.00    0.00       1/1           wxAppConsoleBase::HandleEvent(wxEvtHandler*, void (wxEvtHandler::*)(wxEvent&), wxEvent&) const [10289]
+[84]     0.0    0.00    0.00       1         SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent&) [84]
+                0.00    0.00      12/411         wxString::~wxString() [14]
+                0.00    0.00       6/151         wxString::wxString(char const*) [19]
+                0.00    0.00       2/2           SQLManagerFrame::lb_reload(std::string, std::string, int) [64]
+                0.00    0.00       2/2           wxItemContainer::DoAppendItems(wxArrayStringsAdapter const&, void**, wxClientDataType) [65]
+                0.00    0.00       1/1           wxString::ToStdString() const [100]
+                0.00    0.00       1/1           SQLManagerFrame::ClearAll() [86]
+                0.00    0.00       1/1           SQLManagerFrame::cont_col(std::string) [88]
+                0.00    0.00       1/1           SQLManagerFrame::OnQuit(wxCommandEvent&) [85]
+                0.00    0.00       1/1           SQLManagerFrame::BigBoxSetStatus() [83]
+                0.00    0.00       1/1           wxFileDialog::~wxFileDialog() [74]
+-----------------------------------------------
+                0.00    0.00       1/1           SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent&) [84]
+[85]     0.0    0.00    0.00       1         SQLManagerFrame::OnQuit(wxCommandEvent&) [85]
+-----------------------------------------------
+                0.00    0.00       1/1           SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent&) [84]
+[86]     0.0    0.00    0.00       1         SQLManagerFrame::ClearAll() [86]
+-----------------------------------------------
+                0.00    0.00       1/1           wxAppConsoleBase::HandleEvent(wxEvtHandler*, void (wxEvtHandler::*)(wxEvent&), wxEvent&) const [10289]
+[87]     0.0    0.00    0.00       1         SQLManagerFrame::LoadFile(wxCommandEvent&) [87]
+-----------------------------------------------
+                0.00    0.00       1/1           SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent&) [84]
+[88]     0.0    0.00    0.00       1         SQLManagerFrame::cont_col(std::string) [88]
+-----------------------------------------------
+                0.00    0.00       1/1           SQLManagerApp::OnInit() [77]
+[89]     0.0    0.00    0.00       1         SQLManagerFrame::SQLManagerFrame(wxWindow*, int) [89]
+                0.00    0.00      70/411         wxString::~wxString() [14]
+                0.00    0.00      22/151         wxString::wxString(char const*) [19]
+                0.00    0.00      22/22          wxGetTranslation(wxString const&, wxString const&) [37]
+                0.00    0.00      15/15          wxSizer::Add(wxWindow*, int, int, int, wxObject*) [45]
+                0.00    0.00       3/3           wxTextCtrl::wxTextCtrl(wxWindow*, int, wxString const&, wxPoint const&, wxSize const&, long, wxValidator const&, wxString const&) [56]
+-----------------------------------------------
+                0.00    0.00       1/1           wxAppConsoleBase::DeletePendingObjects() [5266]
+[90]     0.0    0.00    0.00       1         SQLManagerFrame::~SQLManagerFrame() [90]
+                0.00    0.00       1/1           SQLManagerFrame::~SQLManagerFrame() [91]
+-----------------------------------------------
+                0.00    0.00       1/1           SQLManagerFrame::~SQLManagerFrame() [90]
+[91]     0.0    0.00    0.00       1         SQLManagerFrame::~SQLManagerFrame() [91]
+-----------------------------------------------
+                0.00    0.00       1/1           wxEntryReal(int&, wchar_t**) [1284]
+[92]     0.0    0.00    0.00       1         wxAppConsoleBase::CallOnInit() [92]
+                0.00    0.00       1/1           SQLManagerApp::OnInit() [77]
+-----------------------------------------------
+                0.00    0.00       1/1           wxEventLoopBase::OnExit() [4967]
+[93]     0.0    0.00    0.00       1         wxAppConsoleBase::OnEventLoopExit(wxEventLoopBase*) [93]
+-----------------------------------------------
+                0.00    0.00       1/1           SQLManagerApp::OnInit() [77]
+[94]     0.0    0.00    0.00       1         wxAppBase::SetTopWindow(wxWindow*) [94]
+-----------------------------------------------
+                0.00    0.00       1/1           wxWindowBase::InheritAttributes() [3767]
+[95]     0.0    0.00    0.00       1         wxWindowBase::ShouldInheritColours() const [95]
+-----------------------------------------------
+                0.00    0.00       1/1           wxWindowBase::GetBorder(long) const [9870]
+[96]     0.0    0.00    0.00       1         wxStaticLineBase::GetDefaultBorder() const [96]
+-----------------------------------------------
+                0.00    0.00       1/1           wxWindowBase::IsFocusable() const [9809]
+[97]     0.0    0.00    0.00       1         wxNavigationEnabled<wxWindow>::AcceptsFocus() const [97]
+-----------------------------------------------
+                0.00    0.00       1/1           wxControl::MSWGetStyle(long, unsigned long*) const [11530]
+[98]     0.0    0.00    0.00       1         wxNavigationEnabled<wxControl>::AcceptsFocusFromKeyboard() const [98]
+-----------------------------------------------
+                0.00    0.00       1/1           wxWindowBase::InheritAttributes() [3767]
+[99]     0.0    0.00    0.00       1         wxControlWithItemsBase::ShouldInheritColours() const [99]
+-----------------------------------------------
+                0.00    0.00       1/1           SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent&) [84]
+[100]    0.0    0.00    0.00       1         wxString::ToStdString() const [100]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [72] WinMain@16             [91] SQLManagerFrame::~SQLManagerFrame() [47] wxWindowBase::DoGetBestClientSize() const
+   [2] _Unwind_SjLj_Unregister [65] wxItemContainer::DoAppendItems(wxArrayStringsAdapter const&, void**, wxClientDataType) [60] wxWindowBase::GetDefaultAttributes() const
+  [73] wxCreateApp()          [66] wxItemContainer::SetClientDataType(wxClientDataType) [95] wxWindowBase::ShouldInheritColours() const
+  [37] wxGetTranslation(wxString const&, wxString const&) [38] wxSizerItemList::CreateNode(wxNodeBase*, wxNodeBase*, void*, wxListKey const&) [30] wxWindowBase::AcceptsFocusRecursively() const
+  [56] wxTextCtrl::wxTextCtrl(wxWindow*, int, wxString const&, wxPoint const&, wxSize const&, long, wxValidator const&, wxString const&) [43] wxStaticBoxBase::HasTransparentBackground() [46] wxWindowBase::AcceptsFocusFromKeyboard() const
+   [6] wxEvtHandler::TryValidator(wxEvent&) [92] wxAppConsoleBase::CallOnInit() [10] wxWindowBase::IsShown() const
+   [9] wxEvtHandler::TryParent(wxEvent&) [93] wxAppConsoleBase::OnEventLoopExit(wxEventLoopBase*) [35] wxControlBase::GetLabelText() const
+  [74] wxFileDialog::~wxFileDialog() [67] wxAppConsoleBase::OnEventLoopEnter(wxEventLoopBase*) [49] wxControlBase::ShouldInheritColours() const
+  [57] wxWindowBase::SetCanFocus(bool) [52] wxNavigationEnabled<wxWindow>::OnChildFocus(wxChildFocusEvent&) [31] wxControlBase::GetLabel() const
+   [8] wxWindowBase::GetValidator() [44] wxNavigationEnabled<wxWindow>::AddChild(wxWindowBase*) [11] SQLManagerFrame::GetEventHashTable() const
+  [62] wxWindowBase::SetThemeEnabled(bool) [59] wxNavigationEnabled<wxWindow>::SetFocus() [50] wxAnyButtonBase::GetDefaultBorder() const
+  [75] wxWindowBase::SetMinClientSize(wxSize const&) [39] wxObjectEventFunctor::~wxObjectEventFunctor() [55] wxAnyButtonBase::ShouldInheritColours() const
+  [76] wxWindowBase::SetAcceleratorTable(wxAcceleratorTable const&) [40] wxObjectEventFunctor::~wxObjectEventFunctor() [69] wxItemContainer::GetClientDataType() const
+  [24] wxWindowBase::HasTransparentBackground() [16] wxFrame::MSWTranslateMessage(tagMSG*) [53] wxStaticLineBase::DoGetBestSize() const
+  [63] wxWindowBase::GetMainWindowOfCompositeControl() [45] wxSizer::Add(wxWindow*, int, int, int, wxObject*) [96] wxStaticLineBase::GetDefaultBorder() const
+  [42] wxWindowBase::SetName(wxString const&) [19] wxString::wxString(char const*) [97] wxNavigationEnabled<wxWindow>::AcceptsFocus() const
+  [77] SQLManagerApp::OnInit() [14] wxString::~wxString() [70] wxNavigationEnabled<wxWindow>::AcceptsFocusFromKeyboard() const
+  [78] SQLManagerApp::SQLManagerApp() [33] wxWindow::MSWPrintChild(HDC__*, wxWindow*) [98] wxNavigationEnabled<wxControl>::AcceptsFocusFromKeyboard() const
+  [79] SQLManagerApp::~SQLManagerApp() [18] wxWindow::MSWGetCustomBgBrush() [48] wxObjectEventFunctor::GetEvtMethod() const
+  [80] SQLManagerApp::~SQLManagerApp() [28] wxWindow::MSWEndDeferWindowPos() [27] wxObjectEventFunctor::GetEvtHandler() const
+  [54] wxMenuItemList::CreateNode(wxNodeBase*, wxNodeBase*, void*, wxListKey const&) [34] wxWindow::MSWShouldPropagatePrintChild() [7] wxTopLevelWindowBase::IsTopLevel() const
+  [58] wxTextCtrlBase::~wxTextCtrlBase() [94] wxAppBase::SetTopWindow(wxWindow*) [99] wxControlWithItemsBase::ShouldInheritColours() const
+  [81] SQLManagerFrame::OnRunClick(wxCommandEvent&) [12] wxFrameBase::GetMenuBar() const [100] wxString::ToStdString() const
+  [82] SQLManagerFrame::OnSaveClick(wxCommandEvent&) [13] wxFrameBase::GetToolBar() const [22] wxWindow::HasToolTips() const
+  [83] SQLManagerFrame::BigBoxSetStatus() [32] wxFrameBase::GetStatusBar() const [15] wxWindow::ContainsHWND(HWND__*) const
+  [84] SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent&) [68] wxFrameBase::IsClientAreaChild(wxWindow const*) const [25] wxWindow::MSWHasInheritableBackground() const
+  [85] SQLManagerFrame::OnQuit(wxCommandEvent&) [26] wxWindowBase::GetMaxSize() const [36] wxWindow::GetHandle() const
+  [86] SQLManagerFrame::ClearAll() [17] wxWindowBase::GetMinSize() const [61] wxAppBase::IsActive() const
+  [87] SQLManagerFrame::LoadFile(wxCommandEvent&) [21] wxWindowBase::HasCapture() const [23] wxControl::GetDefaultAttributes() const
+  [88] SQLManagerFrame::cont_col(std::string) [41] wxWindowBase::AcceptsFocus() const [71] std::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  [64] SQLManagerFrame::lb_reload(std::string, std::string, int) [51] wxWindowBase::CanBeFocused() const [3] __pthread_self_lite
+  [89] SQLManagerFrame::SQLManagerFrame(wxWindow*, int) [29] wxWindowBase::IsClientAreaChild(wxWindow const*) const [1] _spin_lite_lock
+  [90] SQLManagerFrame::~SQLManagerFrame() [20] wxWindowBase::GetWindowStyleFlag() const [4] _spin_lite_unlock

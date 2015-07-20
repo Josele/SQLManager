@@ -1710,7 +1710,7 @@
 1412631244 c:\wxwidgets-3.0.2\include\wx\univ\theme.h
 	"wx/string.h"
 
-1436777263 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
+1437365235 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
 	<wx/sizer.h>
 	<wx/stattext.h>
 	<wx/radiobox.h>
@@ -1767,6 +1767,99 @@
 
 1412631244 c:\wxwidgets-3.0.2\include\wx\os2\stattext.h
 	"wx/control.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\radiobox.h
+	"wx/defs.h"
+	"wx/ctrlsub.h"
+	"wx/dynarray.h"
+	"wx/univ/radiobox.h"
+	"wx/msw/radiobox.h"
+	"wx/motif/radiobox.h"
+	"wx/gtk/radiobox.h"
+	"wx/gtk1/radiobox.h"
+	"wx/osx/radiobox.h"
+	"wx/cocoa/radiobox.h"
+	"wx/os2/radiobox.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\ctrlsub.h
+	"wx/defs.h"
+	"wx/arrstr.h"
+	"wx/control.h"
+	"wx/msw/ctrlsub.h"
+	"wx/motif/ctrlsub.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\msw\ctrlsub.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\motif\ctrlsub.h
+	"wx/dynarray.h"
+	"wx/generic/ctrlsub.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\generic\ctrlsub.h
+	"wx/dynarray.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\univ\radiobox.h
+	"wx/statbox.h"
+	"wx/dynarray.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\statbox.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/containr.h"
+	"wx/univ/statbox.h"
+	"wx/msw/statbox.h"
+	"wx/motif/statbox.h"
+	"wx/gtk/statbox.h"
+	"wx/gtk1/statbox.h"
+	"wx/osx/statbox.h"
+	"wx/cocoa/statbox.h"
+	"wx/os2/statbox.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\containr.h
+	"wx/defs.h"
+	"wx/event.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\univ\statbox.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\msw\statbox.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\motif\statbox.h
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\statbox.h
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\statbox.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\osx\statbox.h
+	"wx/control.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\statbox.h
+	"wx/cocoa/NSBox.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\nsbox.h
+	"wx/hashmap.h"
+	"wx/cocoa/ObjcAssociate.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\os2\statbox.h
+	"wx/control.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\msw\radiobox.h
+	"wx/statbox.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\motif\radiobox.h
+	"wx/dynarray.h"
+	"wx/arrstr.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\radiobox.h
+	"wx/bitmap.h"
+	"wx/list.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\radiobox.h
+	"wx/bitmap.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\osx\radiobox.h
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\radiobox.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\os2\radiobox.h
 
 1412631244 c:\wxwidgets-3.0.2\include\wx\menu.h
 	"wx/defs.h"
@@ -1936,10 +2029,6 @@
 	"wx/msw/panel.h"
 	"wx/generic/panelg.h"
 
-1412631242 c:\wxwidgets-3.0.2\include\wx\containr.h
-	"wx/defs.h"
-	"wx/event.h"
-
 1412631244 c:\wxwidgets-3.0.2\include\wx\univ\panel.h
 
 1412631244 c:\wxwidgets-3.0.2\include\wx\msw\panel.h
@@ -1984,22 +2073,6 @@
 	"wx/osx/listbox.h"
 	"wx/os2/listbox.h"
 	"wx/cocoa/listbox.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\ctrlsub.h
-	"wx/defs.h"
-	"wx/arrstr.h"
-	"wx/control.h"
-	"wx/msw/ctrlsub.h"
-	"wx/motif/ctrlsub.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\msw\ctrlsub.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\motif\ctrlsub.h
-	"wx/dynarray.h"
-	"wx/generic/ctrlsub.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\generic\ctrlsub.h
-	"wx/dynarray.h"
 
 1412631244 c:\wxwidgets-3.0.2\include\wx\univ\listbox.h
 	"wx/scrolwin.h"
@@ -2066,80 +2139,7 @@
 1435312868 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlite3.h
 	<stdarg.h>
 
-1412631244 c:\wxwidgets-3.0.2\include\wx\radiobox.h
-	"wx/defs.h"
-	"wx/ctrlsub.h"
-	"wx/dynarray.h"
-	"wx/univ/radiobox.h"
-	"wx/msw/radiobox.h"
-	"wx/motif/radiobox.h"
-	"wx/gtk/radiobox.h"
-	"wx/gtk1/radiobox.h"
-	"wx/osx/radiobox.h"
-	"wx/cocoa/radiobox.h"
-	"wx/os2/radiobox.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\univ\radiobox.h
-	"wx/statbox.h"
-	"wx/dynarray.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\statbox.h
-	"wx/defs.h"
-	"wx/control.h"
-	"wx/containr.h"
-	"wx/univ/statbox.h"
-	"wx/msw/statbox.h"
-	"wx/motif/statbox.h"
-	"wx/gtk/statbox.h"
-	"wx/gtk1/statbox.h"
-	"wx/osx/statbox.h"
-	"wx/cocoa/statbox.h"
-	"wx/os2/statbox.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\univ\statbox.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\msw\statbox.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\motif\statbox.h
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\statbox.h
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\statbox.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\osx\statbox.h
-	"wx/control.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\statbox.h
-	"wx/cocoa/NSBox.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\nsbox.h
-	"wx/hashmap.h"
-	"wx/cocoa/ObjcAssociate.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\os2\statbox.h
-	"wx/control.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\msw\radiobox.h
-	"wx/statbox.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\motif\radiobox.h
-	"wx/dynarray.h"
-	"wx/arrstr.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\radiobox.h
-	"wx/bitmap.h"
-	"wx/list.h"
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\radiobox.h
-	"wx/bitmap.h"
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\osx\radiobox.h
-
-1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\radiobox.h
-
-1412631244 c:\wxwidgets-3.0.2\include\wx\os2\radiobox.h
-
-1436777424 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
+1437365235 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
 	"SQLManagerMain.h"
 	<wx/msgdlg.h>
 	<wx/filedlg.h>
@@ -2148,6 +2148,7 @@
 	<exception>
 	<stdexcept>
 	<fstream>
+	<thread>
 	<wx/intl.h>
 	<wx/string.h>
 

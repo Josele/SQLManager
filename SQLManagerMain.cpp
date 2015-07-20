@@ -15,7 +15,7 @@
 #include <exception>
 #include <stdexcept>
 #include <fstream>
-
+#include <thread>
 
 //(*InternalHeaders(SQLManagerFrame)
 #include <wx/intl.h>
@@ -26,12 +26,12 @@ HINSTANCE histDLL;
 //try to work with an array
 typedef int (*Createbase) (sqlite3**,const char*);
 typedef int (*Callblback)(void*,int,char**,char**);
-typedef int (*CreateTable) (sqlite3*,const char*,char*  );
-typedef int (*add_item) (sqlite3* db, string ,string ,string );
-typedef int (*add_text) (sqlite3* db, string ,string ,string,string );
-typedef int (*del_item) (sqlite3* db, string  ,string );
-typedef int (*Getrow) (sqlite3* , string ,string,string,int (*callback)(void*,int,char**,char**),void* );
-typedef int (*Nrow) (sqlite3* , string,int (*callback)(void*,int,char**,char**),void*  );
+typedef int (*CreateTable) (sqlite3*,const char*);
+typedef int (*add_item) (sqlite3*, const char* ,const char* ,const char* );
+typedef int (*add_text) (sqlite3*, const char *,const char *,const char *,const char *);
+typedef int (*del_item) (sqlite3*, const char*  ,const char* );
+typedef int (*Getrow) (sqlite3* , const char* ,const char*,const char*,int (*callback)(void*,int,char**,char**),void* );
+typedef int (*Nrow) (sqlite3* , const char*,int (*callback)(void*,int,char**,char**),void*  );
 
 
 enum wxbuildinfoformat {
@@ -75,6 +75,7 @@ const long SQLManagerFrame::ID_deleteitem = wxNewId();
 const long SQLManagerFrame::ID_BUTTON1 = wxNewId();
 const long SQLManagerFrame::ID_Save = wxNewId();
 const long SQLManagerFrame::ID_Run = wxNewId();
+const long SQLManagerFrame::ID_Run_All = wxNewId();
 const long SQLManagerFrame::ID_PANEL1 = wxNewId();
 const long SQLManagerFrame::ID_MenuNew = wxNewId();
 const long SQLManagerFrame::idMenuLoad = wxNewId();
@@ -169,6 +170,8 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     Run = new wxButton(Panel1, ID_Run, _("Run"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_Run"));
     Run->SetMinSize(wxSize(-1,-1));
     BoxSizer1->Add(Run, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    Run_All = new wxButton(Panel1, ID_Run_All, _("Run All"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_Run_All"));
+    BoxSizer1->Add(Run_All, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     FlexGridSizer1->Add(BoxSizer1, 1, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
     Panel1->SetSizer(FlexGridSizer1);
     FlexGridSizer1->Fit(Panel1);
@@ -196,12 +199,12 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
 
     Connect(ID_LISTBOX,wxEVT_COMMAND_LISTBOX_SELECTED,(wxObjectEventFunction)&SQLManagerFrame::OnListBox1Select);
     Connect(ID_LISTBOX,wxEVT_COMMAND_LISTBOX_DOUBLECLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnListBoxDClick);
-    Connect(ID_TEXTCTRL2,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&SQLManagerFrame::OnTextCtrl2Text);
     Connect(ID_BigBox,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&SQLManagerFrame::OnTextCtrl1Text);
     Connect(ID_deleteitem,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnDeleteClick);
     Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::LoadFile);
     Connect(ID_Save,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnSaveClick);
     Connect(ID_Run,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnRunClick);
+    Connect(ID_Run_All,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnRun_AllClick);
     Connect(ID_MenuNew,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SQLManagerFrame::OnMenuNewSelected);
     Connect(idMenuLoad,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SQLManagerFrame::OnMenuLoadSelected);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SQLManagerFrame::OnQuit);
@@ -213,8 +216,8 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     CreateDirectoryW(FilePath.c_str(), NULL);
     selected=-1;
     Parameters->SetEditable(0);
-     Libraries->SetEditable(0);
-     BigBox->SetEditable(0);
+    Libraries->SetEditable(0);
+    BigBox->SetEditable(0);
 }
 
 SQLManagerFrame::~SQLManagerFrame()
@@ -239,8 +242,7 @@ void SQLManagerFrame::OnClose(wxCloseEvent& event)
 {
     sqlite3_close(db);
     FreeLibrary(histDLL);
-      //  Close();
-   wxWindow::Destroy();
+    wxWindow::Destroy();
 
 }
 
@@ -249,12 +251,17 @@ void SQLManagerFrame::OnClose(wxCloseEvent& event)
 //      argc -- the number of rows in the resultset
 //      argv[] -- the data for each row
 //      azColName -- the name of each column
-   int SQLManagerFrame::c_callback(void* Used, int argc, char **argv, char **azColName){
+int SQLManagerFrame::c_callback(void* Used, int argc, char **argv, char **azColName)
+{
     int i;
     string* cont = static_cast<string*>(Used);
-    for(i=0; i<argc; i++){
-    *cont=*cont + string(argv[i])+ " ";
-    }
+    if(argc==0)
+        return 0;
+    for(i=0; i<(argc-1); i++)
+        {
+            *cont=*cont+string(argv[i])+ " ";
+        }
+    *cont=*cont+string(argv[argc-1]);
 
 
     /*
@@ -298,19 +305,18 @@ FreeLibrary(histDLL);
 *   Parms: void
 *   Return: void
 **/
-string SQLManagerFrame::lb_reload(string tbname, string tcname, int id )
+string SQLManagerFrame::lb_reload(const char* tbname, const char* tcname, int id )
 {
 
 Getrow mifunc(0);
 string answer;
-string result;
 char  num[2000];
-itoa(id,num,10);
+sprintf(num,"%d",id);
 LoadDll();
 try
 {
     mifunc=(Getrow)GetProcAddress(histDLL,"row");
-    result=(mifunc)(db,tbname,tcname,string(num),c_callback,&answer );
+    (mifunc)(db,tbname,tcname,string(num).c_str(),c_callback,&answer );
 }
 catch (std::exception& e)
 {
@@ -335,7 +341,7 @@ Nrow mifunc5(0);
  try
  {
     mifunc5=(Nrow)GetProcAddress(histDLL,"n_row");
-    result=(mifunc5)(db,tbname,c_callback,&answer );
+    result=(mifunc5)(db,tbname.c_str(),c_callback,&answer );
  }
 catch (std::exception& e)
 {
@@ -361,7 +367,6 @@ void SQLManagerFrame::OnMenuNewSelected(wxCommandEvent& event)
     struct stat info;
     CreateTable mifunc3(0);
     const char* tbname="datos";
-    char* db_err=0;
     selected=-1;
     LoadDll();
     if (SaveFileDialog.ShowModal() != wxID_OK)
@@ -381,7 +386,7 @@ void SQLManagerFrame::OnMenuNewSelected(wxCommandEvent& event)
     mifunc=(Createbase)GetProcAddress(histDLL,"CreateDatabase");
     (mifunc)(&db,dbname);
     mifunc3=(CreateTable)GetProcAddress(histDLL,"CreateTable");
-    (mifunc3)(db,tbname,db_err);
+    (mifunc3)(db,tbname);
 
     FreeDll();
     }catch (std::exception& e)
@@ -403,8 +408,26 @@ void SQLManagerFrame::OnMenuNewSelected(wxCommandEvent& event)
 **/
 void SQLManagerFrame::excep_dialog(string e)
 {
-    wxMessageDialog *dial = new wxMessageDialog(NULL,e, wxT("Exception"), wxOK);
+    wxMessageDialog *dial = new wxMessageDialog(NULL,e, wxT("Exception"), wxOK| wxICON_ERROR);
     dial->ShowModal();
+
+}
+/**
+*   Description: Check if there is any forbidden char for windows system
+*   Parms: string
+*   Return: bool
+**/
+bool SQLManagerFrame::str_controler(string String)
+{
+    int cont=String.find('\\')+String.find('/')+String.find(':')+String.find('*')+String.find('?')+String.find('"')+String.find('<')+String.find('>')+String.find('|');
+    if(cont!=-9)
+        {
+         wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Can not use \\/*:?\"<>|"),
+                                                             wxT("Unallowed operation"), wxOK | wxICON_EXCLAMATION);
+        dial->ShowModal();
+        return true;
+        }
+    return false;
 
 }
 /**
@@ -490,7 +513,6 @@ void SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent& event)
     FreeDll();
     if(result!=0)
        {
-        insert_text_BB((" Sqlite3 code error :"));
         return;
         }
     ClearAll();
@@ -499,7 +521,7 @@ void SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent& event)
         {
             str=lb_reload("datos","name",i);
             if (str.Len() > 0)
-            ListBox->Append(str.substr(0,str.length()-1));
+            ListBox->Append(str);
         }
     ListBox->Append("New");
     BigBoxSetStatus();
@@ -543,12 +565,13 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
     add_item additem(0);
     wxString text;
     wxString renamed;
+    int posR;
     int sel = ListBox->GetSelection();
     if (sel == -1)
         {
         return;
         }
-    else if(ListBox->GetCount()==(sel+1))
+    else if(ListBox->GetCount()==((unsigned int)sel+1))
         {
         text ="New item";
         do{
@@ -561,10 +584,13 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
         renamed = myDialog.GetValue();
 
         //renamed = wxGetTextFromUser(wxT("Name of the item"),wxT("New item"), text);
-        }while(renamed.IsSameAs("new")||renamed.IsSameAs("New")||renamed.IsSameAs("NEW"));
+        }while(renamed.IsSameAs("new")||renamed.IsSameAs("New")||renamed.IsSameAs("NEW")||str_controler(renamed.ToStdString()));
 
-        if (renamed.IsEmpty())
+        if (renamed.IsEmpty()||wxNOT_FOUND!=ListBox->FindString(renamed))
             {
+                wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Can not repeat names neither leave it blank"),
+                                                             wxT("Unallowed operation"), wxOK | wxICON_EXCLAMATION);
+                dial->ShowModal();
                 return;
             }
             ListBox->Delete(sel);
@@ -574,7 +600,7 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
             try
             {
             additem=(add_item)GetProcAddress(histDLL,"add_item");
-            (additem)(db,"datos","name",renamed.ToStdString());
+            (additem)(db,"datos","name",renamed.ToStdString().c_str());
             }catch (std::exception& e)
             {
             excep_dialog(string(e.what()));
@@ -583,83 +609,93 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
             selected=sel;
             ListBox->SetSelection(selected);
             text = ListBox->GetString(selected);
-
           try
             {
-            getrow=(Getrow)GetProcAddress(histDLL,"id_row");
-            (getrow)(db,"datos","name",text.ToStdString(),c_callback,&resp);
-            getrow=(Getrow)GetProcAddress(histDLL,"row");
-            (getrow)(db,"datos","ref",resp,c_callback,&answer );
+                getrow=(Getrow)GetProcAddress(histDLL,"id_row");
+                (getrow)(db,"datos","name",text.ToStdString().c_str(),c_callback,&resp);
+                getrow=(Getrow)GetProcAddress(histDLL,"row");
+                (getrow)(db,"datos","ref",resp.c_str(),c_callback,&answer );
             }
             catch (std::exception& e)
             {
-            excep_dialog(string(e.what()));
+                excep_dialog(string(e.what()));
             }
             FreeDll();
-            insert_text_BB(answer.substr(0,answer.length()-1));
+            insert_text_L(" ");
+            insert_text_P(" ");
+
+            insert_text_BB(answer);
+
             BigBox->SetModified(0);
             Parameters->SetModified(0);
             Libraries->SetModified(0);
         }
     else
         {
-
-
             if(selected==sel)
                 return;
             if(BigBox->IsModified()||Libraries->IsModified()||Parameters->IsModified())
-            {
-            wxMessageDialog *dial = new wxMessageDialog(NULL,string("The file has been modify, do you want to save your changes: " +ListBox->GetString(selected).ToStdString() ), wxT("Save"), wxYES_NO);
-            if(dial->ShowModal()==wxID_YES){
-                OnSaveClick(event);
-                }
+                {
+                wxMessageDialog *dial = new wxMessageDialog(NULL
+                                                            ,string("The file has been modify, do you want to save your changes: " +ListBox->GetString(selected).ToStdString() )
+                                                            ,wxT("Save"), wxYES_NO);
+                if(dial->ShowModal()==wxID_YES)
+                    {
+                    OnSaveClick(event);
+                    }
 
-            }
-            //char n[2];
-            //insert_text_BB(string(itoa(sel,n,10)));
+                }
             text = ListBox->GetString(sel);
             LoadDll();
             try
-            {
-            getrow=(Getrow)GetProcAddress(histDLL,"id_row");
-            (getrow)(db,"datos","name",text.ToStdString(),c_callback,&resp);
-            getrow=(Getrow)GetProcAddress(histDLL,"row");
-            (getrow)(db,"datos","ref",resp,c_callback,&answer );
-            }
+                {
+                getrow=(Getrow)GetProcAddress(histDLL,"id_row");
+                (getrow)(db,"datos","name",text.ToStdString().c_str(),c_callback,&resp);
+                getrow=(Getrow)GetProcAddress(histDLL,"row");
+                (getrow)(db,"datos","ref",resp.c_str(),c_callback,&answer );
+                }
             catch (std::exception& e)
-            {
-            excep_dialog(string(e.what()));
-            }
-            FreeDll();
+                {
+                excep_dialog(string(e.what()));
+                }
             selected=sel;
-            insert_text_BB(answer.substr(0,answer.length()-1));
-
-            LoadDll();
+            insert_text_BB(answer);
             try
-            {
-            answer=std::string();
-            getrow=(Getrow)GetProcAddress(histDLL,"row");
-            (getrow)(db,"datos","parms",resp,c_callback,&answer );
-            }
+                {
+                answer=std::string();
+                getrow=(Getrow)GetProcAddress(histDLL,"row");
+                (getrow)(db,"datos","parms",resp.c_str(),c_callback,&answer );
+                }
             catch (std::exception& e)
-            {
-            excep_dialog(string(e.what()));
-            }
-            FreeDll();
-
-            insert_text_P(answer.substr(0,answer.length()-1));    LoadDll();
+                {
+                excep_dialog(string(e.what()));
+                }
+            insert_text_P(answer);
             try
-            {
-            answer=std::string();
-            getrow=(Getrow)GetProcAddress(histDLL,"row");
-            (getrow)(db,"datos","libs",resp,c_callback,&answer );
-            }
+                {
+                answer=std::string();
+                getrow=(Getrow)GetProcAddress(histDLL,"row");
+                (getrow)(db,"datos","libs",resp.c_str(),c_callback,&answer );
+                }
             catch (std::exception& e)
-            {
-            excep_dialog(string(e.what()));
-            }
+                {
+                excep_dialog(string(e.what()));
+                }
+                insert_text_L(answer);
+            try
+                {
+                answer=std::string();
+                getrow=(Getrow)GetProcAddress(histDLL,"row");
+                (getrow)(db,"datos","ret",resp.c_str(),c_callback,&answer );
+                }
+            catch (std::exception& e)
+                {
+                excep_dialog(string(e.what()));
+                }
             FreeDll();
-            insert_text_L(answer.substr(0,answer.length()-1));
+            posR=RadioBox->FindString(answer);
+            if(posR!=wxNOT_FOUND)
+                RadioBox->SetSelection(posR);
             BigBox->SetModified(0);
             Parameters->SetModified(0);
             Libraries->SetModified(0);
@@ -676,25 +712,23 @@ void SQLManagerFrame::OnDeleteClick(wxCommandEvent& event)
     wxString text;
     wxString renamed;
     del_item delitem(0);
-    char  num[2000];
     if(selected==-1)
         {
         return;
         }
 
     text = ListBox->GetString(selected);
-    wxMessageDialog *dial = new wxMessageDialog(NULL,string("Are you sure you want to delete: " +text ), wxT("Delete"), wxYES_NO);
+    wxMessageDialog *dial = new wxMessageDialog(NULL,string("Are you sure you want to delete: " +text ), wxT("Delete"),wxICON_EXCLAMATION| wxYES_NO);
     if(dial->ShowModal()==wxID_NO)
         return;
     //Query to delete
-    itoa(selected,num,10);
     LoadDll();
     try
     {
         getid=(Getrow)GetProcAddress(histDLL,"id_row");
-        (getid)(db,"datos","name",text.ToStdString(),c_callback,&resp);
+        (getid)(db,"datos","name",text.ToStdString().c_str(),c_callback,&resp);
         delitem=(del_item)GetProcAddress(histDLL,"del_item");
-        (delitem)(db,"datos",resp);
+        (delitem)(db,"datos",resp.c_str());
         ListBox->Delete(selected);
      }catch (std::exception& e)
     {
@@ -713,10 +747,9 @@ void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
     Getrow getid(0);
     string resp;
     string text;
-    char  num[2000];
     if(selected==-1)
         return;
-    string name=ListBox->GetString(selected).ToStdString();
+    string name=ListBox->GetString(selected).ToStdString().c_str();
     if(event.GetId()==ID_Save)
     {
     wxMessageDialog *dial = new wxMessageDialog(NULL,string("Are you sure you want to overwrite: " +name ), wxT("Save"), wxYES_NO);
@@ -725,24 +758,33 @@ void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
 
     }
     //Query to delete
-    itoa(selected,num,10);
     text="";
     int n_lines=BigBox->GetNumberOfLines();
     for(i=0;i<n_lines;i++)
-        text=text+BigBox->GetLineText(i).ToStdString()+"\n";
+        {
+            if(i==(n_lines-1))
+            {
+                text=text+BigBox->GetLineText(i).ToStdString();
+                break;
+            }
+            text=text+BigBox->GetLineText(i).ToStdString()+"\n";
+        }
     LoadDll();
     try
     {
         getid=(Getrow)GetProcAddress(histDLL,"id_row");
-        (getid)(db,"datos","name",name,c_callback,&resp);
+        (getid)(db,"datos","name",name.c_str(),c_callback,&resp);
         addtext=(add_text)GetProcAddress(histDLL,"add_text");
-        (addtext)(db,"datos","ref",resp,text);
+        (addtext)(db,"datos","ref",resp.c_str(),text.c_str());
         text=Parameters->GetLineText(0).ToStdString()==std::string()?" ":Parameters->GetLineText(0).ToStdString();
         addtext=(add_text)GetProcAddress(histDLL,"add_text");
-        (addtext)(db,"datos","parms",resp,text);
+        (addtext)(db,"datos","parms",resp.c_str(),text.c_str());
         text=Libraries->GetLineText(0).ToStdString()==std::string()?" ":Libraries->GetLineText(0).ToStdString();
         addtext=(add_text)GetProcAddress(histDLL,"add_text");
-        (addtext)(db,"datos","libs",resp,text);
+        (addtext)(db,"datos","libs",resp.c_str(),text.c_str());
+        text=RadioBox->GetStringSelection().ToStdString()==std::string()?"void":RadioBox->GetStringSelection().ToStdString();
+        addtext=(add_text)GetProcAddress(histDLL,"add_text");
+        (addtext)(db,"datos","ret",resp.c_str(),text.c_str());
 
      }catch (std::exception& e)
     {
@@ -757,10 +799,11 @@ void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
 }
 
 void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
-{
-    string resp;
+{   string resp;
+    wxString renamed;
     string code;
     string parms;
+    string headfuncs;
     string libs;
     string ret;
     Getrow getrow(0);
@@ -771,32 +814,52 @@ void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
         wxMessageDialog *dial = new wxMessageDialog(NULL,string("Before running, you need to save it: " +ListBox->GetString(selected).ToStdString() ), wxT("Delete"), wxYES_NO);
         if(dial->ShowModal()==wxID_NO)
             return;
+
+        OnSaveClick(event);
         }
-    OnSaveClick(event);
     string text = ListBox->GetString(selected).ToStdString();
+    do{
+            wxTextEntryDialog  myDialog(this, _("Name of the file output"), _("New item"), _(""));
+            myDialog.SetMaxLength(30);
+            if ( myDialog.ShowModal() != wxID_OK )
+                {
+                        return;
+                }
+        renamed = myDialog.GetValue();
+    }while(str_controler(renamed.ToStdString()));
+     if (renamed.IsEmpty()||wxNOT_FOUND!=ListBox->FindString(renamed))
+            {
+                wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Can not leave it blank"),
+                                                             wxT("Unallowed operation"), wxOK | wxICON_EXCLAMATION);
+                dial->ShowModal();
+                return;
+            }
     LoadDll();
     try
     {
             getrow=(Getrow)GetProcAddress(histDLL,"id_row");
-            (getrow)(db,"datos","name",text,c_callback,&resp);
+            (getrow)(db,"datos","name",text.c_str(),c_callback,&resp);
             getrow=(Getrow)GetProcAddress(histDLL,"row");
-            (getrow)(db,"datos","ref",resp,c_callback,&code );
+            (getrow)(db,"datos","ref",resp.c_str(),c_callback,&code );
             getrow=(Getrow)GetProcAddress(histDLL,"row");
-            (getrow)(db,"datos","parms",resp,c_callback,&parms );
+            (getrow)(db,"datos","parms",resp.c_str(),c_callback,&parms );
             getrow=(Getrow)GetProcAddress(histDLL,"row");
-            (getrow)(db,"datos","libs",resp,c_callback,&libs );
+            (getrow)(db,"datos","libs",resp.c_str(),c_callback,&libs );
+            getrow=(Getrow)GetProcAddress(histDLL,"row");
+            (getrow)(db,"datos","ret",resp.c_str(),c_callback,&ret );
     }
     catch (std::exception& e)
     {
         excep_dialog(string(e.what()));
     }
+    headfuncs=ret+" __stdcall FUNCTION_DLL "+text+"("+parms+");";
+    code=" __stdcall "+ret+" "+text +"("+parms+")\n{\n"+code+"\n}";
     FreeDll();
-    ret=RadioBox->GetString(RadioBox->GetSelection()).ToStdString();
-    GenerateDllFiles(text,code,parms,libs,ret);
+    GenerateDllFiles_v2(renamed.ToStdString(),code,headfuncs,libs);
 
 
 }
-
+/**
 void SQLManagerFrame:: GenerateDllFiles(string N_file,string action, string parms,string libs,string ret)
 {   //char command[120];
 
@@ -804,27 +867,30 @@ void SQLManagerFrame:: GenerateDllFiles(string N_file,string action, string parm
     char *H_file =(char*) malloc((3*30*sizeof(char)+285*sizeof(char)));
     sprintf(H_file,"#ifndef %s_H\n#define %s_H\n#ifdef __cplusplus\nextern \"C\" {\n#endif\n#ifdef BUILDING_DLL\n#define FUNCTION_DLL __declspec(dllexport)\n#else\n#define FUNCTION_DLL __declspec(dllimport)\n#endif\n %s __stdcall FUNCTION_DLL hello(%s);\n#ifdef __cplusplus\n}\n#endif\n#endif"
             ,N_file.c_str(),N_file.c_str(),ret.c_str(),parms.c_str());
-    string cont=N_file+".h";
+    string cont="Dll_release\\"+N_file+".h";
+    CreateDirectory(L"Dll_release",NULL);
     myfile.open (cont.c_str());
     myfile << H_file;
     myfile.close();
     free(H_file);
-    char C_file[800];
+    char C_file[120];
     sprintf(C_file,"#include <stdio.h>\n%s\n#include \"%s.h\"\n__stdcall %s hello( %s )\n{"
             ,libs.c_str(),N_file.c_str(),ret.c_str(),parms.c_str());
-    cont=N_file+".cpp";
+    cont="Dll_release\\"+N_file+".cpp";
     myfile.open (cont.c_str());
     myfile << C_file << action << "}";
     myfile.close();
     char *command =(char*) malloc((3*30*sizeof(char)+91*sizeof(char)));
 
-    sprintf(command,"g++ -Wall -c -DBUILDING_DLL %s.cpp & pause & g++ -shared -o %s.dll %s.o -Wl,--out-implib,lib%s.a & pause"
-            ,N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str());
-    system(command);
+    sprintf(command,"g++ -Wall -c -DBUILDING_DLL Dll_release\\%s.cpp   & g++ -shared -o Dll_release\\%s.dll %s.o -Wl,--out-implib,Dll_release\\lib%s.a & del %s.o & pause"
+            ,N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str());
+    std::thread first (system,command);
+    first.join();
+
     free(command);
 
-
 }
+*/
 
 void SQLManagerFrame::OnPanel1Paint(wxPaintEvent& event)
 {
@@ -838,6 +904,115 @@ void SQLManagerFrame::LoadFile(wxCommandEvent& event)
 {
 }
 
-void SQLManagerFrame::OnTextCtrl2Text(wxCommandEvent& event)
+
+void SQLManagerFrame::OnRun_AllClick(wxCommandEvent& event)
 {
+    string resp;
+    wxString renamed;
+    string code;
+    string code_cont;
+    string parms;
+    string headfuncs;
+    string text;
+    string libs;
+    string libs_cont;
+    string ret;
+    int n_items;
+    int i;
+    Getrow getrow(0);
+
+    if(BigBox->IsModified()||Parameters->IsModified()||Libraries->IsModified())
+        {
+        wxMessageDialog *dial = new wxMessageDialog(NULL,string("Before running, you need to save it: " +ListBox->GetString(selected).ToStdString() ), wxT("Delete"), wxYES_NO);
+        if(dial->ShowModal()==wxID_NO)
+            return;
+        OnSaveClick(event);
+        }
+    do{
+            wxTextEntryDialog  myDialog(this, _("Name of the file output"), _("New item"), _(""));
+            myDialog.SetMaxLength(30);
+            if ( myDialog.ShowModal() != wxID_OK )
+                {
+                        return;
+                }
+        renamed = myDialog.GetValue();
+    }while(str_controler(renamed.ToStdString()));
+     if (renamed.IsEmpty())
+            {
+                wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Can not leave it blank"),
+                                                             wxT("Unallowed operation"), wxOK | wxICON_EXCLAMATION);
+                dial->ShowModal();
+                return;
+            }
+    LoadDll();
+    n_items=cont_col("datos");
+    for(i=0;(i)<n_items;i++)
+        {
+            text=lb_reload("datos","name",i);
+            if (text.length() > 0)
+            {
+                 try
+                 {
+                    getrow=(Getrow)GetProcAddress(histDLL,"id_row");
+                    (getrow)(db,"datos","name",text.c_str(),c_callback,&resp);
+                    getrow=(Getrow)GetProcAddress(histDLL,"row");
+                    (getrow)(db,"datos","ref",resp.c_str(),c_callback,&code );
+                    getrow=(Getrow)GetProcAddress(histDLL,"row");
+                    (getrow)(db,"datos","parms",resp.c_str(),c_callback,&parms );
+                    getrow=(Getrow)GetProcAddress(histDLL,"row");
+                    (getrow)(db,"datos","libs",resp.c_str(),c_callback,&libs );
+                    getrow=(Getrow)GetProcAddress(histDLL,"row");
+                    (getrow)(db,"datos","ret",resp.c_str(),c_callback,&ret );
+
+                    headfuncs=headfuncs+ret+" __stdcall FUNCTION_DLL "+text+"("+parms+");\n";
+                    code_cont=code_cont+" __stdcall "+ret+" "+text +"("+parms+")\n{\n"+code+"\n}\n";
+                    if(libs!=" ")
+                        libs_cont=libs_cont+"\n"+libs;
+                    resp=std::string();
+                    code=std::string();
+                    libs=std::string();
+                    parms=std::string();
+                    ret=std::string();
+                }
+                catch (std::exception& e)
+                {
+                    excep_dialog(string(e.what()));
+                }
+
+            }
+
+        }
+
+    FreeDll();
+    GenerateDllFiles_v2(renamed.ToStdString(),code_cont,headfuncs,libs_cont);
+
+
+}
+void SQLManagerFrame:: GenerateDllFiles_v2(string N_file,string code, string headfuncs,string libs)
+{   //char command[120];
+
+    std::ofstream myfile;
+    char *H_file =(char*) malloc((3*30*sizeof(char)+800*sizeof(char)));
+    sprintf(H_file,"#ifndef __%s_H__\n#define __%s_H__\n#ifdef BUILDING_DLL\n#define FUNCTION_DLL __declspec(dllexport)\n#else\n#define FUNCTION_DLL __declspec(dllimport)\n#endif\n\n#ifdef __cplusplus\nextern \"C\" {\n#endif\n %s\n#ifdef __cplusplus\n}\n#endif\n#endif"
+            ,N_file.c_str(),N_file.c_str(),headfuncs.c_str());
+    string cont="Dll_release\\"+N_file+".h";
+    CreateDirectory(L"Dll_release",NULL);
+    myfile.open (cont.c_str());
+    myfile << H_file;
+    myfile.close();
+    free(H_file);
+    char C_file[120];
+    sprintf(C_file,"#include \"%s.h\"\n#include <stdio.h>\n%s\n "
+            ,N_file.c_str(),libs.c_str());
+    cont="Dll_release\\"+N_file+".cpp";
+    myfile.open (cont.c_str());
+    myfile << C_file << code;
+//<<"\nextern \"C\" FUNCTION_DLL BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)\n{\n    switch (fdwReason)\n{\n        case DLL_PROCESS_ATTACH:\n            break;\n        case DLL_PROCESS_DETACH:\n            break;\n        case DLL_THREAD_ATTACH:\n            break;\n        case DLL_THREAD_DETACH:\n            break;\n}\nreturn TRUE; // succesful\n}";
+    myfile.close();
+    char *command =(char*) malloc((3*30*sizeof(char)+900*sizeof(char)));
+    sprintf(command,"g++ -Wall -DBUILDING_DLL -O2  -c Dll_release\\%s.cpp -o Dll_release\\%s.o & g++ -shared -Wl,--output-def=Dll_release\\%s.def -Wl,--out-implib=Dll_release\\%s.a -Wl,--dll  Dll_release\\%s.o  -o Dll_release\\%s.dll  & pause"
+            ,N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str());
+    std::thread first (system,command);
+    first.join();
+    free(command);
 }
