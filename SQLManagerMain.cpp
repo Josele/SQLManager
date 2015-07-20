@@ -68,7 +68,7 @@ const long SQLManagerFrame::ID_STATICTEXT4 = wxNewId();
 const long SQLManagerFrame::ID_STATICTEXT5 = wxNewId();
 const long SQLManagerFrame::ID_STATICTEXT3 = wxNewId();
 const long SQLManagerFrame::ID_TEXTCTRL2 = wxNewId();
-const long SQLManagerFrame::ID_RADIOBOX1 = wxNewId();
+const long SQLManagerFrame::ID_RADIOBOX = wxNewId();
 const long SQLManagerFrame::ID_TEXTCTRL1 = wxNewId();
 const long SQLManagerFrame::ID_BigBox = wxNewId();
 const long SQLManagerFrame::ID_deleteitem = wxNewId();
@@ -129,31 +129,28 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     FlexGridSizer2->AddGrowableCol(0);
     FlexGridSizer2->AddGrowableCol(1);
     FlexGridSizer2->AddGrowableCol(2);
-    FlexGridSizer2->AddGrowableRow(0);
-    FlexGridSizer2->AddGrowableRow(1);
-    StaticText4 = new wxStaticText(Panel1, ID_STATICTEXT4, _("Params"), wxDefaultPosition, wxSize(114,15), 0, _T("ID_STATICTEXT4"));
+    StaticText4 = new wxStaticText(Panel1, ID_STATICTEXT4, _("Params"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT4"));
     FlexGridSizer2->Add(StaticText4, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     StaticText5 = new wxStaticText(Panel1, ID_STATICTEXT5, _("Return"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT5"));
     FlexGridSizer2->Add(StaticText5, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     StaticText3 = new wxStaticText(Panel1, ID_STATICTEXT3, _("Extra Libraries"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT3"));
     FlexGridSizer2->Add(StaticText3, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    Parameters = new wxTextCtrl(Panel1, ID_TEXTCTRL2, wxEmptyString, wxDefaultPosition, wxSize(114,28), wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_RICH2, wxDefaultValidator, _T("ID_TEXTCTRL2"));
-    FlexGridSizer2->Add(Parameters, 2, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    Parameters = new wxTextCtrl(Panel1, ID_TEXTCTRL2, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_RICH2, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+    FlexGridSizer2->Add(Parameters, 3, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     wxString __wxRadioBoxChoices_1[3] =
     {
     	_("void"),
     	_("int"),
     	_("char*")
     };
-    RadioBox = new wxRadioBox(Panel1, ID_RADIOBOX1, wxEmptyString, wxDefaultPosition, wxSize(183,36), 3, __wxRadioBoxChoices_1, 1, wxRA_VERTICAL|wxNO_BORDER, wxDefaultValidator, _T("ID_RADIOBOX1"));
-    FlexGridSizer2->Add(RadioBox, 1, wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 1);
-    Libraries = new wxTextCtrl(Panel1, ID_TEXTCTRL1, wxEmptyString, wxDefaultPosition, wxDLG_UNIT(Panel1,wxSize(60,19)), wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_RICH2, wxDefaultValidator, _T("ID_TEXTCTRL1"));
-    Libraries->SetMaxSize(wxSize(-1,-1));
-    FlexGridSizer2->Add(Libraries, 2, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    RadioBox = new wxRadioBox(Panel1, ID_RADIOBOX, wxEmptyString, wxDefaultPosition, wxDefaultSize, 3, __wxRadioBoxChoices_1, 1, wxRA_VERTICAL, wxDefaultValidator, _T("ID_RADIOBOX"));
+    FlexGridSizer2->Add(RadioBox, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    Libraries = new wxTextCtrl(Panel1, ID_TEXTCTRL1, wxEmptyString, wxDefaultPosition, wxDLG_UNIT(Panel1,wxSize(-1,-1)), wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_RICH2, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+    FlexGridSizer2->Add(Libraries, 2, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer3->Add(FlexGridSizer2, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BigBox = new wxTextCtrl(Panel1, ID_BigBox, wxEmptyString, wxDefaultPosition, wxDLG_UNIT(Panel1,wxSize(532,228)), wxTE_AUTO_SCROLL|wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_MULTILINE|wxTE_RICH2|wxVSCROLL, wxDefaultValidator, _T("ID_BigBox"));
     BigBox->SetMinSize(wxSize(400,-1));
-    BoxSizer3->Add(BigBox, 6, wxALL|wxEXPAND|wxALIGN_RIGHT|wxALIGN_TOP, 6);
+    BoxSizer3->Add(BigBox, 5, wxALL|wxEXPAND|wxALIGN_RIGHT|wxALIGN_TOP, 6);
     FlexGridSizer1->Add(BoxSizer3, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
     Delete = new wxButton(Panel1, ID_deleteitem, _("Delete"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_deleteitem"));
@@ -170,7 +167,7 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     Run = new wxButton(Panel1, ID_Run, _("Run"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_Run"));
     Run->SetMinSize(wxSize(-1,-1));
     BoxSizer1->Add(Run, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    Run_All = new wxButton(Panel1, ID_Run_All, _("Run All"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_Run_All"));
+    Run_All = new wxButton(Panel1, ID_Run_All, _("RunAll"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_Run_All"));
     BoxSizer1->Add(Run_All, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     FlexGridSizer1->Add(BoxSizer1, 1, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
     Panel1->SetSizer(FlexGridSizer1);
@@ -199,6 +196,9 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
 
     Connect(ID_LISTBOX,wxEVT_COMMAND_LISTBOX_SELECTED,(wxObjectEventFunction)&SQLManagerFrame::OnListBox1Select);
     Connect(ID_LISTBOX,wxEVT_COMMAND_LISTBOX_DOUBLECLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnListBoxDClick);
+    Connect(ID_TEXTCTRL2,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&SQLManagerFrame::OnParametersText);
+    Connect(ID_RADIOBOX,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&SQLManagerFrame::OnRadioBox1Select);
+    Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&SQLManagerFrame::OnLibrariesText);
     Connect(ID_BigBox,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&SQLManagerFrame::OnTextCtrl1Text);
     Connect(ID_deleteitem,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnDeleteClick);
     Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::LoadFile);
@@ -1015,4 +1015,16 @@ void SQLManagerFrame:: GenerateDllFiles_v2(string N_file,string code, string hea
     std::thread first (system,command);
     first.join();
     free(command);
+}
+
+void SQLManagerFrame::OnLibrariesText(wxCommandEvent& event)
+{
+}
+
+void SQLManagerFrame::OnRadioBox1Select(wxCommandEvent& event)
+{
+}
+
+void SQLManagerFrame::OnParametersText(wxCommandEvent& event)
+{
 }

@@ -60,6 +60,9 @@ class SQLManagerFrame: public wxFrame
         void LoadFile(wxCommandEvent& event);
         void OnClose1(wxCloseEvent& event);
         void OnRun_AllClick(wxCommandEvent& event);
+        void OnLibrariesText(wxCommandEvent& event);
+        void OnRadioBox1Select(wxCommandEvent& event);
+        void OnParametersText(wxCommandEvent& event);
         //*)
         void insert_text_BB(string text);
         void insert_text_P(string text);
@@ -83,7 +86,7 @@ class SQLManagerFrame: public wxFrame
         static const long ID_STATICTEXT5;
         static const long ID_STATICTEXT3;
         static const long ID_TEXTCTRL2;
-        static const long ID_RADIOBOX1;
+        static const long ID_RADIOBOX;
         static const long ID_TEXTCTRL1;
         static const long ID_BigBox;
         static const long ID_deleteitem;

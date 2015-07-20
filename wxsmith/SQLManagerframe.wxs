@@ -90,14 +90,14 @@
 								<object class="sizeritem">
 									<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="Parameters" member="yes">
 										<style>wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_RICH2</style>
-										<handler function="OnTextCtrl2Text" entry="EVT_TEXT" />
+										<handler function="OnParametersText" entry="EVT_TEXT" />
 									</object>
 									<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 									<border>5</border>
 									<option>3</option>
 								</object>
 								<object class="sizeritem">
-									<object class="wxRadioBox" name="ID_RADIOBOX1" variable="RadioBox1" member="yes">
+									<object class="wxRadioBox" name="ID_RADIOBOX" variable="RadioBox" member="yes">
 										<label></label>
 										<content>
 											<item>void</item>
@@ -106,6 +106,7 @@
 										</content>
 										<default>-1</default>
 										<style>wxRA_VERTICAL</style>
+										<handler function="OnRadioBox1Select" entry="EVT_RADIOBOX" />
 									</object>
 									<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 									<border>5</border>
@@ -115,6 +116,7 @@
 									<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="Libraries" member="yes">
 										<size>-1,-1d</size>
 										<style>wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_RICH2</style>
+										<handler function="OnLibrariesText" entry="EVT_TEXT" />
 									</object>
 									<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 									<border>5</border>
@@ -188,6 +190,15 @@
 								<label>Run</label>
 								<minsize>-1,-1</minsize>
 								<handler function="OnRunClick" entry="EVT_BUTTON" />
+							</object>
+							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<option>1</option>
+						</object>
+						<object class="sizeritem">
+							<object class="wxButton" name="ID_Run_All" variable="Run_All" member="yes">
+								<label>RunAll</label>
+								<handler function="OnRun_AllClick" entry="EVT_BUTTON" />
 							</object>
 							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 							<border>5</border>
