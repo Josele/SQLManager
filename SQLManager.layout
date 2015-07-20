@@ -3,7 +3,7 @@
 	<ActiveTarget name="Release" />
 	<File name="SQLManagerMain.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3487" topLine="93" />
+			<Cursor1 position="2887" topLine="89" />
 		</Cursor>
 	</File>
 	<File name="resource.rc" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -13,7 +13,7 @@
 	</File>
 	<File name="SQLManagerMain.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="37039" topLine="999" />
+			<Cursor1 position="32973" topLine="941" />
 		</Cursor>
 	</File>
 	<File name="SQLManagerApp.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">

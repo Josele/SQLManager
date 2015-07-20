@@ -92,7 +92,7 @@
 										<style>wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_RICH2</style>
 										<handler function="OnParametersText" entry="EVT_TEXT" />
 									</object>
-									<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+									<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 									<border>5</border>
 									<option>3</option>
 								</object>
@@ -105,11 +105,15 @@
 											<item>char*</item>
 										</content>
 										<default>-1</default>
+										<pos>-1,-1</pos>
+										<size>169,40</size>
+										<minsize>-1,-1</minsize>
+										<maxsize>-1,-1</maxsize>
 										<style>wxRA_VERTICAL</style>
 										<handler function="OnRadioBox1Select" entry="EVT_RADIOBOX" />
 									</object>
-									<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
-									<border>5</border>
+									<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+									<border>1</border>
 									<option>1</option>
 								</object>
 								<object class="sizeritem">
@@ -118,7 +122,7 @@
 										<style>wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_RICH2</style>
 										<handler function="OnLibrariesText" entry="EVT_TEXT" />
 									</object>
-									<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+									<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 									<border>5</border>
 									<option>2</option>
 								</object>
@@ -232,6 +236,9 @@
 					<help>Quit the application</help>
 					<handler function="OnQuit" entry="EVT_MENU" />
 				</object>
+			</object>
+			<object class="wxMenu" variable="Menu3" member="yes">
+				<label>&amp;Setup</label>
 			</object>
 			<object class="wxMenu" variable="Menu2" member="no">
 				<label>Help</label>

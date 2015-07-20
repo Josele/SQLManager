@@ -104,6 +104,7 @@ class SQLManagerFrame: public wxFrame
         //(*Declarations(SQLManagerFrame)
         wxTextCtrl* Libraries;
         wxStaticText* StaticText2;
+        wxMenu* Menu3;
         wxButton* Button1;
         wxTextCtrl* Parameters;
         wxMenuItem* MenuItem4;
