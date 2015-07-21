@@ -11,6 +11,7 @@
 #define SQLMANAGERMAIN_H
 
 //(*Headers(SQLManagerFrame)
+#include <wx/listctrl.h>
 #include <wx/sizer.h>
 #include <wx/stattext.h>
 #include <wx/radiobox.h>
@@ -63,6 +64,8 @@ class SQLManagerFrame: public wxFrame
         void OnLibrariesText(wxCommandEvent& event);
         void OnRadioBox1Select(wxCommandEvent& event);
         void OnParametersText(wxCommandEvent& event);
+        void OnListViewBeginDrag(wxListEvent& event);
+        void OnlistCtrlItemActivated(wxListEvent& event);
         //*)
         void insert_text_BB(string text);
         void insert_text_P(string text);
@@ -88,6 +91,7 @@ class SQLManagerFrame: public wxFrame
         static const long ID_TEXTCTRL2;
         static const long ID_RADIOBOX;
         static const long ID_TEXTCTRL1;
+        static const long ID_LISTCTRL;
         static const long ID_BigBox;
         static const long ID_deleteitem;
         static const long ID_BUTTON1;
@@ -120,6 +124,7 @@ class SQLManagerFrame: public wxFrame
         wxStatusBar* StatusBar1;
         wxTextCtrl* BigBox;
         wxStaticLine* StaticLine1;
+        wxListCtrl* listCtrl;
         wxButton* Run;
         wxListBox* ListBox;
         wxStaticText* StaticText4;

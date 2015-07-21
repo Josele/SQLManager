@@ -70,6 +70,7 @@ const long SQLManagerFrame::ID_STATICTEXT3 = wxNewId();
 const long SQLManagerFrame::ID_TEXTCTRL2 = wxNewId();
 const long SQLManagerFrame::ID_RADIOBOX = wxNewId();
 const long SQLManagerFrame::ID_TEXTCTRL1 = wxNewId();
+const long SQLManagerFrame::ID_LISTCTRL = wxNewId();
 const long SQLManagerFrame::ID_BigBox = wxNewId();
 const long SQLManagerFrame::ID_deleteitem = wxNewId();
 const long SQLManagerFrame::ID_BUTTON1 = wxNewId();
@@ -103,7 +104,7 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     wxBoxSizer* BoxSizer3;
     wxMenu* Menu2;
 
-    Create(parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("wxID_ANY"));
+    Create(parent, wxID_ANY, _("Dll_Manager"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("wxID_ANY"));
     SetClientSize(wxSize(600,450));
     SetMinSize(wxSize(-1,-1));
     Panel1 = new wxPanel(this, ID_PANEL1, wxPoint(288,216), wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL1"));
@@ -150,9 +151,11 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     Libraries = new wxTextCtrl(Panel1, ID_TEXTCTRL1, wxEmptyString, wxDefaultPosition, wxDLG_UNIT(Panel1,wxSize(-1,-1)), wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_RICH2, wxDefaultValidator, _T("ID_TEXTCTRL1"));
     FlexGridSizer2->Add(Libraries, 2, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer3->Add(FlexGridSizer2, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    listCtrl = new wxListCtrl(Panel1, ID_LISTCTRL, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxTAB_TRAVERSAL, wxDefaultValidator, _T("ID_LISTCTRL"));
+    BoxSizer3->Add(listCtrl, 2, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BigBox = new wxTextCtrl(Panel1, ID_BigBox, wxEmptyString, wxDefaultPosition, wxDLG_UNIT(Panel1,wxSize(532,228)), wxTE_AUTO_SCROLL|wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_MULTILINE|wxTE_RICH2|wxVSCROLL, wxDefaultValidator, _T("ID_BigBox"));
     BigBox->SetMinSize(wxSize(400,-1));
-    BoxSizer3->Add(BigBox, 5, wxALL|wxEXPAND|wxALIGN_RIGHT|wxALIGN_TOP, 6);
+    BoxSizer3->Add(BigBox, 2, wxALL|wxEXPAND|wxALIGN_RIGHT|wxALIGN_TOP, 6);
     FlexGridSizer1->Add(BoxSizer3, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
     Delete = new wxButton(Panel1, ID_deleteitem, _("Delete"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_deleteitem"));
@@ -203,6 +206,7 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     Connect(ID_TEXTCTRL2,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&SQLManagerFrame::OnParametersText);
     Connect(ID_RADIOBOX,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&SQLManagerFrame::OnRadioBox1Select);
     Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&SQLManagerFrame::OnLibrariesText);
+    Connect(ID_LISTCTRL,wxEVT_COMMAND_LIST_ITEM_ACTIVATED,(wxObjectEventFunction)&SQLManagerFrame::OnlistCtrlItemActivated);
     Connect(ID_BigBox,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&SQLManagerFrame::OnTextCtrl1Text);
     Connect(ID_deleteitem,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnDeleteClick);
     Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::LoadFile);
@@ -222,6 +226,11 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     Parameters->SetEditable(0);
     Libraries->SetEditable(0);
     BigBox->SetEditable(0);
+
+    listCtrl->InsertColumn(0,"Name");
+    listCtrl->InsertColumn(1,"Type");
+    listCtrl->InsertColumn(2,"Value");
+
 }
 
 SQLManagerFrame::~SQLManagerFrame()
@@ -400,6 +409,7 @@ void SQLManagerFrame::OnMenuNewSelected(wxCommandEvent& event)
 
     ClearAll();
     ListBox->Append("New");
+    listCtrl->InsertItem(0,"New");
     BigBoxSetStatus();
 
 }
@@ -482,6 +492,7 @@ void SQLManagerFrame::ClearAll()
         Libraries->Clear();
         Parameters->Clear();
         ListBox->Clear();
+        listCtrl->DeleteAllItems();
 
 }
 
@@ -528,6 +539,7 @@ void SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent& event)
             ListBox->Append(str);
         }
     ListBox->Append("New");
+    listCtrl->InsertItem(0,"New");
     BigBoxSetStatus();
 
 }
@@ -600,11 +612,23 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
             ListBox->Delete(sel);
             ListBox->Insert(renamed, sel);
             ListBox->Append("New");
+            listCtrl->InsertItem(0,"New");
             LoadDll();
             try
+
             {
             additem=(add_item)GetProcAddress(histDLL,"add_item");
             (additem)(db,"datos","name",renamed.ToStdString().c_str());
+            }catch (std::exception& e)
+            {
+            excep_dialog(string(e.what()));
+            }
+            try{
+            getrow=(Getrow)GetProcAddress(histDLL,"id_row");
+            (getrow)(db,"datos","name",renamed.ToStdString().c_str(),c_callback,&resp);
+            additem=(add_item)GetProcAddress(histDLL,"add_item");
+            (additem)(db,"params","id2",resp.c_str());
+            resp=std::string();
             }catch (std::exception& e)
             {
             excep_dialog(string(e.what()));
@@ -715,7 +739,7 @@ void SQLManagerFrame::OnDeleteClick(wxCommandEvent& event)
     string resp;
     wxString text;
     wxString renamed;
-    del_item delitem(0);
+    add_item delitem(0);
     if(selected==-1)
         {
         return;
@@ -731,8 +755,8 @@ void SQLManagerFrame::OnDeleteClick(wxCommandEvent& event)
     {
         getid=(Getrow)GetProcAddress(histDLL,"id_row");
         (getid)(db,"datos","name",text.ToStdString().c_str(),c_callback,&resp);
-        delitem=(del_item)GetProcAddress(histDLL,"del_item");
-        (delitem)(db,"datos",resp.c_str());
+        delitem=(add_item)GetProcAddress(histDLL,"del_item");
+        (delitem)(db,"datos",resp.c_str(),"id");
         ListBox->Delete(selected);
      }catch (std::exception& e)
     {
@@ -1032,4 +1056,23 @@ void SQLManagerFrame::OnRadioBox1Select(wxCommandEvent& event)
 
 void SQLManagerFrame::OnParametersText(wxCommandEvent& event)
 {
+}
+
+void SQLManagerFrame::OnListViewBeginDrag(wxListEvent& event)
+{
+}
+
+void SQLManagerFrame::OnlistCtrlItemActivated(wxListEvent& event)
+{
+    int n=listCtrl->GetItemCount ();
+    int sel=event.GetIndex();
+    if(sel==-1)
+        return;
+    else if(n==(sel+1))
+        {
+    wxMessageBox("Selected index: "+wxString()<<n, "Selection Changed!",
+		  wxOK);
+        }
+    long list_index=listCtrl->InsertItem(0,"New");
+   // listCtrl->SetItem(list_index, 1, L"Text");
 }

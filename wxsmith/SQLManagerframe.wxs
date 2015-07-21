@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <wxsmith>
 	<object class="wxFrame" name="SQLManagerFrame">
+		<title>Dll__Manager</title>
 		<size>600,450</size>
 		<minsize>-1,-1</minsize>
 		<id_arg>0</id_arg>
@@ -131,6 +132,15 @@
 							<border>5</border>
 						</object>
 						<object class="sizeritem">
+							<object class="wxListCtrl" name="ID_LISTCTRL" variable="listCtrl" member="yes">
+								<style>wxLC_REPORT|wxTAB_TRAVERSAL</style>
+								<handler function="OnlistCtrlItemActivated" entry="EVT_LIST_ITEM_ACTIVATED" />
+							</object>
+							<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<option>2</option>
+						</object>
+						<object class="sizeritem">
 							<object class="wxTextCtrl" name="ID_BigBox" variable="BigBox" member="yes">
 								<size>532,228d</size>
 								<minsize>400,-1</minsize>
@@ -139,7 +149,7 @@
 							</object>
 							<flag>wxALL|wxEXPAND|wxALIGN_RIGHT|wxALIGN_TOP</flag>
 							<border>6</border>
-							<option>5</option>
+							<option>2</option>
 						</object>
 					</object>
 					<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
