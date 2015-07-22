@@ -16,6 +16,7 @@
 #include <stdexcept>
 #include <fstream>
 #include <thread>
+#include "CParams.h"
 
 //(*InternalHeaders(SQLManagerFrame)
 #include <wx/intl.h>
@@ -28,6 +29,7 @@ typedef int (*Createbase) (sqlite3**,const char*);
 typedef int (*Callblback)(void*,int,char**,char**);
 typedef int (*CreateTable) (sqlite3*,const char*);
 typedef int (*add_item) (sqlite3*, const char* ,const char* ,const char* );
+typedef int (*add_params) (sqlite3* , const char* ,const char* ,const char* ,const char* ,const char* );
 typedef int (*add_text) (sqlite3*, const char *,const char *,const char *,const char *);
 typedef int (*del_item) (sqlite3*, const char*  ,const char* );
 typedef int (*Getrow) (sqlite3* , const char* ,const char*,const char*,int (*callback)(void*,int,char**,char**),void* );
@@ -409,7 +411,6 @@ void SQLManagerFrame::OnMenuNewSelected(wxCommandEvent& event)
 
     ClearAll();
     ListBox->Append("New");
-    listCtrl->InsertItem(0,"New");
     BigBoxSetStatus();
 
 }
@@ -539,7 +540,6 @@ void SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent& event)
             ListBox->Append(str);
         }
     ListBox->Append("New");
-    listCtrl->InsertItem(0,"New");
     BigBoxSetStatus();
 
 }
@@ -612,7 +612,6 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
             ListBox->Delete(sel);
             ListBox->Insert(renamed, sel);
             ListBox->Append("New");
-            listCtrl->InsertItem(0,"New");
             LoadDll();
             try
 
@@ -627,7 +626,7 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
             getrow=(Getrow)GetProcAddress(histDLL,"id_row");
             (getrow)(db,"datos","name",renamed.ToStdString().c_str(),c_callback,&resp);
             additem=(add_item)GetProcAddress(histDLL,"add_item");
-            (additem)(db,"params","id2",resp.c_str());
+            (additem)(db,"params","id",resp.c_str());
             resp=std::string();
             }catch (std::exception& e)
             {
@@ -653,6 +652,8 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
             insert_text_P(" ");
 
             insert_text_BB(answer);
+            listCtrl->DeleteAllItems();
+            listCtrl->InsertItem(0,"New");
 
             BigBox->SetModified(0);
             Parameters->SetModified(0);
@@ -764,6 +765,7 @@ void SQLManagerFrame::OnDeleteClick(wxCommandEvent& event)
     }
     FreeDll();
     BigBox->Clear();
+    listCtrl->DeleteAllItems();
     selected=-1;
     BigBoxSetStatus();
 }
@@ -772,6 +774,7 @@ void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
 {
     int i;
     add_text addtext(0);
+    add_params addparams(0);
     Getrow getid(0);
     string resp;
     string text;
@@ -785,6 +788,7 @@ void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
         return;
 
     }
+
     //Query to delete
     text="";
     int n_lines=BigBox->GetNumberOfLines();
@@ -806,9 +810,6 @@ void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
         (addtext)(db,"datos","ref",resp.c_str(),text.c_str());
         text=Parameters->GetLineText(0).ToStdString()==std::string()?" ":Parameters->GetLineText(0).ToStdString();
         addtext=(add_text)GetProcAddress(histDLL,"add_text");
-        (addtext)(db,"datos","parms",resp.c_str(),text.c_str());
-        text=Libraries->GetLineText(0).ToStdString()==std::string()?" ":Libraries->GetLineText(0).ToStdString();
-        addtext=(add_text)GetProcAddress(histDLL,"add_text");
         (addtext)(db,"datos","libs",resp.c_str(),text.c_str());
         text=RadioBox->GetStringSelection().ToStdString()==std::string()?"void":RadioBox->GetStringSelection().ToStdString();
         addtext=(add_text)GetProcAddress(histDLL,"add_text");
@@ -818,11 +819,24 @@ void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
     {
         excep_dialog(string(e.what()));
     }
+    int nlistC=(listCtrl->GetItemCount ()-1);
+    try
+    {   for(i=0;nlistC>i;i++)
+            {
+
+            addparams=(add_params)GetProcAddress(histDLL,"add_params");
+            (addparams)(db,"params","id,name,type",resp.c_str(),listCtrl->GetItemText(i,0).c_str().AsChar(),listCtrl->GetItemText(i,1).c_str().AsChar());
+            }
+     }catch (std::exception& e)
+    {
+        excep_dialog(string(e.what()));
+    }
     FreeDll();
     BigBoxSetStatus();
     BigBox->SetModified(0);
     Libraries->SetModified(0);
     Parameters->SetModified(0);
+
 
 }
 
@@ -1070,9 +1084,19 @@ void SQLManagerFrame::OnlistCtrlItemActivated(wxListEvent& event)
         return;
     else if(n==(sel+1))
         {
-    wxMessageBox("Selected index: "+wxString()<<n, "Selection Changed!",
-		  wxOK);
+            CParams mi(this);
+            if(mi.ShowModal()==wxID_CANCEL)
+                return;
+            listCtrl->SetItem(sel,0, mi.GetName());
+            listCtrl->SetItem(sel,1, mi.GetType());
+            listCtrl->SetItem(sel,2, mi.GetDefault());
+            listCtrl->InsertItem((sel+1),"New");
+
+
+
+
+ //   wxMessageBox("Selected index: "+wxString()<<n, "Selection Changed!",wxOK);
         }
-    long list_index=listCtrl->InsertItem(0,"New");
+   // long list_index=listCtrl->InsertItem(0,"New");
    // listCtrl->SetItem(list_index, 1, L"Text");
 }

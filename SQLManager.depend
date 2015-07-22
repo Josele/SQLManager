@@ -2140,7 +2140,7 @@
 1435312868 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlite3.h
 	<stdarg.h>
 
-1437462127 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
+1437545590 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
 	"SQLManagerMain.h"
 	<wx/msgdlg.h>
 	<wx/filedlg.h>
@@ -2150,6 +2150,7 @@
 	<stdexcept>
 	<fstream>
 	<thread>
+	"CParams.h"
 	<wx/intl.h>
 	<wx/string.h>
 
@@ -2355,4 +2356,137 @@
 1412631244 c:\wxwidgets-3.0.2\include\wx\valtext.h
 	"wx/defs.h"
 	"wx/validate.h"
+
+1437543146 source:c:\users\josele\documents\c_c++\dll\sqlmanager\cparams.cpp
+	"CParams.h"
+	<wx/intl.h>
+	<wx/string.h>
+
+1437537435 c:\users\josele\documents\c_c++\dll\sqlmanager\cparams.h
+	<wx/stattext.h>
+	<wx/textctrl.h>
+	<wx/choice.h>
+	<wx/button.h>
+	<wx/dialog.h>
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\choice.h
+	"wx/defs.h"
+	"wx/ctrlsub.h"
+	"wx/univ/choice.h"
+	"wx/msw/wince/choicece.h"
+	"wx/msw/choice.h"
+	"wx/motif/choice.h"
+	"wx/gtk/choice.h"
+	"wx/gtk1/choice.h"
+	"wx/osx/choice.h"
+	"wx/cocoa/choice.h"
+	"wx/os2/choice.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\univ\choice.h
+	"wx/combobox.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\combobox.h
+	"wx/defs.h"
+	"wx/textctrl.h"
+	"wx/ctrlsub.h"
+	"wx/textentry.h"
+	"wx/univ/combobox.h"
+	"wx/msw/combobox.h"
+	"wx/motif/combobox.h"
+	"wx/gtk/combobox.h"
+	"wx/gtk1/combobox.h"
+	"wx/osx/combobox.h"
+	"wx/cocoa/combobox.h"
+	"wx/os2/combobox.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\univ\combobox.h
+	"wx/combo.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\combo.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/renderer.h"
+	"wx/bitmap.h"
+	"wx/textentry.h"
+	"wx/msw/combo.h"
+	"wx/generic/combo.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\renderer.h
+	"wx/gdicmn.h"
+	"wx/colour.h"
+	"wx/font.h"
+	"wx/bitmap.h"
+	"wx/string.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\msw\combo.h
+	"wx/timer.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\generic\combo.h
+	"wx/dcbuffer.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\dcbuffer.h
+	"wx/dcmemory.h"
+	"wx/dcclient.h"
+	"wx/window.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\dcmemory.h
+	"wx/dc.h"
+	"wx/bitmap.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\dcclient.h
+	"wx/dc.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\msw\combobox.h
+	"wx/choice.h"
+	"wx/textentry.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\motif\combobox.h
+	"wx/choice.h"
+	"wx/textentry.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\combobox.h
+	"wx/choice.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\combobox.h
+	"wx/defs.h"
+	"wx/object.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\osx\combobox.h
+	"wx/containr.h"
+	"wx/choice.h"
+	"wx/textctrl.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\combobox.h
+	"wx/hashmap.h"
+	"wx/cocoa/ObjcAssociate.h"
+	"wx/textctrl.h"
+	"wx/dynarray.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\os2\combobox.h
+	"wx/choice.h"
+	"wx/textentry.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\msw\wince\choicece.h
+	"wx/defs.h"
+	"wx/dynarray.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\msw\choice.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\motif\choice.h
+	"wx/clntdata.h"
+	"wx/dynarray.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk\choice.h
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\gtk1\choice.h
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\osx\choice.h
+	"wx/control.h"
+	"wx/dynarray.h"
+	"wx/arrstr.h"
+
+1412631242 c:\wxwidgets-3.0.2\include\wx\cocoa\choice.h
+	"wx/cocoa/NSMenu.h"
+
+1412631244 c:\wxwidgets-3.0.2\include\wx\os2\choice.h
 

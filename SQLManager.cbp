@@ -80,6 +80,8 @@
 			<Add library="libwsock32.a" />
 			<Add library="libodbc32.a" />
 		</Linker>
+		<Unit filename="CParams.cpp" />
+		<Unit filename="CParams.h" />
 		<Unit filename="SQLManagerApp.cpp" />
 		<Unit filename="SQLManagerApp.h" />
 		<Unit filename="SQLManagerMain.cpp" />
@@ -87,6 +89,7 @@
 		<Unit filename="resource.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
+		<Unit filename="wxsmith/CParams.wxs" />
 		<Unit filename="wxsmith/SQLManagerframe.wxs" />
 		<Extensions>
 			<code_completion />
@@ -96,6 +99,7 @@
 				<gui name="wxWidgets" src="SQLManagerApp.cpp" main="SQLManagerFrame" init_handlers="necessary" language="CPP" />
 				<resources>
 					<wxFrame wxs="wxsmith/SQLManagerframe.wxs" src="SQLManagerMain.cpp" hdr="SQLManagerMain.h" fwddecl="0" i18n="1" name="SQLManagerFrame" language="CPP" />
+					<wxDialog wxs="wxsmith/CParams.wxs" src="CParams.cpp" hdr="CParams.h" fwddecl="0" i18n="1" name="CParams" language="CPP" />
 				</resources>
 			</wxsmith>
 		</Extensions>
