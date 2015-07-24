@@ -19,6 +19,9 @@ class CParams: public wxDialog
         string GetName();
         string GetType();
         string GetDefault();
+        void SetName(string Name);
+        void SetType(string Type);
+        void SetDefault(string Default);
 		//(*Declarations(CParams)
 		wxStaticText* StaticText2;
 		wxButton* Button1;
@@ -33,13 +36,13 @@ class CParams: public wxDialog
 	protected:
 
 		//(*Identifiers(CParams)
-		static const long ID_TEXTCTRL1;
-		static const long ID_OK;
-		static const long ID_TEXTCTRL2;
-		static const long ID_CHOICE1;
 		static const long ID_STATICTEXT1;
 		static const long ID_STATICTEXT2;
 		static const long ID_STATICTEXT3;
+		static const long ID_TEXTCTRL1;
+		static const long ID_CHOICE1;
+		static const long ID_TEXTCTRL2;
+		static const long ID_OK;
 		//*)
 
 	private:

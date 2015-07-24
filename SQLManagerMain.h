@@ -41,6 +41,7 @@ class SQLManagerFrame: public wxFrame
         static  string algo;
         void callback( int argc, char **argv, char **azColName);
         static int c_callback(void* Used, int argc, char **argv, char **azColName);
+        static int c_callback2(void* Used, int argc, char **argv, char **azColName);
 
     private:
 
@@ -66,7 +67,11 @@ class SQLManagerFrame: public wxFrame
         void OnParametersText(wxCommandEvent& event);
         void OnListViewBeginDrag(wxListEvent& event);
         void OnlistCtrlItemActivated(wxListEvent& event);
+        void OnlistCtrlItemRClick(wxListEvent& event);
         //*)
+         void OnPopupClick(wxCommandEvent &evt);
+
+        void FillListCtrl(string answer,string resp);
         void insert_text_BB(string text);
         void insert_text_P(string text);
         void insert_text_L(string text);
@@ -80,6 +85,7 @@ class SQLManagerFrame: public wxFrame
         void BigBoxSetStatus();
      //   void GenerateDllFiles(string N_file,string action, string parms,string libs,string ret);
         void GenerateDllFiles_v2(string N_file,string code, string headfuncs,string libs);
+
         //(*Identifiers(SQLManagerFrame)
         static const long ID_STATICTEXT1;
         static const long ID_STATICTEXT2;
@@ -105,6 +111,7 @@ class SQLManagerFrame: public wxFrame
         static const long idMenuAbout;
         static const long ID_STATUSBAR1;
         //*)
+
         //(*Declarations(SQLManagerFrame)
         wxTextCtrl* Libraries;
         wxStaticText* StaticText2;
@@ -129,6 +136,7 @@ class SQLManagerFrame: public wxFrame
         wxListBox* ListBox;
         wxStaticText* StaticText4;
         //*)
+
 
         DECLARE_EVENT_TABLE()
 };

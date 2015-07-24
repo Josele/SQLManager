@@ -1710,7 +1710,7 @@
 1412631244 c:\wxwidgets-3.0.2\include\wx\univ\theme.h
 	"wx/string.h"
 
-1437463520 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
+1437728997 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
 	<wx/listctrl.h>
 	<wx/sizer.h>
 	<wx/stattext.h>
@@ -2140,7 +2140,7 @@
 1435312868 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlite3.h
 	<stdarg.h>
 
-1437545590 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
+1437727781 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
 	"SQLManagerMain.h"
 	<wx/msgdlg.h>
 	<wx/filedlg.h>
@@ -2149,6 +2149,7 @@
 	<exception>
 	<stdexcept>
 	<fstream>
+	<sstream>
 	<thread>
 	"CParams.h"
 	<wx/intl.h>
@@ -2357,12 +2358,12 @@
 	"wx/defs.h"
 	"wx/validate.h"
 
-1437543146 source:c:\users\josele\documents\c_c++\dll\sqlmanager\cparams.cpp
+1437728277 source:c:\users\josele\documents\c_c++\dll\sqlmanager\cparams.cpp
 	"CParams.h"
 	<wx/intl.h>
 	<wx/string.h>
 
-1437537435 c:\users\josele\documents\c_c++\dll\sqlmanager\cparams.h
+1437718770 c:\users\josele\documents\c_c++\dll\sqlmanager\cparams.h
 	<wx/stattext.h>
 	<wx/textctrl.h>
 	<wx/choice.h>

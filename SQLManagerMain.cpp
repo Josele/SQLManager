@@ -15,8 +15,11 @@
 #include <exception>
 #include <stdexcept>
 #include <fstream>
+#include <sstream>
 #include <thread>
 #include "CParams.h"
+ #define ID_MODIFYILIST		2001
+ #define ID_DELETEILIST 	2002
 
 //(*InternalHeaders(SQLManagerFrame)
 #include <wx/intl.h>
@@ -29,10 +32,11 @@ typedef int (*Createbase) (sqlite3**,const char*);
 typedef int (*Callblback)(void*,int,char**,char**);
 typedef int (*CreateTable) (sqlite3*,const char*);
 typedef int (*add_item) (sqlite3*, const char* ,const char* ,const char* );
-typedef int (*add_params) (sqlite3* , const char* ,const char* ,const char* ,const char* ,const char* );
-typedef int (*add_text) (sqlite3*, const char *,const char *,const char *,const char *);
+typedef int (*add_params) (sqlite3* , const char* ,const char* ,const char* ,const char* ,const char* ,const char* );
+typedef int (*add_text) (sqlite3*, const char *,const char *,const char *,const char *,const char *);
 typedef int (*del_item) (sqlite3*, const char*  ,const char* );
 typedef int (*Getrow) (sqlite3* , const char* ,const char*,const char*,int (*callback)(void*,int,char**,char**),void* );
+typedef int (*Getitem) (sqlite3* , const char* ,const char*,const char*,const char*,const char*,int (*callback)(void*,int,char**,char**),void* );
 typedef int (*Nrow) (sqlite3* , const char*,int (*callback)(void*,int,char**,char**),void*  );
 
 
@@ -86,6 +90,8 @@ const long SQLManagerFrame::idMenuQuit = wxNewId();
 const long SQLManagerFrame::idMenuAbout = wxNewId();
 const long SQLManagerFrame::ID_STATUSBAR1 = wxNewId();
 //*)
+
+
 
 BEGIN_EVENT_TABLE(SQLManagerFrame,wxFrame)
     //(*EventTable(SQLManagerFrame)
@@ -209,6 +215,7 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     Connect(ID_RADIOBOX,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&SQLManagerFrame::OnRadioBox1Select);
     Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&SQLManagerFrame::OnLibrariesText);
     Connect(ID_LISTCTRL,wxEVT_COMMAND_LIST_ITEM_ACTIVATED,(wxObjectEventFunction)&SQLManagerFrame::OnlistCtrlItemActivated);
+    Connect(ID_LISTCTRL,wxEVT_COMMAND_LIST_ITEM_RIGHT_CLICK,(wxObjectEventFunction)&SQLManagerFrame::OnlistCtrlItemRClick);
     Connect(ID_BigBox,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&SQLManagerFrame::OnTextCtrl1Text);
     Connect(ID_deleteitem,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnDeleteClick);
     Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::LoadFile);
@@ -232,7 +239,6 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     listCtrl->InsertColumn(0,"Name");
     listCtrl->InsertColumn(1,"Type");
     listCtrl->InsertColumn(2,"Value");
-
 }
 
 SQLManagerFrame::~SQLManagerFrame()
@@ -277,21 +283,20 @@ int SQLManagerFrame::c_callback(void* Used, int argc, char **argv, char **azColN
             *cont=*cont+string(argv[i])+ " ";
         }
     *cont=*cont+string(argv[argc-1]);
-
-
-    /*
- for(i=0; i<argc; i++){
-    *stream=+ azColName[i];
-          *stream=+ " = ";
-    if( argv[i] )
-        *stream=+ argv[i];
-    else
-        *stream=+ "NULL";
-     *stream=+ "\n";
- }
-*/
 return 0;
-  //stream.flush();
+
+}
+// Parameters are:
+//      argc -- the number of rows in the resultset
+//      argv[] -- the data for each row
+//      azColName -- the name of each column
+int SQLManagerFrame::c_callback2(void* Used, int argc, char **argv, char **azColName)
+{
+    string* cont = static_cast<string*>(Used);
+    if(argc==0)
+        return 0;
+    *cont=*cont+string(argv[0])+ " ";
+    return 0;
 
 }
 /**
@@ -573,6 +578,38 @@ void SQLManagerFrame::BigBoxSetStatus()
      BigBox->SetEditable(1);
      }
 
+     void SQLManagerFrame::FillListCtrl(string answer,string resp)
+    {
+         string answer2=answer;
+         string container;
+        Getitem getitem(0);
+        string delimiters = " ";
+        size_t current;
+        size_t next = -1;
+        int i=0;
+                    do
+                        {
+
+                            current = next + 1;
+                            next = answer2.find_first_of(delimiters, current );
+                            answer=std::string();
+                            container=answer2.substr( current, next - current );
+
+                                    listCtrl->InsertItem(i,"n");
+                                    getitem=(Getitem)GetProcAddress(histDLL,"get_item");
+                                    listCtrl->SetItem(i,0,container);
+                                    (getitem)(db,"params","type","name",container.c_str(),resp.c_str(),c_callback2,&answer );
+                                    listCtrl->SetItem(i,1,answer);
+                                    answer=std::string();
+                                    getitem=(Getitem)GetProcAddress(histDLL,"get_item");
+                                    (getitem)(db,"params","value","name",container.c_str(),resp.c_str(),c_callback2,&answer );
+                                    listCtrl->SetItem(i,2,answer);
+                                    i++;
+
+                        }while (next != string::npos);
+                        listCtrl->SetItem(i-1,0,"New");
+     }
+
 void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
 {
     string answer;
@@ -590,6 +627,18 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
     else if(ListBox->GetCount()==((unsigned int)sel+1))
         {
         text ="New item";
+         if(BigBox->IsModified()||Libraries->IsModified()||Parameters->IsModified())
+                {
+                wxMessageDialog *dial = new wxMessageDialog(NULL
+                                                            ,string("The file has been modify, do you want to save your changes: " +ListBox->GetString(selected).ToStdString() )
+                                                            ,wxT("Save"), wxYES_NO);
+                if(dial->ShowModal()==wxID_YES)
+                    {
+                    OnSaveClick(event);
+                    }
+
+                }
+
         do{
             wxTextEntryDialog  myDialog(this, _("Name of the item"), _("New item"), _(""));
             myDialog.SetMaxLength(30);
@@ -622,16 +671,7 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
             {
             excep_dialog(string(e.what()));
             }
-            try{
-            getrow=(Getrow)GetProcAddress(histDLL,"id_row");
-            (getrow)(db,"datos","name",renamed.ToStdString().c_str(),c_callback,&resp);
-            additem=(add_item)GetProcAddress(histDLL,"add_item");
-            (additem)(db,"params","id",resp.c_str());
-            resp=std::string();
-            }catch (std::exception& e)
-            {
-            excep_dialog(string(e.what()));
-            }
+
 
             selected=sel;
             ListBox->SetSelection(selected);
@@ -650,11 +690,9 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
             FreeDll();
             insert_text_L(" ");
             insert_text_P(" ");
-
             insert_text_BB(answer);
             listCtrl->DeleteAllItems();
             listCtrl->InsertItem(0,"New");
-
             BigBox->SetModified(0);
             Parameters->SetModified(0);
             Libraries->SetModified(0);
@@ -693,7 +731,7 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
                 {
                 answer=std::string();
                 getrow=(Getrow)GetProcAddress(histDLL,"row");
-                (getrow)(db,"datos","parms",resp.c_str(),c_callback,&answer );
+                (getrow)(db,"datos","parms",resp.c_str(),c_callback2,&answer );
                 }
             catch (std::exception& e)
                 {
@@ -711,16 +749,31 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
                 excep_dialog(string(e.what()));
                 }
                 insert_text_L(answer);
+
             try
+                {   listCtrl->DeleteAllItems();
+                    answer=std::string();
+                    getrow=(Getrow)GetProcAddress(histDLL,"row");
+                    (getrow)(db,"params","name",resp.c_str(),c_callback2,&answer );
+                    FillListCtrl(answer,resp);
+
+                }
+            catch (std::exception& e)
                 {
-                answer=std::string();
-                getrow=(Getrow)GetProcAddress(histDLL,"row");
-                (getrow)(db,"datos","ret",resp.c_str(),c_callback,&answer );
+                    excep_dialog(string(e.what()));
+                }
+
+                 try
+                {
+                    answer=std::string();
+                    getrow=(Getrow)GetProcAddress(histDLL,"row");
+                    (getrow)(db,"datos","ret",resp.c_str(),c_callback,&answer );
                 }
             catch (std::exception& e)
                 {
                 excep_dialog(string(e.what()));
                 }
+
             FreeDll();
             posR=RadioBox->FindString(answer);
             if(posR!=wxNOT_FOUND)
@@ -750,7 +803,6 @@ void SQLManagerFrame::OnDeleteClick(wxCommandEvent& event)
     wxMessageDialog *dial = new wxMessageDialog(NULL,string("Are you sure you want to delete: " +text ), wxT("Delete"),wxICON_EXCLAMATION| wxYES_NO);
     if(dial->ShowModal()==wxID_NO)
         return;
-    //Query to delete
     LoadDll();
     try
     {
@@ -789,7 +841,6 @@ void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
 
     }
 
-    //Query to delete
     text="";
     int n_lines=BigBox->GetNumberOfLines();
     for(i=0;i<n_lines;i++)
@@ -807,36 +858,35 @@ void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
         getid=(Getrow)GetProcAddress(histDLL,"id_row");
         (getid)(db,"datos","name",name.c_str(),c_callback,&resp);
         addtext=(add_text)GetProcAddress(histDLL,"add_text");
-        (addtext)(db,"datos","ref",resp.c_str(),text.c_str());
+        (addtext)(db,"datos","ref",text.c_str(),"id",resp.c_str());
         text=Parameters->GetLineText(0).ToStdString()==std::string()?" ":Parameters->GetLineText(0).ToStdString();
         addtext=(add_text)GetProcAddress(histDLL,"add_text");
-        (addtext)(db,"datos","libs",resp.c_str(),text.c_str());
+        (addtext)(db,"datos","libs",text.c_str(),"id",resp.c_str());
         text=RadioBox->GetStringSelection().ToStdString()==std::string()?"void":RadioBox->GetStringSelection().ToStdString();
         addtext=(add_text)GetProcAddress(histDLL,"add_text");
-        (addtext)(db,"datos","ret",resp.c_str(),text.c_str());
+        (addtext)(db,"datos","ret",text.c_str(),"id",resp.c_str());
 
      }catch (std::exception& e)
     {
         excep_dialog(string(e.what()));
     }
-    int nlistC=(listCtrl->GetItemCount ()-1);
+    /**int nlistC=(listCtrl->GetItemCount ()-1);
     try
     {   for(i=0;nlistC>i;i++)
             {
-
+            // update
             addparams=(add_params)GetProcAddress(histDLL,"add_params");
-            (addparams)(db,"params","id,name,type",resp.c_str(),listCtrl->GetItemText(i,0).c_str().AsChar(),listCtrl->GetItemText(i,1).c_str().AsChar());
+            (addparams)(db,"params","id,name,type,value",resp.c_str(),listCtrl->GetItemText(i,0).c_str().AsChar(),listCtrl->GetItemText(i,1).c_str().AsChar(),listCtrl->GetItemText(i,2).c_str().AsChar());
             }
      }catch (std::exception& e)
     {
         excep_dialog(string(e.what()));
-    }
+    }*/
     FreeDll();
     BigBoxSetStatus();
     BigBox->SetModified(0);
     Libraries->SetModified(0);
     Parameters->SetModified(0);
-
 
 }
 
@@ -1078,6 +1128,10 @@ void SQLManagerFrame::OnListViewBeginDrag(wxListEvent& event)
 
 void SQLManagerFrame::OnlistCtrlItemActivated(wxListEvent& event)
 {
+    string resp;
+    Getrow getid(0);
+    add_params addparams(0);
+    add_text addtext(0);
     int n=listCtrl->GetItemCount ();
     int sel=event.GetIndex();
     if(sel==-1)
@@ -1091,12 +1145,89 @@ void SQLManagerFrame::OnlistCtrlItemActivated(wxListEvent& event)
             listCtrl->SetItem(sel,1, mi.GetType());
             listCtrl->SetItem(sel,2, mi.GetDefault());
             listCtrl->InsertItem((sel+1),"New");
-
-
-
+            LoadDll();
+            try
+            {
+                getid=(Getrow)GetProcAddress(histDLL,"id_row");
+                (getid)(db,"datos","name",ListBox->GetString(selected).ToStdString().c_str(),c_callback,&resp);
+                addparams=(add_params)GetProcAddress(histDLL,"add_params");
+                (addparams)(db,"params","id,name,type,value",resp.c_str(),mi.GetName().c_str(),mi.GetType().c_str(),mi.GetDefault().c_str());
+            }
+            catch (std::exception& e)
+            {
+                    excep_dialog(string(e.what()));
+            }
+            FreeDll();
 
  //   wxMessageBox("Selected index: "+wxString()<<n, "Selection Changed!",wxOK);
         }
+        else
+            {
+                CParams mi(this);
+                mi.SetDefault(listCtrl->GetItemText(sel,2).ToStdString());
+                mi.SetName(listCtrl->GetItemText(sel,0).ToStdString());
+                mi.SetType(listCtrl->GetItemText(sel,1).ToStdString());
+                LoadDll();
+                try
+                {
+                if(mi.ShowModal()==wxID_CANCEL)
+                    return;
+                addtext=(add_text)GetProcAddress(histDLL,"add_text");
+                (addtext)(db,"params","type",mi.GetType().c_str(),"name",listCtrl->GetItemText(sel,0).ToStdString().c_str());
+                addtext=(add_text)GetProcAddress(histDLL,"add_text");
+                (addtext)(db,"params","value",mi.GetDefault().c_str(),"name",listCtrl->GetItemText(sel,0).ToStdString().c_str());
+                addtext=(add_text)GetProcAddress(histDLL,"add_text");
+                (addtext)(db,"params","name",mi.GetName().c_str(),"name",listCtrl->GetItemText(sel,0).ToStdString().c_str());
+                }
+                catch (std::exception& e)
+                {
+                    excep_dialog(string(e.what()));
+                }
+                FreeDll();
+                listCtrl->SetItem(sel,0, mi.GetName());
+                listCtrl->SetItem(sel,1, mi.GetType());
+                listCtrl->SetItem(sel,2, mi.GetDefault());
+            }
    // long list_index=listCtrl->InsertItem(0,"New");
    // listCtrl->SetItem(list_index, 1, L"Text");
+}
+
+
+void SQLManagerFrame::OnlistCtrlItemRClick(wxListEvent& event)
+{
+
+    add_item delitem(0);
+    int result;
+    string selection=event.GetItem().GetText().ToStdString();
+ 	wxMenu mnu;
+    mnu.Append(ID_MODIFYILIST, "Edit");
+ 	mnu.Append(ID_DELETEILIST, "Delete");
+ 	result=wxWindow::GetPopupMenuSelectionFromUser(mnu);
+    switch(result)
+        {
+ 		case ID_MODIFYILIST:
+ 		    SQLManagerFrame::OnlistCtrlItemActivated(event);
+ 			break;
+ 		case ID_DELETEILIST:
+            wxMessageDialog *dial = new wxMessageDialog(NULL,string("Are you sure you want to delete: " )+selection, wxT("Delete"),wxICON_EXCLAMATION| wxYES_NO);
+            if(dial->ShowModal()==wxID_NO)
+                return;
+
+            LoadDll();
+            try
+                {
+                    delitem=(add_item)GetProcAddress(histDLL,"del_item");
+                    result=(delitem)(db,"params",selection.c_str(),"name");
+                }
+            catch (std::exception& e)
+                {
+                    excep_dialog(string(e.what()));
+                }
+            FreeDll();
+            if(result!=0)
+                return;
+            listCtrl->DeleteItem(event.GetItem().GetId());
+            break;
+        }
+
 }

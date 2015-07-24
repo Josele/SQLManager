@@ -135,6 +135,7 @@
 							<object class="wxListCtrl" name="ID_LISTCTRL" variable="listCtrl" member="yes">
 								<style>wxLC_REPORT|wxTAB_TRAVERSAL</style>
 								<handler function="OnlistCtrlItemActivated" entry="EVT_LIST_ITEM_ACTIVATED" />
+								<handler function="OnlistCtrlItemRClick" entry="EVT_LIST_ITEM_RIGHT_CLICK" />
 							</object>
 							<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 							<border>5</border>
