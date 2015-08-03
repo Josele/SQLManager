@@ -47,5 +47,16 @@
 			<pos>280,80</pos>
 			<handler function="OnButton2Click" entry="EVT_BUTTON" />
 		</object>
+		<object class="wxCheckBox" name="ID_CHECKBOX1" variable="CheckBox1" member="yes">
+			<label>array</label>
+			<pos>16,80</pos>
+			<handler function="OnCheckBox1Click" entry="EVT_CHECKBOX" />
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL3" variable="TextCtrl3" member="yes">
+			<maxlength>3</maxlength>
+			<pos>72,80</pos>
+			<size>32,21</size>
+			<handler function="OnTextCtrl3Text" entry="EVT_TEXT" />
+		</object>
 	</object>
 </wxsmith>

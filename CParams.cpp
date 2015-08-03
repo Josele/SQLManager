@@ -1,4 +1,6 @@
 #include "CParams.h"
+#include <wx/msgdlg.h>
+
 
 //(*InternalHeaders(CParams)
 #include <wx/intl.h>
@@ -13,6 +15,8 @@ const long CParams::ID_TEXTCTRL1 = wxNewId();
 const long CParams::ID_CHOICE1 = wxNewId();
 const long CParams::ID_TEXTCTRL2 = wxNewId();
 const long CParams::ID_OK = wxNewId();
+const long CParams::ID_CHECKBOX1 = wxNewId();
+const long CParams::ID_TEXTCTRL3 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(CParams,wxDialog)
@@ -38,10 +42,16 @@ CParams::CParams(wxWindow* parent,wxWindowID id)
 	TextCtrl2 = new wxTextCtrl(this, ID_TEXTCTRL2, wxEmptyString, wxPoint(288,40), wxSize(136,21), wxTE_RICH, wxDefaultValidator, _T("ID_TEXTCTRL2"));
 	TextCtrl2->SetMaxLength(30);
 	Button1 = new wxButton(this, ID_OK, _("Ok"), wxPoint(280,80), wxDefaultSize, 0, wxDefaultValidator, _T("ID_OK"));
+	CheckBox1 = new wxCheckBox(this, ID_CHECKBOX1, _("array"), wxPoint(16,80), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX1"));
+	CheckBox1->SetValue(false);
+	TextCtrl3 = new wxTextCtrl(this, ID_TEXTCTRL3, wxEmptyString, wxPoint(72,80), wxSize(32,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
+	TextCtrl3->SetMaxLength(3);
 
 	Connect(ID_OK,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&CParams::OnButton2Click);
+	Connect(ID_CHECKBOX1,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&CParams::OnCheckBox1Click);
+	Connect(ID_TEXTCTRL3,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&CParams::OnTextCtrl3Text);
 	//*)
-
+	TextCtrl3->Enable(0);
 }
 
 CParams::~CParams()
@@ -57,7 +67,7 @@ return TextCtrl1->GetLineText(0).ToStdString();
 }
 void CParams::SetType(string Type)
 {
-    int next=Type.find_first_of(" ", 0 );
+    unsigned int next=Type.find_first_of(" ", 0 );
     Type=Type.substr( 0, (next==string::npos?Type.length():next) );
 
 
@@ -67,19 +77,31 @@ void CParams::SetType(string Type)
 }
 void CParams::SetDefault(string Default)
 {
-return TextCtrl2->SetLabel(Default);
+    return TextCtrl2->SetLabel(Default);
+}
+void CParams::SetArray(bool status)
+{
+     CheckBox1->SetValue(status);
+         if(status)
+        TextCtrl3->Enable(1);
+    else
+        TextCtrl3->Enable(0);
 }
 void CParams::SetName(string Name)
 {
- TextCtrl1->SetLabel(Name);
+    TextCtrl1->SetLabel(Name);
 }
 string CParams::GetType()
 {
-return Choice1->GetString(Choice1->GetSelection()).ToStdString();
+    return Choice1->GetString(Choice1->GetSelection()).ToStdString();
+}
+bool CParams::GetArray()
+{
+    return CheckBox1->GetValue();
 }
 string CParams::GetDefault()
 {
-return TextCtrl2->GetLineText(0).ToStdString();
+    return TextCtrl2->GetLineText(0).ToStdString();
 }
 
 
@@ -99,17 +121,49 @@ void CParams::OnButton2Click(wxCommandEvent& event)
         else
             break;
         }
-        EndModal(wxID_OK);
+        if(!(TextCtrl2->GetLineText(0).ToStdString().find_first_not_of(' ') != std::string::npos))
+            TextCtrl2->Clear();
+        if(!str_controler(text))
+            EndModal(wxID_OK);
 }
 void CParams::OnTextCtrl2Text(wxCommandEvent& event)
 {
 }
+bool CParams::str_controler(string String)
+{
+    int cont=String.find('@')+String.find('\'')+String.find('$')+String.find('%')+String.find('(')
+                    +String.find(')')+String.find('¬')+String.find('&')+String.find('#')+String.find('~')
+                        +String.find('\\')+String.find('=')+String.find('/')+String.find(':')+String.find('*')
+                            +String.find('?')+String.find('"')+String.find('<')+String.find('>')+String.find('|')
+                                +String.find('+')+String.find(' ')+String.find('.');
+    if(cont!=-23)
+        {
+         wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Can not use @()#~&%$=\\/*:?\" '<.>|+"),
+                                                             wxT("Unallowed operation"), wxOK | wxICON_EXCLAMATION);
+        dial->ShowModal();
+        return true;
+        }
+    return false;
 
+}
 void CParams::OnChoice1Select(wxCommandEvent& event)
 {
 
 }
 
 void CParams::OnTextCtrl1Text(wxCommandEvent& event)
+{
+}
+
+void CParams::OnCheckBox1Click(wxCommandEvent& event)
+{
+    if(CheckBox1->GetValue())
+        TextCtrl3->Enable(1);
+    else
+        TextCtrl3->Enable(0);
+
+}
+
+void CParams::OnTextCtrl3Text(wxCommandEvent& event)
 {
 }

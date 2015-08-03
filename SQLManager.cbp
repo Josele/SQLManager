@@ -82,15 +82,24 @@
 		</Linker>
 		<Unit filename="CParams.cpp" />
 		<Unit filename="CParams.h" />
+		<Unit filename="ConfigDialog.cpp" />
+		<Unit filename="ConfigDialog.h" />
 		<Unit filename="SQLManagerApp.cpp" />
 		<Unit filename="SQLManagerApp.h" />
 		<Unit filename="SQLManagerMain.cpp" />
 		<Unit filename="SQLManagerMain.h" />
+		<Unit filename="TesterDialog.cpp" />
+		<Unit filename="TesterDialog.h" />
+		<Unit filename="TesterFrame.cpp" />
+		<Unit filename="TesterFrame.h" />
 		<Unit filename="resource.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
 		<Unit filename="wxsmith/CParams.wxs" />
+		<Unit filename="wxsmith/ConfigDialog1.wxs" />
 		<Unit filename="wxsmith/SQLManagerframe.wxs" />
+		<Unit filename="wxsmith/TesterDialog.wxs" />
+		<Unit filename="wxsmith/TesterFrame1.wxs" />
 		<Extensions>
 			<code_completion />
 			<envvars />
@@ -100,6 +109,9 @@
 				<resources>
 					<wxFrame wxs="wxsmith/SQLManagerframe.wxs" src="SQLManagerMain.cpp" hdr="SQLManagerMain.h" fwddecl="0" i18n="1" name="SQLManagerFrame" language="CPP" />
 					<wxDialog wxs="wxsmith/CParams.wxs" src="CParams.cpp" hdr="CParams.h" fwddecl="0" i18n="1" name="CParams" language="CPP" />
+					<wxDialog wxs="wxsmith/ConfigDialog1.wxs" src="ConfigDialog.cpp" hdr="ConfigDialog.h" fwddecl="0" i18n="1" name="ConfigDialog" language="CPP" />
+					<wxFrame wxs="wxsmith/TesterFrame1.wxs" src="TesterFrame.cpp" hdr="TesterFrame.h" fwddecl="0" i18n="1" name="TesterFrame" language="CPP" />
+					<wxDialog wxs="wxsmith/TesterDialog.wxs" src="TesterDialog.cpp" hdr="TesterDialog.h" fwddecl="0" i18n="1" name="TesterDialog" language="CPP" />
 				</resources>
 			</wxsmith>
 		</Extensions>

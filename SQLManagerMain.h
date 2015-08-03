@@ -22,6 +22,7 @@
 #include <wx/panel.h>
 #include <wx/button.h>
 #include <wx/frame.h>
+#include <wx/choicdlg.h>
 #include <wx/statusbr.h>
 //*)
 #include <string.h>
@@ -68,13 +69,16 @@ class SQLManagerFrame: public wxFrame
         void OnListViewBeginDrag(wxListEvent& event);
         void OnlistCtrlItemActivated(wxListEvent& event);
         void OnlistCtrlItemRClick(wxListEvent& event);
+        void OnMenuLibrariesSelected(wxCommandEvent& event);
+        void OnMenuConfigSelected(wxCommandEvent& event);
         //*)
-         void OnPopupClick(wxCommandEvent &evt);
-
+        void OnPopupClick(wxCommandEvent &evt);
+        template<class T>
+        string toString(T data);
+        string array_maker(string arraypar,string type);
         void FillListCtrl(string answer,string resp);
         void insert_text_BB(string text);
         void insert_text_P(string text);
-        void insert_text_L(string text);
         void ClearAll();
         string lb_reload(const char* tbname,const char* tcname, int id );
         int cont_col(string tbname);
@@ -83,21 +87,21 @@ class SQLManagerFrame: public wxFrame
         void FreeDll();
         void excep_dialog(string e);
         void BigBoxSetStatus();
+        string GetParams(string answer,string resp,int n);
      //   void GenerateDllFiles(string N_file,string action, string parms,string libs,string ret);
         void GenerateDllFiles_v2(string N_file,string code, string headfuncs,string libs);
 
         //(*Identifiers(SQLManagerFrame)
         static const long ID_STATICTEXT1;
-        static const long ID_STATICTEXT2;
+        static const long ID_STATICTEXT3;
         static const long ID_LISTBOX;
         static const long ID_STATICLINE1;
+        static const long ID_LISTCTRL;
         static const long ID_STATICTEXT4;
         static const long ID_STATICTEXT5;
-        static const long ID_STATICTEXT3;
         static const long ID_TEXTCTRL2;
         static const long ID_RADIOBOX;
-        static const long ID_TEXTCTRL1;
-        static const long ID_LISTCTRL;
+        static const long ID_STATICTEXT2;
         static const long ID_BigBox;
         static const long ID_deleteitem;
         static const long ID_BUTTON1;
@@ -108,12 +112,14 @@ class SQLManagerFrame: public wxFrame
         static const long ID_MenuNew;
         static const long idMenuLoad;
         static const long idMenuQuit;
+        static const long ID_Config;
+        static const long ID_Lib;
         static const long idMenuAbout;
         static const long ID_STATUSBAR1;
         //*)
 
         //(*Declarations(SQLManagerFrame)
-        wxTextCtrl* Libraries;
+        wxMenuItem* MenuItem5;
         wxStaticText* StaticText2;
         wxMenu* Menu3;
         wxButton* Button1;
@@ -122,6 +128,7 @@ class SQLManagerFrame: public wxFrame
         wxButton* Run_All;
         wxPanel* Panel1;
         wxStaticText* StaticText1;
+        wxMenuItem* MenuConfig;
         wxStaticText* StaticText3;
         wxRadioBox* RadioBox;
         wxButton* Save;
@@ -133,10 +140,12 @@ class SQLManagerFrame: public wxFrame
         wxStaticLine* StaticLine1;
         wxListCtrl* listCtrl;
         wxButton* Run;
+        wxMultiChoiceDialog* MultiChoiceDialog1;
         wxListBox* ListBox;
         wxStaticText* StaticText4;
         //*)
-
+        bool retstatus;
+        wxString MultiChoiceDialogChoices_1[11];
 
         DECLARE_EVENT_TABLE()
 };
