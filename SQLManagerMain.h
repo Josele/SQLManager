@@ -28,6 +28,9 @@
 #include <string.h>
 #include <stdio.h>
 #include "sqlite3.h"
+#include <thread>
+#include <list>
+
 
 using std::string;
 class SQLManagerFrame: public wxFrame
@@ -45,7 +48,12 @@ class SQLManagerFrame: public wxFrame
         static int c_callback2(void* Used, int argc, char **argv, char **azColName);
 
     private:
+        struct Params{
+            int num;
+            string cont;
+            std::list<string> mytypes;
 
+        };
         //(*Handlers(SQLManagerFrame)
         void OnQuit(wxCommandEvent& event);
         void OnAbout(wxCommandEvent& event);
@@ -87,9 +95,9 @@ class SQLManagerFrame: public wxFrame
         void FreeDll();
         void excep_dialog(string e);
         void BigBoxSetStatus();
-        string GetParams(string answer,string resp,int n);
+        Params GetParams(string answer,string resp,int n);
      //   void GenerateDllFiles(string N_file,string action, string parms,string libs,string ret);
-        void GenerateDllFiles_v2(string N_file,string code, string headfuncs,string libs);
+        void GenerateDllFiles_v2(string N_file,string code, string headfuncs,string libs,int N=1);
 
         //(*Identifiers(SQLManagerFrame)
         static const long ID_STATICTEXT1;
@@ -145,8 +153,8 @@ class SQLManagerFrame: public wxFrame
         wxStaticText* StaticText4;
         //*)
         bool retstatus;
+        std::thread first;
         wxString MultiChoiceDialogChoices_1[11];
-
         DECLARE_EVENT_TABLE()
 };
 

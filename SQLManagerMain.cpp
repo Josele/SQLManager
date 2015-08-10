@@ -16,11 +16,9 @@
 #include <stdexcept>
 #include <fstream>
 #include <sstream>
-#include <thread>
 #include <vector>
 #include "CParams.h"
 #include "ConfigDialog.h"
-//#include "TesterFrame.h"
  #include "TesterDialog.h"
  #define ID_MODIFYILIST		2001
  #define ID_DELETEILIST 	2002
@@ -39,13 +37,13 @@ typedef int (*Createbase) (sqlite3**,const char*);
 typedef int (*Callblback)(void*,int,char**,char**);
 typedef int (*CreateTable) (sqlite3*,const char*);
 typedef int (*add_item) (sqlite3*, const char* ,const char* ,const char* );
-typedef int (*add_params) (sqlite3* , const char* ,const char* ,const char* ,const char* ,const char* ,const char* ,const char* );
+typedef int  (*add_params) (sqlite3* , const char* ,const char* ,const char* ,const char* ,const char* ,const char* ,const char* );
 typedef int (*add_text) (sqlite3*, const char *,const char *,const char *,const char *,const char *);
 typedef int (*del_item) (sqlite3*, const char*  ,const char* );
 typedef int (*Getrow) (sqlite3* , const char* ,const char*,const char*,int (*callback)(void*,int,char**,char**),void* );
+typedef int (*max_params) (sqlite3* , const char* ,const char*,int (*callback)(void*,int,char**,char**),void* );
 typedef int (*Getitem) (sqlite3* , const char* ,const char*,const char*,const char*,const char*,int (*callback)(void*,int,char**,char**),void* );
 typedef int (*Nrow) (sqlite3* , const char*,int (*callback)(void*,int,char**,char**),void*  );
-
 
 enum wxbuildinfoformat {
     short_f, long_f };
@@ -148,23 +146,15 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     FlexGridSizer1->Add(StaticLine1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer3 = new wxBoxSizer(wxVERTICAL);
     listCtrl = new wxListCtrl(Panel1, ID_LISTCTRL, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxTAB_TRAVERSAL, wxDefaultValidator, _T("ID_LISTCTRL"));
-    listCtrl->SetMinSize(wxSize(-1,-1));
-    listCtrl->SetMaxSize(wxSize(-1,-1));
     BoxSizer3->Add(listCtrl, 2, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     FlexGridSizer2 = new wxFlexGridSizer(0, 2, 0, 0);
     FlexGridSizer2->AddGrowableCol(0);
     FlexGridSizer2->AddGrowableCol(1);
     StaticText4 = new wxStaticText(Panel1, ID_STATICTEXT4, _("Return param"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT4"));
-    StaticText4->SetMinSize(wxSize(-1,-1));
-    StaticText4->SetMaxSize(wxSize(-1,-1));
     FlexGridSizer2->Add(StaticText4, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     StaticText5 = new wxStaticText(Panel1, ID_STATICTEXT5, _("Return type"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT5"));
-    StaticText5->SetMinSize(wxSize(-1,-1));
-    StaticText5->SetMaxSize(wxSize(-1,-1));
     FlexGridSizer2->Add(StaticText5, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    Parameters = new wxTextCtrl(Panel1, ID_TEXTCTRL2, wxEmptyString, wxDefaultPosition, wxSize(-1,-1), wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_RICH2, wxDefaultValidator, _T("ID_TEXTCTRL2"));
-    Parameters->SetMinSize(wxSize(-1,-1));
-    Parameters->SetMaxSize(wxSize(-1,-1));
+    Parameters = new wxTextCtrl(Panel1, ID_TEXTCTRL2, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_RICH2, wxDefaultValidator, _T("ID_TEXTCTRL2"));
     FlexGridSizer2->Add(Parameters, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     wxString __wxRadioBoxChoices_1[4] =
     {
@@ -179,9 +169,8 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     FlexGridSizer2->Add(RadioBox, 3, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 1);
     BoxSizer3->Add(FlexGridSizer2, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer4 = new wxBoxSizer(wxVERTICAL);
-    StaticText2 = new wxStaticText(Panel1, ID_STATICTEXT2, _("Code"), wxDefaultPosition, wxSize(-1,-1), 0, _T("ID_STATICTEXT2"));
+    StaticText2 = new wxStaticText(Panel1, ID_STATICTEXT2, _("Code"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT2"));
     StaticText2->SetMinSize(wxSize(-1,-1));
-    StaticText2->SetMaxSize(wxSize(-1,-1));
     BoxSizer4->Add(StaticText2, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BigBox = new wxTextCtrl(Panel1, ID_BigBox, wxEmptyString, wxDefaultPosition, wxDLG_UNIT(Panel1,wxSize(532,228)), wxTE_AUTO_SCROLL|wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_MULTILINE|wxTE_RICH2|wxVSCROLL, wxDefaultValidator, _T("ID_BigBox"));
     BigBox->SetMinSize(wxSize(400,-1));
@@ -307,6 +296,8 @@ void SQLManagerFrame::OnAbout(wxCommandEvent& event)
 
 void SQLManagerFrame::OnClose(wxCloseEvent& event)
 {
+    if (first.joinable())
+        first.join();
     sqlite3_close(db);
     FreeLibrary(histDLL);
     wxWindow::Destroy(); //The problem come when we overwrite this method or kind of. In that case we need to destroy the window ourself.
@@ -505,10 +496,11 @@ bool SQLManagerFrame::str_controler(string String)
                     +String.find(')')+String.find('¬')+String.find('&')+String.find('#')+String.find('~')
                         +String.find('\\')+String.find('=')+String.find('/')+String.find(':')+String.find('*')
                             +String.find('?')+String.find('"')+String.find('<')+String.find('>')+String.find('|')
-                                +String.find('+')+String.find(' ')+String.find('.');
-    if(cont!=-23)
+                                +String.find('+')+String.find(' ')+String.find('.')+String.find('?')+String.find('[')
+                                    +String.find(']');
+    if(cont!=-26)
         {
-            wxMessageDialog *dial = new wxMessageDialog(NULL, _("Can not use @()#~¬&%$=\\/*:?\" '<.>|+"),
+            wxMessageDialog *dial = new wxMessageDialog(NULL, _("Can not use @()#~¬&%$=\\/*:?¿[]\" '<.>|+"),
                                                                  wxT("Unallowed operation"), wxOK | wxICON_EXCLAMATION);
             dial->ShowModal();
             return true;
@@ -945,8 +937,6 @@ void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
 
 void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
 {
-
-
     string resp;
     string answer;
     string renamed;
@@ -955,6 +945,7 @@ void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
     string headfuncs;
     string libs;
     string ret;
+    Params result;
     wxArrayInt selections;
     Getrow getrow(0);
     Getitem getitem(0);
@@ -1020,9 +1011,10 @@ void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
     {
         excep_dialog(string(e.what()));
     }
-    headfuncs=ret+" __stdcall FUNCTION_DLL "+text+"("+GetParams(answer,resp,0)+");";
+    result=GetParams(answer,resp,0);
+    headfuncs=ret+" __stdcall FUNCTION_DLL "+text+"("+result.cont+");";
   //  code=" __stdcall "+ret+" "+text +"("+GetParams()+")\n{\n"+code+"\n}";
-    code=" __stdcall "+ret+" "+text +"("+GetParams(answer,resp,1)+")\n{\n"+((ret=="void")?"":(ret+" "+parm+";\n"))+code+"\n"+(ret!="void"?("return "+parm+";"):" ")+"\n}\n";
+    code=" __stdcall "+ret+" "+text +"("+GetParams(answer,resp,1).cont+")\n{\n"+((ret=="void")?"":(ret+" "+parm+";\n"))+code+"\n"+(ret!="void"?("return "+parm+";"):" ")+"\n}\n";
      try
         {
             getitem=(Getitem)GetProcAddress(histDLL,"get_item");
@@ -1051,9 +1043,11 @@ void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
 
     GenerateDllFiles_v2(renamed,code,headfuncs,libs);
     TesterDialog mi(this);
-    mi.GenerateGrid(3,2);
+    mi.GenerateGrid(result.num,1);
+    mi.ColorSet(result.mytypes,0);
+    mi.RowName(text,0);
     mi.ShowModal();
-
+    first.join();
 
 }
 
@@ -1061,8 +1055,9 @@ void SQLManagerFrame::OnPanel1Paint(wxPaintEvent& event)
 {
 }
 
-string SQLManagerFrame::GetParams(string answer,string resp,int n)
-{
+ SQLManagerFrame::Params SQLManagerFrame::GetParams(string answer,string resp,int n)
+{   std::list<string> mytypes;
+    Params result;
     string answer2=answer.substr(0,answer.length()-1);
     string cont;
     string type;
@@ -1089,16 +1084,25 @@ string SQLManagerFrame::GetParams(string answer,string resp,int n)
                 answer=std::string();
                 getitem=(Getitem)GetProcAddress(histDLL,"get_item");
                 (getitem)(db,"params","value","name",container.c_str(),resp.c_str(),c_callback,&answer);
-                if (isarray=="1")
+                if (isarray=="1"&&answer!="")
                     answer=array_maker(answer,type);
-                if(answer!=std::string()&&n==0)
+                if(answer!=""&&n==0)
+                    {
                     cont=cont+((isarray=="1")?"[]":"")+"="+answer+",";
-                else
+                }else{
                     cont=cont+((isarray=="1")?"[]":"")+",";
+                }
+                if(type!=std::string())
+                    mytypes.push_back(type);
+                type=std::string();
+                isarray=std::string();
                 i++;
             }while (next != string::npos);
             cont=(cont.length()!=0)?cont.substr(0,cont.length()-1):"";
-return cont;
+            result.cont=cont;
+            result.num=mytypes.size();
+            result.mytypes=mytypes;
+return result;
 }
 
 void SQLManagerFrame::OnPanel1Paint1(wxPaintEvent& event)
@@ -1128,6 +1132,7 @@ void SQLManagerFrame::LoadFile(wxCommandEvent& event)
 
 void SQLManagerFrame::OnRun_AllClick(wxCommandEvent& event)
 {
+    max_params MaxParms(0);
     string resp;
     string answer;
     string renamed;
@@ -1138,6 +1143,8 @@ void SQLManagerFrame::OnRun_AllClick(wxCommandEvent& event)
     string text;
     string libs_cont;
     string ret;
+    TesterDialog mi(this);
+    Params result;
     int n_items;
     int i;
     Getrow getrow(0);
@@ -1185,7 +1192,18 @@ void SQLManagerFrame::OnRun_AllClick(wxCommandEvent& event)
             }
     }
     LoadDll();
+    try
+    {
+        MaxParms=(max_params)GetProcAddress(histDLL,"max_parms");
+        (MaxParms)(db,"params","id",c_callback,&answer );
+    }
+        catch (std::exception& e)
+    {
+        excep_dialog(string(e.what()));
+    }
     n_items=cont_col("datos");
+    mi.GenerateGrid(atoi(answer.c_str()),n_items-1);
+    answer=std::string();
     for(i=0;(i)<n_items;i++)
         {
             text=lb_reload("datos","name",i);
@@ -1203,9 +1221,11 @@ void SQLManagerFrame::OnRun_AllClick(wxCommandEvent& event)
                     (getrow)(db,"datos","parms",resp.c_str(),c_callback,&parm );
                     getrow=(Getrow)GetProcAddress(histDLL,"row");
                     (getrow)(db,"params","name",resp.c_str(),c_callback2,&answer );
-
-                    headfuncs=headfuncs+ret+" __stdcall FUNCTION_DLL "+text+"("+GetParams(answer,resp,0)+");\n";
-                    code_cont=code_cont+" __stdcall "+ret+" "+text +"("+GetParams(answer,resp,1)+")\n{\n"+((ret=="void")?"":(ret+" "+parm+";\n"))+code+"\n"+(ret!="void"?("return "+parm+";"):" ")+"\n}\n";
+                    result=GetParams(answer,resp,0);
+                    headfuncs=headfuncs+ret+" __stdcall FUNCTION_DLL "+text+"("+result.cont+");\n";
+                    code_cont=code_cont+" __stdcall "+ret+" "+text +"("+GetParams(answer,resp,1).cont+")\n{\n"+((ret=="void")?"":(ret+" "+parm+";\n"))+code+"\n"+(ret!="void"?("return "+parm+";"):" ")+"\n}\n";
+                    mi.ColorSet(result.mytypes,i-1);
+                    mi.RowName(text,i-1);
 
                     resp=std::string();
                     code=std::string();
@@ -1226,14 +1246,15 @@ void SQLManagerFrame::OnRun_AllClick(wxCommandEvent& event)
     wxArrayInt selections=MultiChoiceDialog1->GetSelections();
     for (size_t n=0; n < selections.GetCount(); ++n )
             libs_cont=libs_cont+("#include <"+MultiChoiceDialogChoices_1[selections[n]])+ ">\n";
-    GenerateDllFiles_v2(renamed,code_cont,headfuncs,libs_cont);
-
+    GenerateDllFiles_v2(renamed,code_cont,headfuncs,libs_cont,n_items);
+    mi.ShowModal();
+    first.join();
 
 }
-void SQLManagerFrame:: GenerateDllFiles_v2(string N_file,string code, string headfuncs,string libs)
+void SQLManagerFrame:: GenerateDllFiles_v2(string N_file,string code, string headfuncs,string libs,int N)
 {
     std::ofstream myfile;
-    char *H_file =(char*) malloc((3*30*sizeof(char)+800*sizeof(char)));
+    char *H_file =(char*) malloc((N*30*sizeof(char)+400*sizeof(char)));
     sprintf(H_file,"#ifndef __%s_H__\n#define __%s_H__\n#ifdef BUILDING_DLL\n#define FUNCTION_DLL __declspec(dllexport)\n#else\n#define FUNCTION_DLL __declspec(dllimport)\n#endif\n\n#ifdef __cplusplus\nextern \"C\" {\n#endif\n %s\n#ifdef __cplusplus\n}\n#endif\n#endif"
             ,N_file.c_str(),N_file.c_str(),headfuncs.c_str());
     string cont="Dll_release\\"+N_file+".h";
@@ -1242,20 +1263,23 @@ void SQLManagerFrame:: GenerateDllFiles_v2(string N_file,string code, string hea
     myfile << H_file;
     myfile.close();
     free(H_file);
-    char C_file[400];
+    char C_file[600];
     sprintf(C_file,"#include \"%s.h\"\n#include <stdio.h>\n%s\n "
             ,N_file.c_str(),libs.c_str());
     cont="Dll_release\\"+N_file+".cpp";
     myfile.open (cont.c_str());
-    myfile << C_file << code;
+    myfile << C_file << code <<(false?"":"extern \"C\" FUNCTION_DLL bool APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved){\nswitch (fdwReason)\n{\ncase DLL_PROCESS_ATTACH:\nbreak;\ncase DLL_PROCESS_DETACH:\nbreak;\ncase DLL_THREAD_ATTACH:\nbreak;\ncase DLL_THREAD_DETACH:\nbreak;\n}\nreturn TRUE;\n}");
     myfile.close();
     char *command =(char*) malloc((3*30*sizeof(char)+900*sizeof(char)));
-    sprintf(command,"g++ -Wall -DBUILDING_DLL -O2  -c Dll_release\\%s.cpp -o Dll_release\\%s.o & g++ -shared -Wl,--output-def=Dll_release\\%s.def -Wl,--out-implib=Dll_release\\%s.a -Wl,--dll  Dll_release\\%s.o  -o Dll_release\\%s.dll  & pause"
+    sprintf(command,"(g++ -Wall -DBUILDING_DLL -O2  -c Dll_release\\%s.cpp -o Dll_release\\%s.o || pause )& g++ -shared -Wl,--output-def=Dll_release\\%s.def -Wl,--out-implib=Dll_release\\%s.a -Wl,--dll  Dll_release\\%s.o  -o Dll_release\\%s.dll "
             ,N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str());
-    std::thread first (system,command);
-    first.join();
+    /**if (first.joinable())
+    first.join();if (first.joinable())
+    first.join();*/
+    first=std::thread (system,command);
+
   //  int consta=system("exit(1)");
-    free(command);
+//    free(command);
 }
 
 void SQLManagerFrame::OnLibrariesText(wxCommandEvent& event)

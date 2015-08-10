@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <wxsmith>
 	<object class="wxDialog" name="TesterDialog">
+		<title>Tester</title>
+		<size>570,309</size>
+		<minsize>-1,-1</minsize>
+		<maxsize>-1,-1</maxsize>
 		<id_arg>0</id_arg>
+		<style>wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER|wxTAB_TRAVERSAL|wxMAXIMIZE_BOX|wxMINIMIZE_BOX</style>
 		<object class="wxFlexGridSizer" variable="FlexGridSizer1" member="no">
 			<cols>1</cols>
 			<rows>5</rows>
@@ -11,7 +16,7 @@
 				<object class="wxBoxSizer" variable="BoxSizer1" member="no">
 					<object class="sizeritem">
 						<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
-							<label>Label</label>
+							<label>Times</label>
 						</object>
 						<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 						<border>5</border>
@@ -19,7 +24,8 @@
 					</object>
 					<object class="sizeritem">
 						<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl1" member="yes">
-							<value>Text</value>
+							<value>10</value>
+							<validator>val</validator>
 						</object>
 						<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 						<border>5</border>
@@ -37,10 +43,16 @@
 				<border>5</border>
 			</object>
 			<object class="sizeritem">
-				<object class="wxGrid" name="ID_GRID1" variable="Grid1" member="yes" />
-				<flag>wxALL|wxALIGN_TOP|wxALIGN_CENTER_HORIZONTAL</flag>
+				<object class="wxSplitterWindow" name="ID_SPLITTERWINDOW1" variable="SplitterWindow1" member="yes">
+					<minsize>10</minsize>
+					<minsize>10,10</minsize>
+					<object class="wxGrid" name="ID_GRID1" variable="Grid1" member="yes">
+						<style>wxVSCROLL|wxHSCROLL</style>
+					</object>
+				</object>
+				<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 				<border>5</border>
-				<option>4</option>
+				<option>3</option>
 			</object>
 			<object class="sizeritem">
 				<object class="wxStaticLine" name="ID_STATICLINE2" variable="StaticLine2" member="yes">
@@ -50,16 +62,23 @@
 				<border>5</border>
 			</object>
 			<object class="sizeritem">
-				<object class="wxStdDialogButtonSizer" variable="StdDialogButtonSizer1" member="no">
-					<object class="button">
-						<object class="wxButton" name="wxID_OK">
-							<label></label>
+				<object class="wxBoxSizer" variable="BoxSizer2" member="no">
+					<object class="sizeritem">
+						<object class="wxButton" name="ID_Launch" variable="Launch" member="yes">
+							<label>Launch</label>
+							<handler function="OnLaunchClick" entry="EVT_BUTTON" />
 						</object>
+						<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+						<border>5</border>
+						<option>1</option>
 					</object>
-					<object class="button">
-						<object class="wxButton" name="wxID_CANCEL">
-							<label></label>
+					<object class="sizeritem">
+						<object class="wxButton" name="wxID_CANCEL" variable="Button1" member="yes">
+							<label>Close</label>
 						</object>
+						<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+						<border>5</border>
+						<option>1</option>
 					</object>
 				</object>
 				<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>

@@ -5,11 +5,15 @@
 #include <wx/sizer.h>
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
+#include <wx/splitter.h>
 #include <wx/statline.h>
 #include <wx/grid.h>
+#include <wx/button.h>
 #include <wx/dialog.h>
 //*)
+#include <list>
 
+using std::string;
 class TesterDialog: public wxDialog
 {
 	public:
@@ -18,13 +22,19 @@ class TesterDialog: public wxDialog
 		virtual ~TesterDialog();
 
 		//(*Declarations(TesterDialog)
+		wxButton* Button1;
 		wxStaticText* StaticText1;
 		wxGrid* Grid1;
 		wxStaticLine* StaticLine2;
 		wxStaticLine* StaticLine1;
 		wxTextCtrl* TextCtrl1;
+		wxSplitterWindow* SplitterWindow1;
+		wxButton* Launch;
 		//*)
         void GenerateGrid(int col,int row);
+        void RowName(string name,int row);
+        void ColorSet(std::list<string> mylist,int row);
+        void AddReturn();
 
 
 	protected:
@@ -34,14 +44,20 @@ class TesterDialog: public wxDialog
 		static const long ID_TEXTCTRL1;
 		static const long ID_STATICLINE1;
 		static const long ID_GRID1;
+		static const long ID_SPLITTERWINDOW1;
 		static const long ID_STATICLINE2;
+		static const long ID_Launch;
 		//*)
 
 	private:
 
 		//(*Handlers(TesterDialog)
+		void OnLaunchClick(wxCommandEvent& event);
 		//*)
+		template<class T>
+        string toString(T data);
 
+        unsigned long m_value=5;
 		DECLARE_EVENT_TABLE()
 };
 

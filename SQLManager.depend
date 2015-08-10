@@ -1710,7 +1710,7 @@
 1412634844 c:\wxwidgets-3.0.2\include\wx\univ\theme.h
 	"wx/string.h"
 
-1438572216 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
+1438833274 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
 	<wx/listctrl.h>
 	<wx/sizer.h>
 	<wx/stattext.h>
@@ -1727,6 +1727,8 @@
 	<string.h>
 	<stdio.h>
 	"sqlite3.h"
+	<thread>
+	<list>
 
 1412634844 c:\wxwidgets-3.0.2\include\wx\sizer.h
 	"wx/defs.h"
@@ -2141,7 +2143,7 @@
 1435316468 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlite3.h
 	<stdarg.h>
 
-1438591778 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
+1439182782 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
 	"SQLManagerMain.h"
 	<wx/msgdlg.h>
 	<wx/filedlg.h>
@@ -2151,10 +2153,10 @@
 	<stdexcept>
 	<fstream>
 	<sstream>
-	<thread>
 	<vector>
 	"CParams.h"
 	"ConfigDialog.h"
+	"TesterDialog.h"
 	<wx/bitmap.h>
 	<wx/icon.h>
 	<wx/intl.h>
@@ -2648,7 +2650,7 @@
 	<stddef.h>
 	"wx/defs.h"
 
-1438596269 source:c:\users\josele\documents\c_c++\dll\sqlmanager\testerframe.cpp
+1438598205 source:c:\users\josele\documents\c_c++\dll\sqlmanager\testerframe.cpp
 	"TesterFrame.h"
 	<wx/intl.h>
 	<wx/button.h>
@@ -2680,4 +2682,35 @@
 1412634842 c:\wxwidgets-3.0.2\include\wx\generic\gridctrl.h
 	"wx/grid.h"
 	"wx/datetime.h"
+
+1438757952 c:\users\josele\documents\c_c++\dll\sqlmanager\testerdialog.h
+	<wx/sizer.h>
+	<wx/stattext.h>
+	<wx/textctrl.h>
+	<wx/splitter.h>
+	<wx/statline.h>
+	<wx/grid.h>
+	<wx/button.h>
+	<wx/dialog.h>
+	<list>
+
+1438766578 source:c:\users\josele\documents\c_c++\dll\sqlmanager\testerdialog.cpp
+	"TesterDialog.h"
+	<wx/intl.h>
+	<wx/string.h>
+	<wx/valnum.h>
+	<sstream>
+
+1412634844 c:\wxwidgets-3.0.2\include\wx\splitter.h
+	"wx/event.h"
+	"wx/generic/splitter.h"
+
+1412634842 c:\wxwidgets-3.0.2\include\wx\generic\splitter.h
+	"wx/window.h"
+	"wx/containr.h"
+
+1412634844 c:\wxwidgets-3.0.2\include\wx\valnum.h
+	"wx/defs.h"
+	"wx/validate.h"
+	<limits>
 

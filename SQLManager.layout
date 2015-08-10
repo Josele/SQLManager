@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
-	<File name="CParams.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+	<File name="SQLManagerApp.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4285" topLine="108" />
-		</Cursor>
-	</File>
-	<File name="SQLManagerMain.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="449" topLine="6" />
+			<Cursor1 position="424" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="SQLManagerApp.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -16,54 +11,49 @@
 			<Cursor1 position="340" topLine="1" />
 		</Cursor>
 	</File>
-	<File name="resource.rc" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="40" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="SQLManagerMain.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="51347" topLine="1340" />
-		</Cursor>
-	</File>
 	<File name="ConfigDialog.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="3299" topLine="73" />
 		</Cursor>
 	</File>
-	<File name="CParams.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="TesterDialog.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1604" topLine="49" />
+			<Cursor1 position="3919" topLine="53" />
 		</Cursor>
 	</File>
-	<File name="ConfigDialog.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="TesterDialog.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="904" topLine="25" />
+			<Cursor1 position="690" topLine="2" />
 		</Cursor>
 	</File>
-	<File name="TesterDialog.cpp" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="SQLManagerMain.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="0" topLine="0" />
+			<Cursor1 position="48056" topLine="1250" />
 		</Cursor>
 	</File>
-	<File name="TesterFrame.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="ConfigDialog.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="669" topLine="16" />
+			<Cursor1 position="904" topLine="12" />
 		</Cursor>
 	</File>
-	<File name="TesterDialog.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="SQLManagerMain.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="618" topLine="21" />
+			<Cursor1 position="771" topLine="130" />
 		</Cursor>
 	</File>
-	<File name="SQLManagerApp.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="CParams.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="424" topLine="0" />
+			<Cursor1 position="1604" topLine="13" />
 		</Cursor>
 	</File>
-	<File name="TesterFrame.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="resource.rc" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2859" topLine="55" />
+			<Cursor1 position="40" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="CParams.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4285" topLine="108" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
