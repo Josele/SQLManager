@@ -1223,7 +1223,7 @@ void SQLManagerFrame::OnRun_AllClick(wxCommandEvent& event)
                     (getrow)(db,"params","name",resp.c_str(),c_callback2,&answer );
                     result=GetParams(answer,resp,0);
                     headfuncs=headfuncs+ret+" __stdcall FUNCTION_DLL "+text+"("+result.cont+");\n";
-                    code_cont=code_cont+" __stdcall "+ret+" "+text +"("+GetParams(answer,resp,1).cont+")\n{\n"+((ret=="void")?"":(ret+" "+parm+";\n"))+code+"\n"+(ret!="void"?("return "+parm+";"):" ")+"\n}\n";
+                    code_cont=code_cont+" __stdcall FUNCTION_DLL "+ret+" "+text +"("+GetParams(answer,resp,1).cont+")\n{\n"+((ret=="void")?"":(ret+" "+parm+";\n"))+code+"\n"+(ret!="void"?("return "+parm+";"):" ")+"\n}\n";
                     mi.ColorSet(result.mytypes,i-1);
                     mi.RowName(text,i-1);
 
@@ -1268,10 +1268,10 @@ void SQLManagerFrame:: GenerateDllFiles_v2(string N_file,string code, string hea
             ,N_file.c_str(),libs.c_str());
     cont="Dll_release\\"+N_file+".cpp";
     myfile.open (cont.c_str());
-    myfile << C_file << code <<"\nextern \"C\" FUNCTION_DLL BOOLEAN APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)\n{\n    switch (fdwReason)\n{\n        case DLL_PROCESS_ATTACH:\n            break;\n        case DLL_PROCESS_DETACH:\n            break;\n        case DLL_THREAD_ATTACH:\n            break;\n        case DLL_THREAD_DETACH:\n            break;\n}\nreturn TRUE; // succesful\n}";
-    myfile.close();
+    myfile << C_file << code <<"extern \"C\" FUNCTION_DLL BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)\n{\n    switch (fdwReason)\n    {\n        case DLL_PROCESS_ATTACH:\n            // attach to process\n            // return FALSE to fail DLL load\n            break;\n        case DLL_PROCESS_DETACH:\n            // detach from process\n            break;\n        case DLL_THREAD_ATTACH:\n            // attach to thread\n            break;\n        case DLL_THREAD_DETACH:\n            // detach from thread\n            break;\n    }\n    return TRUE; // succesful\n}";
+        myfile.close();
     char *command =(char*) malloc((3*30*sizeof(char)+900*sizeof(char)));
-    sprintf(command,"(g++ -Wall -DBUILDING_DLL -O2  -c Dll_release\\%s.cpp -o Dll_release\\%s.o || pause )& g++ -shared -Wl,--output-def=Dll_release\\%s.def -Wl,--out-implib=Dll_release\\%s.a -Wl,--dll  Dll_release\\%s.o  -o Dll_release\\%s.dll "
+    sprintf(command,"(g++ -Wall -DBUILDING_DLL -O2  -c Dll_release\\%s.cpp -o Dll_release\\%s.o || pause )& g++ -shared -Wl,--output-def=Dll_release\\%s.def -Wl,--out-implib=Dll_release\\%s.a -Wl,--dll  Dll_release\\%s.o  -o Dll_release\\%s.dll -s "
             ,N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str());
     /**if (first.joinable())
     first.join();if (first.joinable())

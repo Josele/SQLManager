@@ -1,13 +1,12 @@
-#include "function.h"
+#include "ccv.h"
 #include <stdio.h>
-#include <math.h>
 
-  __stdcall void das( )
+  __stdcall void c( )
 {
 
  
 }
-extern "C" FUNCTION_DLL BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
+__stdcall   FUNCTION_DLL bool APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {
     switch (fdwReason)
     {
