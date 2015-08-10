@@ -1268,7 +1268,7 @@ void SQLManagerFrame:: GenerateDllFiles_v2(string N_file,string code, string hea
             ,N_file.c_str(),libs.c_str());
     cont="Dll_release\\"+N_file+".cpp";
     myfile.open (cont.c_str());
-    myfile << C_file << code <<(false?"":"extern \"C\" FUNCTION_DLL bool APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved){\nswitch (fdwReason)\n{\ncase DLL_PROCESS_ATTACH:\nbreak;\ncase DLL_PROCESS_DETACH:\nbreak;\ncase DLL_THREAD_ATTACH:\nbreak;\ncase DLL_THREAD_DETACH:\nbreak;\n}\nreturn TRUE;\n}");
+    myfile << C_file << code <<"\nextern \"C\" FUNCTION_DLL BOOLEAN APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)\n{\n    switch (fdwReason)\n{\n        case DLL_PROCESS_ATTACH:\n            break;\n        case DLL_PROCESS_DETACH:\n            break;\n        case DLL_THREAD_ATTACH:\n            break;\n        case DLL_THREAD_DETACH:\n            break;\n}\nreturn TRUE; // succesful\n}";
     myfile.close();
     char *command =(char*) malloc((3*30*sizeof(char)+900*sizeof(char)));
     sprintf(command,"(g++ -Wall -DBUILDING_DLL -O2  -c Dll_release\\%s.cpp -o Dll_release\\%s.o || pause )& g++ -shared -Wl,--output-def=Dll_release\\%s.def -Wl,--out-implib=Dll_release\\%s.a -Wl,--dll  Dll_release\\%s.o  -o Dll_release\\%s.dll "
