@@ -154,7 +154,7 @@ class SQLManagerFrame: public wxFrame
         //*)
         bool retstatus;
         std::thread first;
-        wxString MultiChoiceDialogChoices_1[11];
+        wxString MultiChoiceDialogChoices_1[12];
         DECLARE_EVENT_TABLE()
 };
 

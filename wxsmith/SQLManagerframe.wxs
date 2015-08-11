@@ -284,6 +284,8 @@
 				<item>stdarg.h</item>
 				<item>stddef.h</item>
 				<item>stdint.h</item>
+				<item>stdlib.h</item>
+				<item>string.h</item>
 				<item>tgmath.h</item>
 				<item>time.h</item>
 				<item>wchar.h</item>

@@ -17,6 +17,17 @@
 						<pos>8,8</pos>
 						<size>80,13</size>
 					</object>
+					<object class="wxRadioBox" name="ID_CallC" variable="RadioBoxCC" member="yes">
+						<label>Calling Convection</label>
+						<content>
+							<item>none</item>
+							<item>stdcall</item>
+							<item>cdecl</item>
+						</content>
+						<default>-1</default>
+						<pos>8,64</pos>
+						<size>104,88</size>
+					</object>
 				</object>
 				<label>Basic</label>
 			</object>

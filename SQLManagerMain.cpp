@@ -224,7 +224,7 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     StatusBar1->SetFieldsCount(1,__wxStatusBarWidths_1);
     StatusBar1->SetStatusStyles(1,__wxStatusBarStyles_1);
     SetStatusBar(StatusBar1);
-    wxString __wxMultiChoiceDialogChoices_1[11] =
+    wxString __wxMultiChoiceDialogChoices_1[13] =
     {
     	_("float.h"),
     	_("math.h"),
@@ -233,12 +233,14 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     	_("stdarg.h"),
     	_("stddef.h"),
     	_("stdint.h"),
+    	_("stdlib.h"),
+    	_("string.h"),
     	_("tgmath.h"),
     	_("time.h"),
     	_("wchar.h"),
     	_("windows.h")
     };
-    MultiChoiceDialog1 = new wxMultiChoiceDialog(this, _("Select items"), wxEmptyString, 11, __wxMultiChoiceDialogChoices_1, wxCHOICEDLG_STYLE, wxDefaultPosition);
+    MultiChoiceDialog1 = new wxMultiChoiceDialog(this, _("Select items"), wxEmptyString, 13, __wxMultiChoiceDialogChoices_1, wxCHOICEDLG_STYLE, wxDefaultPosition);
 
     Connect(ID_LISTBOX,wxEVT_COMMAND_LISTBOX_DOUBLECLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnListBoxDClick);
     Connect(ID_LISTCTRL,wxEVT_COMMAND_LIST_ITEM_ACTIVATED,(wxObjectEventFunction)&SQLManagerFrame::OnlistCtrlItemActivated);
@@ -272,7 +274,7 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     listCtrl->InsertColumn(2,"Array");
     listCtrl->InsertColumn(3,"Value");
     retstatus=false;
-    for(int n=0;n<11;n++) MultiChoiceDialogChoices_1[n]=__wxMultiChoiceDialogChoices_1[n];
+    for(int n=0;n<12;n++) MultiChoiceDialogChoices_1[n]=__wxMultiChoiceDialogChoices_1[n];
 
 }
 
@@ -595,7 +597,7 @@ void SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent& event)
     ListBox->Append("New");
     selected=-1;
     BigBoxSetStatus();
-
+    OnMenuLibrariesSelected(event);
 }
 
 /**
@@ -940,6 +942,7 @@ void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
     string resp;
     string answer;
     string renamed;
+    string CallConv;
     string code;
     string parm;
     string headfuncs;
@@ -966,6 +969,13 @@ void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
     {
         getitem=(Getitem)GetProcAddress(histDLL,"get_item");
         (getitem)(db,"config","name","id","1","1",c_callback,&renamed );
+         getitem=(Getitem)GetProcAddress(histDLL,"get_item");
+        (getitem)(db,"config","CC","id","1","1",c_callback,&CallConv );
+        if(CallConv=="none")
+            CallConv="";
+        else
+            CallConv="__"+CallConv;
+
     }
         catch (std::exception& e)
     {
@@ -1012,9 +1022,10 @@ void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
         excep_dialog(string(e.what()));
     }
     result=GetParams(answer,resp,0);
-    headfuncs=ret+" __stdcall FUNCTION_DLL "+text+"("+result.cont+");";
+    headfuncs=ret+" "+CallConv+" FUNCTION_DLL "+text+"("+result.cont+");";
   //  code=" __stdcall "+ret+" "+text +"("+GetParams()+")\n{\n"+code+"\n}";
-    code=" __stdcall "+ret+" "+text +"("+GetParams(answer,resp,1).cont+")\n{\n"+((ret=="void")?"":(ret+" "+parm+";\n"))+code+"\n"+(ret!="void"?("return "+parm+";"):" ")+"\n}\n";
+    code=CallConv +" "+ret+" "+text +"("+GetParams(answer,resp,1).cont+")\n{\n"+((ret=="void")?"":(ret+" "+parm+";\n"))+code+"\n"+(ret!="void"?("return "+parm+";"):" ")+"\n}\n";
+     answer=std::string();
      try
         {
             getitem=(Getitem)GetProcAddress(histDLL,"get_item");
@@ -1034,13 +1045,11 @@ void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
                 {
                     current = next + 1;
                     next = answer.find_first_of(delimiters, current );
-                    selections.Add(atoi(answer.substr( current, next - current ).c_str()));
+                   libs=libs+("#include <"+MultiChoiceDialogChoices_1[atoi(answer.substr( current, next - current ).c_str())]+ ">\n");
+
                 }while (next != string::npos);
-            for (size_t n=0; n < selections.GetCount(); ++n )
-            libs=libs+("#include <"+MultiChoiceDialogChoices_1[selections[n]])+ ">\n";
+
         }
-
-
     GenerateDllFiles_v2(renamed,code,headfuncs,libs);
     TesterDialog mi(this);
     mi.GenerateGrid(result.num,1);
@@ -1137,6 +1146,7 @@ void SQLManagerFrame::OnRun_AllClick(wxCommandEvent& event)
     string answer;
     string renamed;
     string code;
+    string CallConv;
     string code_cont;
     string headfuncs;
     string parm;
@@ -1159,10 +1169,20 @@ void SQLManagerFrame::OnRun_AllClick(wxCommandEvent& event)
         OnSaveClick(event);
         }
     LoadDll();
+    n_items=cont_col("datos");
+    if(n_items<=0)
+        return;
     try
     {
         getitem=(Getitem)GetProcAddress(histDLL,"get_item");
         (getitem)(db,"config","name","id","1","1",c_callback,&renamed );
+        getitem=(Getitem)GetProcAddress(histDLL,"get_item");
+        (getitem)(db,"config","CC","id","1","1",c_callback,&CallConv );
+
+        if(CallConv=="none")
+            CallConv=std::string();
+        else
+            CallConv="__"+CallConv;
     }
         catch (std::exception& e)
     {
@@ -1199,9 +1219,8 @@ void SQLManagerFrame::OnRun_AllClick(wxCommandEvent& event)
     }
         catch (std::exception& e)
     {
-        excep_dialog(string(e.what()));
+        //excep_dialog(string(e.what()));
     }
-    n_items=cont_col("datos");
     mi.GenerateGrid(atoi(answer.c_str()),n_items-1);
     answer=std::string();
     for(i=0;(i)<n_items;i++)
@@ -1222,8 +1241,8 @@ void SQLManagerFrame::OnRun_AllClick(wxCommandEvent& event)
                     getrow=(Getrow)GetProcAddress(histDLL,"row");
                     (getrow)(db,"params","name",resp.c_str(),c_callback2,&answer );
                     result=GetParams(answer,resp,0);
-                    headfuncs=headfuncs+ret+" __stdcall FUNCTION_DLL "+text+"("+result.cont+");\n";
-                    code_cont=code_cont+" __stdcall FUNCTION_DLL "+ret+" "+text +"("+GetParams(answer,resp,1).cont+")\n{\n"+((ret=="void")?"":(ret+" "+parm+";\n"))+code+"\n"+(ret!="void"?("return "+parm+";"):" ")+"\n}\n";
+                    headfuncs=headfuncs+ret+" "+CallConv+" FUNCTION_DLL "+text+"("+result.cont+");\n";
+                    code_cont=code_cont+" "+CallConv+" FUNCTION_DLL "+ret+" "+text +"("+GetParams(answer,resp,1).cont+")\n{\n"+((ret=="void")?"":(ret+" "+parm+";\n"))+code+"\n"+(ret!="void"?("return "+parm+";"):" ")+"\n}\n";
                     mi.ColorSet(result.mytypes,i-1);
                     mi.RowName(text,i-1);
 
@@ -1242,10 +1261,32 @@ void SQLManagerFrame::OnRun_AllClick(wxCommandEvent& event)
 
         }
 
+
+    answer=std::string();
+     try
+        {
+            getitem=(Getitem)GetProcAddress(histDLL,"get_item");
+            (getitem)(db,"config","libs","id","1","1",c_callback,&answer );
+        }
+    catch (std::exception& e)
+        {
+            excep_dialog(string(e.what()));
+        }
     FreeDll();
-    wxArrayInt selections=MultiChoiceDialog1->GetSelections();
-    for (size_t n=0; n < selections.GetCount(); ++n )
-            libs_cont=libs_cont+("#include <"+MultiChoiceDialogChoices_1[selections[n]])+ ">\n";
+    if (answer!="-1")
+        {
+            string delimiters = ",";
+            size_t current;
+            size_t next = -1;
+            do
+                {
+                    current = next + 1;
+                    next = answer.find_first_of(delimiters, current );
+                   libs_cont=libs_cont+("#include <"+MultiChoiceDialogChoices_1[atoi(answer.substr( current, next - current ).c_str())]+ ">\n");
+
+                }while (next != string::npos);
+
+        }
     GenerateDllFiles_v2(renamed,code_cont,headfuncs,libs_cont,n_items);
     mi.ShowModal();
     first.join();
@@ -1268,7 +1309,8 @@ void SQLManagerFrame:: GenerateDllFiles_v2(string N_file,string code, string hea
             ,N_file.c_str(),libs.c_str());
     cont="Dll_release\\"+N_file+".cpp";
     myfile.open (cont.c_str());
-    myfile << C_file << code <<"extern \"C\" FUNCTION_DLL BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)\n{\n    switch (fdwReason)\n    {\n        case DLL_PROCESS_ATTACH:\n            // attach to process\n            // return FALSE to fail DLL load\n            break;\n        case DLL_PROCESS_DETACH:\n            // detach from process\n            break;\n        case DLL_THREAD_ATTACH:\n            // attach to thread\n            break;\n        case DLL_THREAD_DETACH:\n            // detach from thread\n            break;\n    }\n    return TRUE; // succesful\n}";
+    myfile << C_file << code ;
+    //<<"extern \"C\" FUNCTION_DLL BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)\n{\n    switch (fdwReason)\n    {\n        case DLL_PROCESS_ATTACH:\n            // attach to process\n            // return FALSE to fail DLL load\n            break;\n        case DLL_PROCESS_DETACH:\n            // detach from process\n            break;\n        case DLL_THREAD_ATTACH:\n            // attach to thread\n            break;\n        case DLL_THREAD_DETACH:\n            // detach from thread\n            break;\n    }\n    return TRUE; // succesful\n}";
         myfile.close();
     char *command =(char*) malloc((3*30*sizeof(char)+900*sizeof(char)));
     sprintf(command,"(g++ -Wall -DBUILDING_DLL -O2  -c Dll_release\\%s.cpp -o Dll_release\\%s.o || pause )& g++ -shared -Wl,--output-def=Dll_release\\%s.def -Wl,--out-implib=Dll_release\\%s.a -Wl,--dll  Dll_release\\%s.o  -o Dll_release\\%s.dll -s "
@@ -1441,7 +1483,7 @@ void SQLManagerFrame::OnMenuLibrariesSelected(wxCommandEvent& event)
             excep_dialog(string(e.what()));
         }
     FreeDll();
-    if (answer!="-1")
+    if (answer!="-1"&&answer!=std::string())
         {
             string delimiters = ",";
             size_t current;
@@ -1450,12 +1492,15 @@ void SQLManagerFrame::OnMenuLibrariesSelected(wxCommandEvent& event)
                 {
                     current = next + 1;
                     next = answer.find_first_of(delimiters, current );
-                    selections.Add(atoi(answer.substr( current, next - current ).c_str()));
+                        selections.Add(atoi(answer.substr( current, next - current ).c_str()));
                 }while (next != string::npos);
             MultiChoiceDialog1->SetSelections(selections);
 
         }
-    MultiChoiceDialog1->ShowModal();
+    if(event.GetId()!=ID_Lib)
+            return;
+    if(MultiChoiceDialog1->ShowModal()==wxID_CANCEL)
+        return;
     selections=MultiChoiceDialog1->GetSelections();
     answer=std::string();
     for (size_t n=0; n < selections.GetCount(); ++n )
@@ -1480,6 +1525,7 @@ void SQLManagerFrame::OnMenuConfigSelected(wxCommandEvent& event)
 Getitem getitem(0);
 add_text addtext(0);
 string answer;
+string answer2;
 if(db==0)
     return;
 ConfigDialog mi(this);
@@ -1488,6 +1534,9 @@ try
     {
         getitem=(Getitem)GetProcAddress(histDLL,"get_item");
         (getitem)(db,"config","name","id","1","1",c_callback,&answer );
+         getitem=(Getitem)GetProcAddress(histDLL,"get_item");
+        (getitem)(db,"config","CC","id","1","1",c_callback,&answer2 );
+
     }
 catch (std::exception& e)
     {
@@ -1496,6 +1545,7 @@ catch (std::exception& e)
  FreeDll();
 
 mi.SetName(answer);
+mi.SetCC(answer2);
 if(mi.ShowModal()!=wxID_OK)
     return;
 LoadDll();
@@ -1503,10 +1553,15 @@ try
     {
         addtext=(add_text)GetProcAddress(histDLL,"add_text");
         (addtext)(db,"config","name",mi.GetName().c_str(),"id","1");
+        addtext=(add_text)GetProcAddress(histDLL,"add_text");
+        (addtext)(db,"config","CC",mi.GetCC().c_str(),"id","1");
     }
 catch (std::exception& e)
     {
         excep_dialog(string(e.what()));
     }
+
+
+
 FreeDll();
 }

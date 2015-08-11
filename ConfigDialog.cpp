@@ -9,7 +9,7 @@
 //(*IdInit(ConfigDialog)
 const long ConfigDialog::ID_TEXTCTRL1 = wxNewId();
 const long ConfigDialog::ID_STATICTEXT1 = wxNewId();
-const long ConfigDialog::ID_CHECKBOX1 = wxNewId();
+const long ConfigDialog::ID_CallC = wxNewId();
 const long ConfigDialog::ID_PANEL1 = wxNewId();
 const long ConfigDialog::ID_NOTEBOOK1 = wxNewId();
 const long ConfigDialog::ID_OK = wxNewId();
@@ -29,8 +29,13 @@ ConfigDialog::ConfigDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	Panel1 = new wxPanel(Notebook1, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL1"));
 	TextCtrl1 = new wxTextCtrl(Panel1, ID_TEXTCTRL1, _("Text"), wxPoint(8,32), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	StaticText1 = new wxStaticText(Panel1, ID_STATICTEXT1, _("Output file:"), wxPoint(8,8), wxSize(80,13), 0, _T("ID_STATICTEXT1"));
-	CheckBox1 = new wxCheckBox(Panel1, ID_CHECKBOX1, _("Tester Enable"), wxPoint(8,80), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX1"));
-	CheckBox1->SetValue(false);
+	wxString __wxRadioBoxChoices_1[3] =
+	{
+		_("none"),
+		_("stdcall"),
+		_("cdecl")
+	};
+	RadioBoxCC = new wxRadioBox(Panel1, ID_CallC, _("Calling Convection"), wxPoint(8,64), wxSize(104,88), 3, __wxRadioBoxChoices_1, 1, 0, wxDefaultValidator, _T("ID_CallC"));
 	Notebook1->AddPage(Panel1, _("Basic"), false);
 	Ok = new wxButton(this, ID_OK, _("Ok"), wxPoint(40,240), wxDefaultSize, 0, wxDefaultValidator, _T("ID_OK"));
 	Cancel = new wxButton(this, wxID_CANCEL, _("Cancel"), wxPoint(136,240), wxDefaultSize, 0, wxDefaultValidator, _T("wxID_CANCEL"));
@@ -48,10 +53,18 @@ void ConfigDialog::SetName(string Name)
 {
     TextCtrl1->SetLabel(Name);
 }
+void ConfigDialog::SetCC(string sel)
+{
+    RadioBoxCC->SetStringSelection(sel);
+}
 
 string ConfigDialog::GetName()
 {
 return TextCtrl1->GetLineText(0).ToStdString();
+}
+string ConfigDialog::GetCC()
+{
+return RadioBoxCC->GetStringSelection().ToStdString();
 }
 
 bool ConfigDialog::str_controler(string String)
@@ -93,4 +106,8 @@ void ConfigDialog::OnOkClick(wxCommandEvent& event)
 
         if(!str_controler(text))
             EndModal(wxID_OK);
+}
+
+void ConfigDialog::OnRadioBoxCCSelect1(wxCommandEvent& event)
+{
 }

@@ -1,29 +1,33 @@
 #include "function.h"
 #include <stdio.h>
+#include <float.h>
 #include <math.h>
+#include <stdbool.h>
+#include <stdarg.h>
+#include <stdlib.h>
+#include <string.h>
 
-  __stdcall void das( )
+  __cdecl FUNCTION_DLL void function2(int size,int var[])
 {
+for(int n=0;n<size;n++)
+{
+	var[n]=rand() % 100;
+	var[n]=pow(var[n],2);
+}
 
  
 }
-extern "C" FUNCTION_DLL BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
+ __cdecl FUNCTION_DLL int function1(int n)
 {
-    switch (fdwReason)
-    {
-        case DLL_PROCESS_ATTACH:
-            // attach to process
-            // return FALSE to fail DLL load
-            break;
-        case DLL_PROCESS_DETACH:
-            // detach from process
-            break;
-        case DLL_THREAD_ATTACH:
-            // attach to thread
-            break;
-        case DLL_THREAD_DETACH:
-            // detach from thread
-            break;
-    }
-    return TRUE; // succesful
+int result;
+    result=n-1;
+
+    for (int i=2; i<=n; ++i)
+        for (int j=sqrt(i);j>1;--j)
+            if (i%j==0)
+            {
+                --result;
+                break;
+            }
+return result;
 }

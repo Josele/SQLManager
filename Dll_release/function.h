@@ -9,7 +9,9 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
- void __stdcall FUNCTION_DLL das( );
+ void __cdecl FUNCTION_DLL function2(int size,int var[]);
+int __cdecl FUNCTION_DLL function1(int n);
+
 #ifdef __cplusplus
 }
 #endif

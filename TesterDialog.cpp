@@ -5,8 +5,9 @@
 #include <wx/string.h>
 //*)
 #include <wx/valnum.h>
+#include <windows.h>
 #include <sstream>
-
+#include <wx/progdlg.h>
 
 //(*IdInit(TesterDialog)
 const long TesterDialog::ID_STATICTEXT1 = wxNewId();
@@ -130,8 +131,14 @@ void TesterDialog::ColorSet(std::list<string> mylist,int row)
 
 void TesterDialog::OnLaunchClick(wxCommandEvent& event)
 {
+    int n=0;
+    wxProgressDialog progressDlg(_("Please wait"), _("Scanning"),1000, this, wxPD_APP_MODAL | wxPD_CAN_ABORT);
+    for(n;n<1000;n++)
+        {
+        if (!progressDlg.Update(n)) // if cancel clicked
+            return; // abort processing
 
-    Grid1->SetCellValue( 0, 1, "wxGrid is good" );
-    Grid1->SetCellValue( 0, 5, Grid1->GetCellValue (0,0) );
+        Sleep(10);
 
+        }
 }
