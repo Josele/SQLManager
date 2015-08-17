@@ -7,7 +7,10 @@
 #include <wx/valnum.h>
 #include <windows.h>
 #include <sstream>
+#include <fstream>
 #include <wx/progdlg.h>
+#include <wx/msgdlg.h>
+
 
 //(*IdInit(TesterDialog)
 const long TesterDialog::ID_STATICTEXT1 = wxNewId();
@@ -84,13 +87,85 @@ string TesterDialog::toString(T data)
     return ss.str();
 }
 
+string TesterDialog::funcpointer()
+{   std::list<FuncDescr> lol=ListOfList;
+    string funchp;
+    while(!lol.empty())
+    {
+        funchp=funchp+" typedef "+lol.front().ret+"(*"+lol.front().name+") ( ";
+        while(!lol.front().mytypes.empty())
+        {
+            funchp=funchp+" "+lol.front().mytypes.front()+",";
+            lol.front().mytypes.pop_front();
+        }
+        funchp=funchp.substr(0,funchp.length()-1)+");\n";
+        lol.pop_front();
+    }
+return funchp;
+}
+
+string TesterDialog::funcdecl()
+{
+    std::list<FuncDescr> lol=ListOfList;
+    string funchp;
+    while(!lol.empty())
+    {
+        funchp=funchp +lol.front().name+" call_"+lol.front().name+"(0);\n";
+        lol.pop_front();
+    }
+return funchp;
+}
+string TesterDialog::funccallers()
+{
+    int row=0;
+    int col=0;
+    std::list<FuncDescr> lol=ListOfList;
+    const char* countingst="       begin = high_resolution_clock::now();\n" ;
+    const char* countingen="       end = high_resolution_clock::now();\n";
+    const char* countingen2="       ticks = duration_cast<microseconds>(end-begin);\n      myfile<<ticks.count()<<\"\\n\";\n\n" ;
+    string funchp;
+    while(!lol.empty())
+    {
+        funchp=funchp+(row==0?"auto":"")+countingst+"      call_"+lol.front().name+"=("+lol.front().name+")GetProcAddress(histDLL,\""+lol.front().name+"\");\n";
+        funchp=funchp+(lol.front().ret=="void"?"":"      myfile<<")+"(call_"+lol.front().name+")( ";
+
+        while(!lol.front().mytypes.empty())
+        {
+            funchp=funchp+(lol.front().mytypes.front()=="char*"?"\""+Grid1->GetCellValue(row,col)+"\"":Grid1->GetCellValue(row,col))+",";
+            lol.front().mytypes.pop_front();
+            col++;
+        }
+        funchp=funchp.substr(0,funchp.length()-1)+")"+(lol.front().ret!="void"?"<<\",\"":"")+";\n"+(row==0?"auto":"")+countingen+(row==0?"auto":"")+countingen2;
+        lol.pop_front();
+        row++;
+        col=0;
+    }
+return funchp;
+}
+void TesterDialog::FileName(string file)
+{
+ this->file=file;
+}
+string TesterDialog::funcretdecl()
+{
+    std::list<FuncDescr> lol=ListOfList;
+    string funchp;
+    while(!lol.empty())
+    {   if(lol.front().ret!="void")
+            funchp=funchp +lol.front().ret+" result_"+lol.front().name+";\n";
+        lol.pop_front();
+    }
+return funchp;
+}
+
 void TesterDialog::GenerateGrid(int col,int row)
 {
     int n;
-    Grid1->CreateGrid(row,col+1);
+    Grid1->CreateGrid(row,col+2);
     for(n=0;n<col;n++)
         Grid1->SetColLabelValue(n,"P"+toString(n));
     Grid1->SetColLabelValue(n,"Return");
+    Grid1->SetColLabelValue(n+1,"Time");
 	Grid1->EnableEditing(true);
 	Grid1->EnableGridLines(true);
 	Grid1->SetDefaultCellFont( Grid1->GetFont() );
@@ -102,15 +177,15 @@ void TesterDialog::RowName(string name,int row)
 {
        Grid1->SetRowLabelValue(row,name);
 }
-void TesterDialog::ColorSet(std::list<string> mylist,int row)
+void TesterDialog::ColorSet(FuncDescr descriptor,int row )
 {
+    ListOfList.push_back(descriptor);
     string temp;
     int n=0;
-
-    while( !mylist.empty() )
+    while( !descriptor.mytypes.empty() )
     {
         //Grid1->SetReadOnly(row,n,false);
-        temp=mylist.front();
+        temp=descriptor.mytypes.front();
 
             if("int"==temp)
                 Grid1->SetCellBackgroundColour(row,n,wxColour(255,0,0));
@@ -123,7 +198,7 @@ void TesterDialog::ColorSet(std::list<string> mylist,int row)
 
 
         n++;
-        mylist.pop_front();
+        descriptor.mytypes.pop_front();
     }
 
     }
@@ -131,8 +206,30 @@ void TesterDialog::ColorSet(std::list<string> mylist,int row)
 
 void TesterDialog::OnLaunchClick(wxCommandEvent& event)
 {
-    int n=0;
-    wxProgressDialog progressDlg(_("Please wait"), _("Scanning"),1000, this, wxPD_APP_MODAL | wxPD_CAN_ABORT);
+    const char* cont="Dll_release\\tester.cpp";
+    const char* funcoutstream="const char* cont=\"output.txt\";\nstd::ofstream myfile;\nmyfile.open(cont);\n";
+    char* open_dll=(char*) malloc(120*sizeof(char));
+    sprintf(open_dll,"histDLL= LoadLibrary(\"%s.dll\");\n    if (histDLL != NULL){\n",file.c_str());
+    std::ofstream myfile;
+    const char* C_file="#include <iostream>\n#include <windows.h>\n#include <fstream>\n#include <stdio.h>\n#include <chrono>\nusing namespace std;\nusing namespace std::chrono;\nHINSTANCE histDLL;\n";
+    myfile.open (cont);
+    myfile << C_file<< funcpointer()<<"int main()\n{\n"<<funcdecl()<<funcoutstream<<open_dll<<funccallers()<<"      FreeLibrary(histDLL);\n      }\nreturn 0;\n}";
+
+
+    myfile.close();
+    int n=system("(g++ -std=c++11 -O2 -c -o  Dll_release\\tester.o  Dll_release\\tester.cpp ||(exit 1) )& g++ -o Dll_release\\tester.exe Dll_release\\tester.o ||(exit 1)");
+    if(n!=0)
+        {
+        wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Check if all parameters are fill"),
+                         wxT("Compilation Fail"), wxOK | wxICON_ERROR);
+
+        dial->ShowModal();
+        }
+    /** int n=0;
+
+
+
+   wxProgressDialog progressDlg(_("Please wait"), _("Scanning"),1000, this, wxPD_APP_MODAL | wxPD_CAN_ABORT);
     for(n;n<1000;n++)
         {
         if (!progressDlg.Update(n)) // if cancel clicked
@@ -140,5 +237,5 @@ void TesterDialog::OnLaunchClick(wxCommandEvent& event)
 
         Sleep(10);
 
-        }
+        }*/
 }

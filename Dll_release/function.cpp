@@ -7,8 +7,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-  __cdecl FUNCTION_DLL void function2(int size,int var[])
+  __cdecl FUNCTION_DLL void function2(int size)
 {
+int var[size];
 for(int n=0;n<size;n++)
 {
 	var[n]=rand() % 100;

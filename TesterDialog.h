@@ -14,13 +14,19 @@
 #include <list>
 
 using std::string;
+struct FuncDescr
+        {
+            int num;
+            string name;
+            string ret;
+            std::list<string> mytypes;
+        };
 class TesterDialog: public wxDialog
 {
 	public:
 
 		TesterDialog(wxWindow* parent,wxWindowID id=wxID_ANY,const wxPoint& pos=wxDefaultPosition,const wxSize& size=wxDefaultSize);
 		virtual ~TesterDialog();
-
 		//(*Declarations(TesterDialog)
 		wxButton* Button1;
 		wxStaticText* StaticText1;
@@ -33,7 +39,8 @@ class TesterDialog: public wxDialog
 		//*)
         void GenerateGrid(int col,int row);
         void RowName(string name,int row);
-        void ColorSet(std::list<string> mylist,int row);
+        void FileName(string file);
+        void ColorSet(FuncDescr descriptor,int row);
         void AddReturn();
 
 
@@ -56,9 +63,17 @@ class TesterDialog: public wxDialog
 		//*)
 		template<class T>
         string toString(T data);
+        string funcpointer();
+        string funcretdecl();
+        string funccallers();
+        string funcdecl();
 
         unsigned long m_value=5;
+
+        std::list<FuncDescr> ListOfList;
+        string file;
 		DECLARE_EVENT_TABLE()
+
 };
 
 #endif

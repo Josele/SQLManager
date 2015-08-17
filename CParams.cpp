@@ -124,7 +124,10 @@ void CParams::OnButton2Click(wxCommandEvent& event)
         if(!(TextCtrl2->GetLineText(0).ToStdString().find_first_not_of(' ') != std::string::npos))
             TextCtrl2->Clear();
         if(!str_controler(text))
-            EndModal(wxID_OK);
+            {
+                TextCtrl1->SetValue(text);
+                EndModal(wxID_OK);
+            }
 }
 void CParams::OnTextCtrl2Text(wxCommandEvent& event)
 {

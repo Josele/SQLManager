@@ -747,6 +747,7 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
             }
             FreeDll();
             insert_text_P(answer);
+            insert_text_BB("");
             listCtrl->DeleteAllItems();
             listCtrl->InsertItem(0,"New");
             BigBox->SetModified(0);
@@ -949,6 +950,7 @@ void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
     string libs;
     string ret;
     Params result;
+    FuncDescr Descriptor;
     wxArrayInt selections;
     Getrow getrow(0);
     Getitem getitem(0);
@@ -1022,6 +1024,10 @@ void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
         excep_dialog(string(e.what()));
     }
     result=GetParams(answer,resp,0);
+    Descriptor.mytypes=result.mytypes;
+    Descriptor.ret=ret;
+    Descriptor.name=text;
+    Descriptor.num=result.num;
     headfuncs=ret+" "+CallConv+" FUNCTION_DLL "+text+"("+result.cont+");";
   //  code=" __stdcall "+ret+" "+text +"("+GetParams()+")\n{\n"+code+"\n}";
     code=CallConv +" "+ret+" "+text +"("+GetParams(answer,resp,1).cont+")\n{\n"+((ret=="void")?"":(ret+" "+parm+";\n"))+code+"\n"+(ret!="void"?("return "+parm+";"):" ")+"\n}\n";
@@ -1053,8 +1059,9 @@ void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
     GenerateDllFiles_v2(renamed,code,headfuncs,libs);
     TesterDialog mi(this);
     mi.GenerateGrid(result.num,1);
-    mi.ColorSet(result.mytypes,0);
+    mi.ColorSet(Descriptor,0);
     mi.RowName(text,0);
+    mi.FileName(renamed);
     mi.ShowModal();
     first.join();
 
@@ -1155,6 +1162,7 @@ void SQLManagerFrame::OnRun_AllClick(wxCommandEvent& event)
     string ret;
     TesterDialog mi(this);
     Params result;
+    FuncDescr Descriptor;
     int n_items;
     int i;
     Getrow getrow(0);
@@ -1241,9 +1249,13 @@ void SQLManagerFrame::OnRun_AllClick(wxCommandEvent& event)
                     getrow=(Getrow)GetProcAddress(histDLL,"row");
                     (getrow)(db,"params","name",resp.c_str(),c_callback2,&answer );
                     result=GetParams(answer,resp,0);
+                    Descriptor.mytypes=result.mytypes;
+                    Descriptor.ret=ret;
+                    Descriptor.name=text;
+                    Descriptor.num=result.num;
                     headfuncs=headfuncs+ret+" "+CallConv+" FUNCTION_DLL "+text+"("+result.cont+");\n";
                     code_cont=code_cont+" "+CallConv+" FUNCTION_DLL "+ret+" "+text +"("+GetParams(answer,resp,1).cont+")\n{\n"+((ret=="void")?"":(ret+" "+parm+";\n"))+code+"\n"+(ret!="void"?("return "+parm+";"):" ")+"\n}\n";
-                    mi.ColorSet(result.mytypes,i-1);
+                    mi.ColorSet(Descriptor,i-1);
                     mi.RowName(text,i-1);
 
                     resp=std::string();
@@ -1287,6 +1299,7 @@ void SQLManagerFrame::OnRun_AllClick(wxCommandEvent& event)
                 }while (next != string::npos);
 
         }
+    mi.FileName(renamed);
     GenerateDllFiles_v2(renamed,code_cont,headfuncs,libs_cont,n_items);
     mi.ShowModal();
     first.join();
