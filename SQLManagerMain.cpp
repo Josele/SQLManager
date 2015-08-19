@@ -76,14 +76,11 @@ const long SQLManagerFrame::ID_STATICTEXT3 = wxNewId();
 const long SQLManagerFrame::ID_LISTBOX = wxNewId();
 const long SQLManagerFrame::ID_STATICLINE1 = wxNewId();
 const long SQLManagerFrame::ID_LISTCTRL = wxNewId();
-const long SQLManagerFrame::ID_STATICTEXT4 = wxNewId();
 const long SQLManagerFrame::ID_STATICTEXT5 = wxNewId();
-const long SQLManagerFrame::ID_TEXTCTRL2 = wxNewId();
 const long SQLManagerFrame::ID_RADIOBOX = wxNewId();
 const long SQLManagerFrame::ID_STATICTEXT2 = wxNewId();
 const long SQLManagerFrame::ID_BigBox = wxNewId();
 const long SQLManagerFrame::ID_deleteitem = wxNewId();
-const long SQLManagerFrame::ID_BUTTON1 = wxNewId();
 const long SQLManagerFrame::ID_Save = wxNewId();
 const long SQLManagerFrame::ID_Run = wxNewId();
 const long SQLManagerFrame::ID_Run_All = wxNewId();
@@ -124,7 +121,7 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     SetMinSize(wxSize(-1,-1));
     {
     	wxIcon FrameIcon;
-    	FrameIcon.CopyFromBitmap(wxBitmap(wxImage(_T("C:\\Users\\josele\\Pictures\\icon_128.png"))));
+    	FrameIcon.CopyFromBitmap(wxBitmap(wxImage(_T("icon_128.png"))));
     	SetIcon(FrameIcon);
     }
     Panel1 = new wxPanel(this, ID_PANEL1, wxPoint(288,216), wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL1"));
@@ -147,15 +144,10 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     BoxSizer3 = new wxBoxSizer(wxVERTICAL);
     listCtrl = new wxListCtrl(Panel1, ID_LISTCTRL, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxTAB_TRAVERSAL, wxDefaultValidator, _T("ID_LISTCTRL"));
     BoxSizer3->Add(listCtrl, 2, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    FlexGridSizer2 = new wxFlexGridSizer(0, 2, 0, 0);
+    FlexGridSizer2 = new wxFlexGridSizer(0, 1, 0, 0);
     FlexGridSizer2->AddGrowableCol(0);
-    FlexGridSizer2->AddGrowableCol(1);
-    StaticText4 = new wxStaticText(Panel1, ID_STATICTEXT4, _("Return param"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT4"));
-    FlexGridSizer2->Add(StaticText4, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     StaticText5 = new wxStaticText(Panel1, ID_STATICTEXT5, _("Return type"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT5"));
     FlexGridSizer2->Add(StaticText5, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    Parameters = new wxTextCtrl(Panel1, ID_TEXTCTRL2, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER|wxTE_PROCESS_TAB|wxTE_RICH2, wxDefaultValidator, _T("ID_TEXTCTRL2"));
-    FlexGridSizer2->Add(Parameters, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     wxString __wxRadioBoxChoices_1[4] =
     {
     	_("void"),
@@ -184,8 +176,6 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     FlexGridSizer1->Add(BoxSizer2, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     FlexGridSizer1->Add(-1,-1,1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
-    Button1 = new wxButton(Panel1, ID_BUTTON1, _("Load File"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
-    BoxSizer1->Add(Button1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     Save = new wxButton(Panel1, ID_Save, _("Save"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_Save"));
     Save->SetMinSize(wxSize(-1,-1));
     BoxSizer1->Add(Save, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
@@ -245,11 +235,9 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     Connect(ID_LISTBOX,wxEVT_COMMAND_LISTBOX_DOUBLECLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnListBoxDClick);
     Connect(ID_LISTCTRL,wxEVT_COMMAND_LIST_ITEM_ACTIVATED,(wxObjectEventFunction)&SQLManagerFrame::OnlistCtrlItemActivated);
     Connect(ID_LISTCTRL,wxEVT_COMMAND_LIST_ITEM_RIGHT_CLICK,(wxObjectEventFunction)&SQLManagerFrame::OnlistCtrlItemRClick);
-    Connect(ID_TEXTCTRL2,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&SQLManagerFrame::OnParametersText);
     Connect(ID_RADIOBOX,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&SQLManagerFrame::OnRadioBox1Select);
     Connect(ID_BigBox,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&SQLManagerFrame::OnTextCtrl1Text);
     Connect(ID_deleteitem,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnDeleteClick);
-    Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::LoadFile);
     Connect(ID_Save,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnSaveClick);
     Connect(ID_Run,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnRunClick);
     Connect(ID_Run_All,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&SQLManagerFrame::OnRun_AllClick);
@@ -265,7 +253,7 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     FilePath=TEXT("SQLDLL.dll");
     CreateDirectoryW(FilePath.c_str(), NULL);
     selected=-1;
-    Parameters->SetEditable(0);
+    //Parameters->SetEditable(0);
     BigBox->SetEditable(0);
     RadioBox->Enable(false);
 
@@ -274,7 +262,7 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     listCtrl->InsertColumn(2,"Array");
     listCtrl->InsertColumn(3,"Value");
     retstatus=false;
-    for(int n=0;n<12;n++) MultiChoiceDialogChoices_1[n]=__wxMultiChoiceDialogChoices_1[n];
+    for(int n=0;n<13;n++) MultiChoiceDialogChoices_1[n]=__wxMultiChoiceDialogChoices_1[n];
 
 }
 
@@ -435,7 +423,8 @@ void SQLManagerFrame::OnMenuNewSelected(wxCommandEvent& event)
     struct stat info;
     CreateTable mifunc3(0);
     const char* tbname="datos";
-      if(selected!=-1&&(BigBox->IsModified()||Parameters->IsModified()||retstatus))
+     // if(selected!=-1&&(BigBox->IsModified()||Parameters->IsModified()||retstatus))
+      if(selected!=-1&&(BigBox->IsModified()||retstatus))
         {
             wxMessageDialog *dial = new wxMessageDialog(NULL
                 ,string("The file has been modify, do you want to save your changes: " +ListBox->GetString(selected).ToStdString() )
@@ -524,14 +513,14 @@ void SQLManagerFrame::insert_text_BB(string text)
 *   Description: Insert text in the Parameter box.
 *   Parms: string
 *   Return: void
-**/
+*
 void SQLManagerFrame::insert_text_P(string text)
 {
     Parameters->Clear();
     Parameters->SetForegroundColour(wxColour(0,0,0));
     Parameters->AppendText(text);
 }
-
+*/
 /**
 *   Description: clear text in the big box and listbox.
 *   Parms: void
@@ -540,7 +529,7 @@ void SQLManagerFrame::insert_text_P(string text)
 void SQLManagerFrame::ClearAll()
 {
     BigBox->Clear();
-    Parameters->Clear();
+    //Parameters->Clear();
     ListBox->Clear();
     listCtrl->DeleteAllItems();
 }
@@ -555,7 +544,8 @@ void SQLManagerFrame::OnMenuLoadSelected(wxCommandEvent& event)
     int result;
     wxString str;
     Createbase mifunc(0);
-    if(selected!=-1&&(BigBox->IsModified()||Parameters->IsModified()||retstatus))
+  //  if(selected!=-1&&(BigBox->IsModified()||Parameters->IsModified()||retstatus))
+    if(selected!=-1&&(BigBox->IsModified()||retstatus))
         {
             wxMessageDialog *dial = new wxMessageDialog(NULL
                 ,string("The file has been modify, do you want to save your changes: " +ListBox->GetString(selected).ToStdString() )
@@ -622,12 +612,12 @@ void SQLManagerFrame::BigBoxSetStatus()
     if(selected==-1)
         {
             RadioBox->Enable(false);
-            Parameters->SetEditable(0);
+            //Parameters->SetEditable(0);
             BigBox->SetEditable(0);
             return;
         }
      RadioBox->Enable(true);
-     Parameters->SetEditable(1);
+   //  Parameters->SetEditable(1);
      BigBox->SetEditable(1);
 }
 /**
@@ -686,7 +676,8 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
     else if(ListBox->GetCount()==((unsigned int)sel+1))
         {
         text ="New item";
-         if(BigBox->IsModified()||Parameters->IsModified()||retstatus)
+         //if(BigBox->IsModified()||Parameters->IsModified()||retstatus)
+         if(BigBox->IsModified()||retstatus)
                 {
                 wxMessageDialog *dial = new wxMessageDialog(NULL
                                                             ,string("The file has been modify, do you want to save your changes: " +ListBox->GetString(selected).ToStdString() )
@@ -738,27 +729,28 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
             {
                 getrow=(Getrow)GetProcAddress(histDLL,"id_row");
                 (getrow)(db,"datos","name",text.ToStdString().c_str(),c_callback,&resp);
-                getrow=(Getrow)GetProcAddress(histDLL,"row");
-                (getrow)(db,"datos","parms",resp.c_str(),c_callback,&answer );
+                //getrow=(Getrow)GetProcAddress(histDLL,"row");
+                //(getrow)(db,"datos","parms",resp.c_str(),c_callback,&answer );
             }
             catch (std::exception& e)
             {
                 excep_dialog(string(e.what()));
             }
             FreeDll();
-            insert_text_P(answer);
+            //insert_text_P(answer);
             insert_text_BB("");
             listCtrl->DeleteAllItems();
             listCtrl->InsertItem(0,"New");
             BigBox->SetModified(0);
-            Parameters->SetModified(0);
+            //Parameters->SetModified(0);
             RadioBox->SetSelection(0);
         }
     else
         {
             if(selected==sel)
                 return;
-            if(BigBox->IsModified()||Parameters->IsModified()||retstatus)
+            //if(BigBox->IsModified()||Parameters->IsModified()||retstatus)
+            if(BigBox->IsModified()||retstatus)
                 {
                 wxMessageDialog *dial = new wxMessageDialog(NULL
                                                             ,string("The file has been modify, do you want to save your changes: " +ListBox->GetString(selected).ToStdString() )
@@ -784,7 +776,7 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
                 }
             selected=sel;
             insert_text_BB(answer);
-            try
+           /** try
                 {
                 answer=std::string();
                 getrow=(Getrow)GetProcAddress(histDLL,"row");
@@ -794,8 +786,8 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
                 {
                 excep_dialog(string(e.what()));
                 }
-            insert_text_P(answer);
-
+            //insert_text_P(answer);
+            */
             try
                 {   listCtrl->DeleteAllItems();
                     answer=std::string();
@@ -825,11 +817,11 @@ void SQLManagerFrame::OnListBoxDClick(wxCommandEvent& event)
             if(posR!=wxNOT_FOUND)
                 RadioBox->SetSelection(posR);
             BigBox->SetModified(0);
-            Parameters->SetModified(0);
-            if(RadioBox->GetSelection()==0)
+            //Parameters->SetModified(0);
+           /** if(RadioBox->GetSelection()==0)
                 Parameters->Enable(0);
             else
-                Parameters->Enable(1);
+                Parameters->Enable(1);*/
         }
     BigBoxSetStatus();
 
@@ -907,9 +899,9 @@ void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
         (getid)(db,"datos","name",name.c_str(),c_callback,&resp);
         addtext=(add_text)GetProcAddress(histDLL,"add_text");
         (addtext)(db,"datos","ref",text.c_str(),"id",resp.c_str());
-        text=Parameters->GetLineText(0).ToStdString()==std::string()?" ":Parameters->GetLineText(0).ToStdString();
-        addtext=(add_text)GetProcAddress(histDLL,"add_text");
-        (addtext)(db,"datos","parms",text.c_str(),"id",resp.c_str());
+        //text=Parameters->GetLineText(0).ToStdString()==std::string()?" ":Parameters->GetLineText(0).ToStdString();
+        //addtext=(add_text)GetProcAddress(histDLL,"add_text");
+        //(addtext)(db,"datos","parms",text.c_str(),"id",resp.c_str());
         text=RadioBox->GetStringSelection().ToStdString()==std::string()?"void":RadioBox->GetStringSelection().ToStdString();
         addtext=(add_text)GetProcAddress(histDLL,"add_text");
         (addtext)(db,"datos","ret",text.c_str(),"id",resp.c_str());
@@ -933,7 +925,7 @@ void SQLManagerFrame::OnSaveClick(wxCommandEvent& event)
     FreeDll();
     BigBoxSetStatus();
     BigBox->SetModified(0);
-    Parameters->SetModified(0);
+   // Parameters->SetModified(0);
     retstatus=false;
 
 }
@@ -956,7 +948,8 @@ void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
     Getitem getitem(0);
     if(selected==-1)
         return;
-    if(BigBox->IsModified()||Parameters->IsModified()||retstatus)
+    //if(BigBox->IsModified()||Parameters->IsModified()||retstatus)
+    if(BigBox->IsModified()||retstatus)
         {
         wxMessageDialog *dial = new wxMessageDialog(NULL,string("Before running, you need to save it: " +ListBox->GetString(selected).ToStdString() ), wxT("Delete"), wxYES_NO);
         if(dial->ShowModal()==wxID_NO)
@@ -1056,21 +1049,33 @@ void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
                 }while (next != string::npos);
 
         }
-    GenerateDllFiles_v2(renamed,code,headfuncs,libs);
+
     TesterDialog mi(this);
     mi.GenerateGrid(result.num,1);
     mi.ColorSet(Descriptor,0);
     mi.RowName(text,0);
     mi.FileName(renamed);
-    mi.ShowModal();
-    first.join();
-
+    if(!GenerateDllFiles_v2(renamed,code,headfuncs,libs))
+        mi.ShowModal();
+    else
+        excep_dialog(get_file_contents("stderr.msg"));
 }
 
 void SQLManagerFrame::OnPanel1Paint(wxPaintEvent& event)
 {
 }
-
+string SQLManagerFrame::get_file_contents(const char *filename)
+{
+  std::ifstream in(filename, std::ios::in | std::ios::binary);
+  if (in)
+  {
+    std::ostringstream contents;
+    contents << in.rdbuf();
+    in.close();
+    return(contents.str());
+  }
+  return "";
+}
  SQLManagerFrame::Params SQLManagerFrame::GetParams(string answer,string resp,int n)
 {   std::list<string> mytypes;
     Params result;
@@ -1169,7 +1174,8 @@ void SQLManagerFrame::OnRun_AllClick(wxCommandEvent& event)
     Getitem getitem(0);
      if(db==0)
         return;
-    if(BigBox->IsModified()||Parameters->IsModified()||retstatus)
+    //if(BigBox->IsModified()||Parameters->IsModified()||retstatus)
+    if(BigBox->IsModified()||retstatus)
         {
         wxMessageDialog *dial = new wxMessageDialog(NULL,string("Before running, you need to save it: " +ListBox->GetString(selected).ToStdString() ), wxT("Delete"), wxYES_NO);
         if(dial->ShowModal()==wxID_NO)
@@ -1300,12 +1306,14 @@ void SQLManagerFrame::OnRun_AllClick(wxCommandEvent& event)
 
         }
     mi.FileName(renamed);
-    GenerateDllFiles_v2(renamed,code_cont,headfuncs,libs_cont,n_items);
-    mi.ShowModal();
-    first.join();
+    if(!GenerateDllFiles_v2(renamed,code_cont,headfuncs,libs_cont,n_items))
+        mi.ShowModal();
+    else
+        excep_dialog(string("Compilation error, check the syntax:\n\n"+get_file_contents("stderr.msg")));
+    //first.join();
 
 }
-void SQLManagerFrame:: GenerateDllFiles_v2(string N_file,string code, string headfuncs,string libs,int N)
+int SQLManagerFrame:: GenerateDllFiles_v2(string N_file,string code, string headfuncs,string libs,int N)
 {
     std::ofstream myfile;
     char *H_file =(char*) malloc((N*30*sizeof(char)+400*sizeof(char)));
@@ -1326,17 +1334,34 @@ void SQLManagerFrame:: GenerateDllFiles_v2(string N_file,string code, string hea
     //<<"extern \"C\" FUNCTION_DLL BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)\n{\n    switch (fdwReason)\n    {\n        case DLL_PROCESS_ATTACH:\n            // attach to process\n            // return FALSE to fail DLL load\n            break;\n        case DLL_PROCESS_DETACH:\n            // detach from process\n            break;\n        case DLL_THREAD_ATTACH:\n            // attach to thread\n            break;\n        case DLL_THREAD_DETACH:\n            // detach from thread\n            break;\n    }\n    return TRUE; // succesful\n}";
         myfile.close();
     char *command =(char*) malloc((3*30*sizeof(char)+900*sizeof(char)));
-    sprintf(command,"(g++ -Wall -DBUILDING_DLL -O2  -c Dll_release\\%s.cpp -o Dll_release\\%s.o || pause )& g++ -shared -Wl,--output-def=Dll_release\\%s.def -Wl,--out-implib=Dll_release\\%s.a -Wl,--dll  Dll_release\\%s.o  -o Dll_release\\%s.dll -s "
+    sprintf(command,"(g++ -Wall -DBUILDING_DLL -O2  -c Dll_release\\%s.cpp -o Dll_release\\%s.o || exit 1 )& ((g++ -shared -Wl,--output-def=Dll_release\\%s.def -Wl,--out-implib=Dll_release\\%s.a -Wl,--dll  Dll_release\\%s.o  -o Dll_release\\%s.dll -s))"
             ,N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str());
     /**if (first.joinable())
     first.join();if (first.joinable())
     first.join();*/
-    first=std::thread (system,command);
+    //first=std::thread (system,command);
+    remove("stderr.msg");
+    if(system(command)!=0)
+    {
+    sprintf(command,"(g++ -Wall -DBUILDING_DLL -O2  -c Dll_release\\%s.cpp -o Dll_release\\%s.o 2> stderr.msg )& ((g++ -shared -Wl,--output-def=Dll_release\\%s.def -Wl,--out-implib=Dll_release\\%s.a -Wl,--dll  Dll_release\\%s.o  -o Dll_release\\%s.dll -s))"
+            ,N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str());
+        system(command);
+    }
 
+    return existsFile("stderr.msg");
   //  int consta=system("exit(1)");
 //    free(command);
 }
-
+int SQLManagerFrame::existsFile(char* filename) {
+	FILE* f = NULL;
+	f = fopen(filename,"r");
+	if (f == NULL && errno == ENOENT)
+		return 0;
+	else {
+		fclose(f);
+		return 1;
+	}
+}
 void SQLManagerFrame::OnLibrariesText(wxCommandEvent& event)
 {
 }
@@ -1344,10 +1369,10 @@ void SQLManagerFrame::OnLibrariesText(wxCommandEvent& event)
 void SQLManagerFrame::OnRadioBox1Select(wxCommandEvent& event)
 {
     retstatus=true;
-    if(RadioBox->GetSelection()==0)
+   /** if(RadioBox->GetSelection()==0)
         Parameters->Enable(0);
     else
-        Parameters->Enable(1);
+        Parameters->Enable(1);*/
 }
 
 void SQLManagerFrame::OnParametersText(wxCommandEvent& event)

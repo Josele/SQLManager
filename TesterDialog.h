@@ -69,9 +69,11 @@ class TesterDialog: public wxDialog
         string funcdecl();
 
         unsigned long m_value=5;
-
+        wxArrayString excludeString;
         std::list<FuncDescr> ListOfList;
+        int row,col;
         string file;
+
 		DECLARE_EVENT_TABLE()
 
 };

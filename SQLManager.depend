@@ -1710,7 +1710,7 @@
 1412634844 c:\wxwidgets-3.0.2\include\wx\univ\theme.h
 	"wx/string.h"
 
-1439268768 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
+1439974118 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
 	<wx/listctrl.h>
 	<wx/sizer.h>
 	<wx/stattext.h>
@@ -2143,7 +2143,7 @@
 1435316468 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlite3.h
 	<stdarg.h>
 
-1439527730 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
+1439959129 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
 	"SQLManagerMain.h"
 	<wx/msgdlg.h>
 	<wx/filedlg.h>
@@ -2366,13 +2366,13 @@
 	"wx/defs.h"
 	"wx/validate.h"
 
-1439528448 source:c:\users\josele\documents\c_c++\dll\sqlmanager\cparams.cpp
+1439782005 source:c:\users\josele\documents\c_c++\dll\sqlmanager\cparams.cpp
 	"CParams.h"
 	<wx/msgdlg.h>
 	<wx/intl.h>
 	<wx/string.h>
 
-1439194227 c:\users\josele\documents\c_c++\dll\sqlmanager\cparams.h
+1439782005 c:\users\josele\documents\c_c++\dll\sqlmanager\cparams.h
 	<wx/stattext.h>
 	<wx/textctrl.h>
 	<wx/checkbox.h>
@@ -2540,13 +2540,13 @@
 1412634844 c:\wxwidgets-3.0.2\include\wx\os2\checkbox.h
 	"wx/control.h"
 
-1439268156 source:c:\users\josele\documents\c_c++\dll\sqlmanager\configdialog.cpp
+1439782005 source:c:\users\josele\documents\c_c++\dll\sqlmanager\configdialog.cpp
 	"ConfigDialog.h"
 	<wx/msgdlg.h>
 	<wx/intl.h>
 	<wx/string.h>
 
-1439268156 c:\users\josele\documents\c_c++\dll\sqlmanager\configdialog.h
+1439782005 c:\users\josele\documents\c_c++\dll\sqlmanager\configdialog.h
 	<wx/notebook.h>
 	<wx/stattext.h>
 	<wx/radiobox.h>
@@ -2683,7 +2683,7 @@
 	"wx/grid.h"
 	"wx/datetime.h"
 
-1439441049 c:\users\josele\documents\c_c++\dll\sqlmanager\testerdialog.h
+1439974085 c:\users\josele\documents\c_c++\dll\sqlmanager\testerdialog.h
 	<wx/sizer.h>
 	<wx/stattext.h>
 	<wx/textctrl.h>
@@ -2694,7 +2694,7 @@
 	<wx/dialog.h>
 	<list>
 
-1439526692 source:c:\users\josele\documents\c_c++\dll\sqlmanager\testerdialog.cpp
+1439974103 source:c:\users\josele\documents\c_c++\dll\sqlmanager\testerdialog.cpp
 	"TesterDialog.h"
 	<wx/intl.h>
 	<wx/string.h>

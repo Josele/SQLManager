@@ -11,7 +11,6 @@
 #include <wx/progdlg.h>
 #include <wx/msgdlg.h>
 
-
 //(*IdInit(TesterDialog)
 const long TesterDialog::ID_STATICTEXT1 = wxNewId();
 const long TesterDialog::ID_TEXTCTRL1 = wxNewId();
@@ -30,7 +29,10 @@ END_EVENT_TABLE()
 
 TesterDialog::TesterDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 {
-    wxIntegerValidator<unsigned long>val(&m_value, wxNUM_VAL_THOUSANDS_SEPARATOR);
+
+ 	excludeString.Add(",,");
+
+ 	wxIntegerValidator<unsigned long>val(&m_value, wxNUM_VAL_THOUSANDS_SEPARATOR);
 	//(*Initialize(TesterDialog)
 	wxBoxSizer* BoxSizer2;
 	wxBoxSizer* BoxSizer1;
@@ -126,8 +128,8 @@ string TesterDialog::funccallers()
     string funchp;
     while(!lol.empty())
     {
-        funchp=funchp+(row==0?"auto":"")+countingst+"      call_"+lol.front().name+"=("+lol.front().name+")GetProcAddress(histDLL,\""+lol.front().name+"\");\n";
-        funchp=funchp+(lol.front().ret=="void"?"":"      myfile<<")+"(call_"+lol.front().name+")( ";
+        funchp=funchp+countingst+"      call_"+lol.front().name+"=("+lol.front().name+")GetProcAddress(histDLL,\""+lol.front().name+"\");\n";
+        funchp=funchp+(lol.front().ret=="void"?"      myfile<< \"void,,\";\n":"      myfile<<")+"(call_"+lol.front().name+")( ";
 
         while(!lol.front().mytypes.empty())
         {
@@ -135,7 +137,7 @@ string TesterDialog::funccallers()
             lol.front().mytypes.pop_front();
             col++;
         }
-        funchp=funchp.substr(0,funchp.length()-1)+")"+(lol.front().ret!="void"?"<<\",\"":"")+";\n"+(row==0?"auto":"")+countingen+(row==0?"auto":"")+countingen2;
+        funchp=funchp.substr(0,funchp.length()-1)+")"+(lol.front().ret!="void"?"<<\",,\"":"")+";\n"+countingen+(row==0?"auto":"")+countingen2;
         lol.pop_front();
         row++;
         col=0;
@@ -161,6 +163,9 @@ return funchp;
 void TesterDialog::GenerateGrid(int col,int row)
 {
     int n;
+    this->row=row;
+    this->col=col;
+
     Grid1->CreateGrid(row,col+2);
     for(n=0;n<col;n++)
         Grid1->SetColLabelValue(n,"P"+toString(n));
@@ -206,25 +211,98 @@ void TesterDialog::ColorSet(FuncDescr descriptor,int row )
 
 void TesterDialog::OnLaunchClick(wxCommandEvent& event)
 {
+    int offset=0;
+    int i=0;
+    int j=0;
+    int addcol=atoi(TextCtrl1->GetLineText(0).ToStdString().c_str());
+    string line;
+    boolean skip=false;
+    string container;
+    string delimiters = ",";
+    size_t current;
+    size_t cuter;
+    size_t next = -1;
     const char* cont="Dll_release\\tester.cpp";
     const char* funcoutstream="const char* cont=\"output.txt\";\nstd::ofstream myfile;\nmyfile.open(cont);\n";
+    const char* autodecl="auto  begin = high_resolution_clock::now();\nauto end = high_resolution_clock::now();\nauto   ticks = duration_cast<microseconds>(end-begin);\n";
     char* open_dll=(char*) malloc(120*sizeof(char));
     sprintf(open_dll,"histDLL= LoadLibrary(\"%s.dll\");\n    if (histDLL != NULL){\n",file.c_str());
     std::ofstream myfile;
     const char* C_file="#include <iostream>\n#include <windows.h>\n#include <fstream>\n#include <stdio.h>\n#include <chrono>\nusing namespace std;\nusing namespace std::chrono;\nHINSTANCE histDLL;\n";
     myfile.open (cont);
-    myfile << C_file<< funcpointer()<<"int main()\n{\n"<<funcdecl()<<funcoutstream<<open_dll<<funccallers()<<"      FreeLibrary(histDLL);\n      }\nreturn 0;\n}";
+    myfile << C_file<< funcpointer()<<"int main(int argc,char **argv)\n{\n"<<funcdecl()<<funcoutstream<<autodecl<<open_dll<<funccallers()<<"      FreeLibrary(histDLL);\n      }\nreturn 0;\n}";
 
 
     myfile.close();
-    int n=system("(g++ -std=c++11 -O2 -c -o  Dll_release\\tester.o  Dll_release\\tester.cpp ||(exit 1) )& g++ -o Dll_release\\tester.exe Dll_release\\tester.o ||(exit 1)");
+    int n=system(" (g++ -std=c++11 -O2 -c -o  Dll_release\\tester.o  Dll_release\\tester.cpp ||(exit 1) )& g++ -o Dll_release\\tester.exe Dll_release\\tester.o ||(exit 1)");
     if(n!=0)
         {
         wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Check if all parameters are fill"),
                          wxT("Compilation Fail"), wxOK | wxICON_ERROR);
-
         dial->ShowModal();
+        return;
         }
+    system("Dll_release\\tester.exe");
+
+    std::ifstream infile;
+    if(Grid1->GetNumberCols()>(col+2))
+        Grid1->DeleteCols(col+2,(Grid1->GetNumberCols()-2));
+
+     if(addcol>2)
+        Grid1->AppendCols(addcol-1);
+    for(n=(col+1);n<((col+1)+addcol);n++)
+        Grid1->SetColLabelValue(n,"Time");
+
+    do{
+
+        infile.open("output.txt");
+         if (infile.is_open())
+        {
+            while ( infile.good() )
+                {
+                    getline (infile,line);
+                    if(line=="")
+                        break;
+                    cuter= next + 1;
+                    do{
+                        current = next + 1;
+                        next = line.find_first_of(delimiters, current );
+                            if(next == string::npos||(line.substr(next,2)==",,"))
+                            {
+
+                                container=line.substr( cuter, next - cuter );
+                                if(!(skip&&((j)==0)))
+                                    Grid1->SetCellValue(i,col+j+offset,container);
+                                j++;
+                                next=(next==-1)?-1:next++;
+                                cuter=next+2;
+                            }
+                            //skip=false;
+                         }while (next != string::npos);
+                     next=-1;
+                     j=0;
+                    // j=offset;
+                     i++;
+
+
+                }
+                 skip=true;
+            infile.close();
+
+        offset++;
+        addcol--;
+        i=0;
+        system("Dll_release\\tester.exe");
+
+        }
+
+        }while((addcol)>0);
+
+
+   // wxGridTableBase* portablas=Grid1->GetTable();
+   remove("Dll_release\\tester.exe");
+   // remove("Dll_release\\tester.cpp");
+
     /** int n=0;
 
 

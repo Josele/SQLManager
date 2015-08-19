@@ -93,11 +93,13 @@ class SQLManagerFrame: public wxFrame
         bool str_controler(string String);
         void LoadDll();
         void FreeDll();
+        string get_file_contents(const char *filename);
+        int existsFile(char* filename);
         void excep_dialog(string e);
         void BigBoxSetStatus();
         Params GetParams(string answer,string resp,int n);
      //   void GenerateDllFiles(string N_file,string action, string parms,string libs,string ret);
-        void GenerateDllFiles_v2(string N_file,string code, string headfuncs,string libs,int N=1);
+        int GenerateDllFiles_v2(string N_file,string code, string headfuncs,string libs,int N=1);
 
         //(*Identifiers(SQLManagerFrame)
         static const long ID_STATICTEXT1;
@@ -105,14 +107,11 @@ class SQLManagerFrame: public wxFrame
         static const long ID_LISTBOX;
         static const long ID_STATICLINE1;
         static const long ID_LISTCTRL;
-        static const long ID_STATICTEXT4;
         static const long ID_STATICTEXT5;
-        static const long ID_TEXTCTRL2;
         static const long ID_RADIOBOX;
         static const long ID_STATICTEXT2;
         static const long ID_BigBox;
         static const long ID_deleteitem;
-        static const long ID_BUTTON1;
         static const long ID_Save;
         static const long ID_Run;
         static const long ID_Run_All;
@@ -130,8 +129,6 @@ class SQLManagerFrame: public wxFrame
         wxMenuItem* MenuItem5;
         wxStaticText* StaticText2;
         wxMenu* Menu3;
-        wxButton* Button1;
-        wxTextCtrl* Parameters;
         wxMenuItem* MenuItem4;
         wxButton* Run_All;
         wxPanel* Panel1;
@@ -150,11 +147,10 @@ class SQLManagerFrame: public wxFrame
         wxButton* Run;
         wxMultiChoiceDialog* MultiChoiceDialog1;
         wxListBox* ListBox;
-        wxStaticText* StaticText4;
         //*)
         bool retstatus;
         std::thread first;
-        wxString MultiChoiceDialogChoices_1[12];
+        wxString MultiChoiceDialogChoices_1[13];
         DECLARE_EVENT_TABLE()
 };
 
