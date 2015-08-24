@@ -249,10 +249,14 @@ void TesterDialog::OnLaunchClick(wxCommandEvent& event)
         Grid1->DeleteCols(col+2,(Grid1->GetNumberCols()-2));
 
      if(addcol>2)
-        Grid1->AppendCols(addcol-1);
-    for(n=(col+1);n<((col+1)+addcol);n++)
-        Grid1->SetColLabelValue(n,"Time");
-
+        Grid1->AppendCols((addcol-1)*2);
+    i++;
+    for(n=(col+2);n<((col+1)+addcol*2);n=n+2)
+        {   i++;
+            Grid1->SetColLabelValue(n,"Return"+toString(i));
+            Grid1->SetColLabelValue(n+1,"Time"+toString(i));
+        }
+i=0;
     do{
 
         infile.open("output.txt");
@@ -271,8 +275,9 @@ void TesterDialog::OnLaunchClick(wxCommandEvent& event)
                             {
 
                                 container=line.substr( cuter, next - cuter );
-                                if(!(skip&&((j)==0)))
-                                    Grid1->SetCellValue(i,col+j+offset,container);
+                               // if(!(skip&&((j)==0)))
+                               //Grid1->SetCellValue(i,col+j+offset,container);
+                                Grid1->SetCellValue(i,col+j+offset,container);
                                 j++;
                                 next=(next==-1)?-1:next++;
                                 cuter=next+2;
@@ -289,6 +294,7 @@ void TesterDialog::OnLaunchClick(wxCommandEvent& event)
                  skip=true;
             infile.close();
 
+        offset++;
         offset++;
         addcol--;
         i=0;

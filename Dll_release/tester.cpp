@@ -22,14 +22,14 @@ histDLL= LoadLibrary("function.dll");
     if (histDLL != NULL){
        begin = high_resolution_clock::now();
       call_function2=(function2)GetProcAddress(histDLL,"function2");
-      myfile<<(call_function2)( 10)<<",,";
+      myfile<<(call_function2)( 24)<<",,";
        end = high_resolution_clock::now();
 auto       ticks = duration_cast<microseconds>(end-begin);
       myfile<<ticks.count()<<"\n";
 
        begin = high_resolution_clock::now();
       call_function1=(function1)GetProcAddress(histDLL,"function1");
-      myfile<<(call_function1)( 10000)<<",,";
+      myfile<<(call_function1)( 23)<<",,";
        end = high_resolution_clock::now();
        ticks = duration_cast<microseconds>(end-begin);
       myfile<<ticks.count()<<"\n";

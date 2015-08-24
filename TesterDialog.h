@@ -57,7 +57,12 @@ class TesterDialog: public wxDialog
 		//*)
 
 	private:
+     struct Result{
+            int Id;
+            string Time;
+            string Value;
 
+        };
 		//(*Handlers(TesterDialog)
 		void OnLaunchClick(wxCommandEvent& event);
 		//*)

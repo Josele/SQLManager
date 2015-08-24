@@ -1710,7 +1710,7 @@
 1412634844 c:\wxwidgets-3.0.2\include\wx\univ\theme.h
 	"wx/string.h"
 
-1439974118 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
+1440042697 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
 	<wx/listctrl.h>
 	<wx/sizer.h>
 	<wx/stattext.h>
@@ -2143,7 +2143,7 @@
 1435316468 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlite3.h
 	<stdarg.h>
 
-1439959129 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
+1440042697 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
 	"SQLManagerMain.h"
 	<wx/msgdlg.h>
 	<wx/filedlg.h>
@@ -2683,7 +2683,7 @@
 	"wx/grid.h"
 	"wx/datetime.h"
 
-1439974085 c:\users\josele\documents\c_c++\dll\sqlmanager\testerdialog.h
+1440042697 c:\users\josele\documents\c_c++\dll\sqlmanager\testerdialog.h
 	<wx/sizer.h>
 	<wx/stattext.h>
 	<wx/textctrl.h>
@@ -2694,7 +2694,7 @@
 	<wx/dialog.h>
 	<list>
 
-1439975254 source:c:\users\josele\documents\c_c++\dll\sqlmanager\testerdialog.cpp
+1440064854 source:c:\users\josele\documents\c_c++\dll\sqlmanager\testerdialog.cpp
 	"TesterDialog.h"
 	<wx/intl.h>
 	<wx/string.h>
