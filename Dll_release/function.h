@@ -11,6 +11,7 @@ extern "C" {
 #endif
  char* __cdecl FUNCTION_DLL function2(int size);
 int __cdecl FUNCTION_DLL function1(int n);
+void __cdecl FUNCTION_DLL jaja(int* var2,int* varsdvs,double* varsdaa);
 
 #ifdef __cplusplus
 }

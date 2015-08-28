@@ -58,9 +58,9 @@ class TesterDialog: public wxDialog
 
 	private:
      struct Result{
-            int Id;
-            string Time;
-            string Value;
+
+            std::list<string> Time;
+            std::list<string> Value;
 
         };
 		//(*Handlers(TesterDialog)
@@ -76,6 +76,7 @@ class TesterDialog: public wxDialog
         unsigned long m_value=5;
         wxArrayString excludeString;
         std::list<FuncDescr> ListOfList;
+        std::list<Result> AllResult;
         int row,col;
         string file;
 

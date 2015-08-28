@@ -78,6 +78,7 @@ const long SQLManagerFrame::ID_STATICLINE1 = wxNewId();
 const long SQLManagerFrame::ID_LISTCTRL = wxNewId();
 const long SQLManagerFrame::ID_STATICTEXT5 = wxNewId();
 const long SQLManagerFrame::ID_RADIOBOX = wxNewId();
+const long SQLManagerFrame::ID_CHECKBOX1 = wxNewId();
 const long SQLManagerFrame::ID_STATICTEXT2 = wxNewId();
 const long SQLManagerFrame::ID_BigBox = wxNewId();
 const long SQLManagerFrame::ID_deleteitem = wxNewId();
@@ -105,6 +106,7 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
 {
     //(*Initialize(SQLManagerFrame)
     wxBoxSizer* BoxSizer4;
+    wxBoxSizer* BoxSizer5;
     wxMenuItem* MenuItem2;
     wxMenuItem* MenuItem1;
     wxFlexGridSizer* FlexGridSizer2;
@@ -148,6 +150,7 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     FlexGridSizer2->AddGrowableCol(0);
     StaticText5 = new wxStaticText(Panel1, ID_STATICTEXT5, _("Return type"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT5"));
     FlexGridSizer2->Add(StaticText5, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    BoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
     wxString __wxRadioBoxChoices_1[4] =
     {
     	_("void"),
@@ -155,10 +158,14 @@ SQLManagerFrame::SQLManagerFrame(wxWindow* parent,wxWindowID id)
     	_("double"),
     	_("char*")
     };
-    RadioBox = new wxRadioBox(Panel1, ID_RADIOBOX, wxEmptyString, wxPoint(-1,-1), wxSize(169,40), 4, __wxRadioBoxChoices_1, 1, wxRA_VERTICAL, wxDefaultValidator, _T("ID_RADIOBOX"));
+    RadioBox = new wxRadioBox(Panel1, ID_RADIOBOX, wxEmptyString, wxDefaultPosition, wxSize(169,40), 4, __wxRadioBoxChoices_1, 1, wxRA_VERTICAL, wxDefaultValidator, _T("ID_RADIOBOX"));
     RadioBox->SetMinSize(wxSize(-1,-1));
     RadioBox->SetMaxSize(wxSize(-1,-1));
-    FlexGridSizer2->Add(RadioBox, 3, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 1);
+    BoxSizer5->Add(RadioBox, 3, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 1);
+    CheckBox1 = new wxCheckBox(Panel1, ID_CHECKBOX1, _("pointer"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX1"));
+    CheckBox1->SetValue(false);
+    BoxSizer5->Add(CheckBox1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    FlexGridSizer2->Add(BoxSizer5, 3, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer3->Add(FlexGridSizer2, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer4 = new wxBoxSizer(wxVERTICAL);
     StaticText2 = new wxStaticText(Panel1, ID_STATICTEXT2, _("Code"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT2"));
@@ -1051,9 +1058,12 @@ void SQLManagerFrame::OnRunClick(wxCommandEvent& event)
         }
 
     TesterDialog mi(this);
-    mi.GenerateGrid(result.num,1);
+    mi.GenerateGrid(result.num,2);
     mi.ColorSet(Descriptor,0);
-    mi.RowName(text,0);
+    Descriptor.mytypes.clear();
+    mi.ColorSet(Descriptor,1);
+    mi.RowName(string(text+"(value)"),0);
+    mi.RowName(string(text+"(time)"),1);
     mi.FileName(renamed);
     if(!GenerateDllFiles_v2(renamed,code,headfuncs,libs))
         mi.ShowModal();
@@ -1114,7 +1124,7 @@ string SQLManagerFrame::get_file_contents(const char *filename)
                     cont=cont+((isarray=="1")?"[]":"")+",";
                 }
                 if(type!=std::string())
-                    mytypes.push_back(type);
+                    mytypes.push_back(type+((isarray=="1")?"[]":""));
                 type=std::string();
                 isarray=std::string();
                 i++;
@@ -1235,7 +1245,7 @@ void SQLManagerFrame::OnRun_AllClick(wxCommandEvent& event)
     {
         //excep_dialog(string(e.what()));
     }
-    mi.GenerateGrid(atoi(answer.c_str()),n_items-1);
+    mi.GenerateGrid(atoi(answer.c_str()),(n_items-1)*2);
     answer=std::string();
     for(i=0;(i)<n_items;i++)
         {
@@ -1261,9 +1271,11 @@ void SQLManagerFrame::OnRun_AllClick(wxCommandEvent& event)
                     Descriptor.num=result.num;
                     headfuncs=headfuncs+ret+" "+CallConv+" FUNCTION_DLL "+text+"("+result.cont+");\n";
                     code_cont=code_cont+" "+CallConv+" FUNCTION_DLL "+ret+" "+text +"("+GetParams(answer,resp,1).cont+")\n{\n"+((ret=="void")?"":(ret+" "+parm+";\n"))+code+"\n"+(ret!="void"?("return "+parm+";"):" ")+"\n}\n";
-                    mi.ColorSet(Descriptor,i-1);
-                    mi.RowName(text,i-1);
-
+                    mi.ColorSet(Descriptor,2*i-2);
+                    Descriptor.mytypes.clear();
+                    mi.ColorSet(Descriptor,2*i-1);
+                    mi.RowName(string(text+"(value)"),2*i-2);
+                    mi.RowName(string(text+"(time)"),2*i-1);
                     resp=std::string();
                     code=std::string();
                     ret=std::string();
@@ -1347,8 +1359,8 @@ int SQLManagerFrame:: GenerateDllFiles_v2(string N_file,string code, string head
             ,N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str(),N_file.c_str());
         system(command);
     }
-
-    return existsFile("stderr.msg");
+    char filepath[]="stderr.msg";
+    return existsFile(filepath);
   //  int consta=system("exit(1)");
 //    free(command);
 }

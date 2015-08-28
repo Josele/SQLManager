@@ -2,10 +2,6 @@
 #include <stdio.h>
 #include <float.h>
 #include <math.h>
-#include <stdbool.h>
-#include <stdarg.h>
-#include <stdlib.h>
-#include <string.h>
 #include <windows.h>
 
   __cdecl FUNCTION_DLL char* function2(int size)
@@ -28,4 +24,11 @@ int result;
                 break;
             }
 return result;
+}
+ __cdecl FUNCTION_DLL void jaja(int* var2,int* varsdvs,double* varsdaa)
+{
+*var2=*var2*2;
+*varsdaa=*varsdaa*2;
+Sleep(*var2);
+ 
 }

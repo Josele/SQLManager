@@ -1710,13 +1710,14 @@
 1412634844 c:\wxwidgets-3.0.2\include\wx\univ\theme.h
 	"wx/string.h"
 
-1440042697 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
+1440490061 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.h
 	<wx/listctrl.h>
 	<wx/sizer.h>
 	<wx/stattext.h>
 	<wx/radiobox.h>
 	<wx/menu.h>
 	<wx/textctrl.h>
+	<wx/checkbox.h>
 	<wx/listbox.h>
 	<wx/statline.h>
 	<wx/panel.h>
@@ -2143,7 +2144,7 @@
 1435316468 c:\users\josele\documents\c_c++\dll\sqlmanager\sqlite3.h
 	<stdarg.h>
 
-1440042697 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
+1440492627 source:c:\users\josele\documents\c_c++\dll\sqlmanager\sqlmanagermain.cpp
 	"SQLManagerMain.h"
 	<wx/msgdlg.h>
 	<wx/filedlg.h>
@@ -2366,13 +2367,13 @@
 	"wx/defs.h"
 	"wx/validate.h"
 
-1439782005 source:c:\users\josele\documents\c_c++\dll\sqlmanager\cparams.cpp
+1440648446 source:c:\users\josele\documents\c_c++\dll\sqlmanager\cparams.cpp
 	"CParams.h"
 	<wx/msgdlg.h>
 	<wx/intl.h>
 	<wx/string.h>
 
-1439782005 c:\users\josele\documents\c_c++\dll\sqlmanager\cparams.h
+1440493244 c:\users\josele\documents\c_c++\dll\sqlmanager\cparams.h
 	<wx/stattext.h>
 	<wx/textctrl.h>
 	<wx/checkbox.h>
@@ -2683,7 +2684,7 @@
 	"wx/grid.h"
 	"wx/datetime.h"
 
-1440042697 c:\users\josele\documents\c_c++\dll\sqlmanager\testerdialog.h
+1440734716 c:\users\josele\documents\c_c++\dll\sqlmanager\testerdialog.h
 	<wx/sizer.h>
 	<wx/stattext.h>
 	<wx/textctrl.h>
@@ -2694,7 +2695,7 @@
 	<wx/dialog.h>
 	<list>
 
-1440064854 source:c:\users\josele\documents\c_c++\dll\sqlmanager\testerdialog.cpp
+1440738818 source:c:\users\josele\documents\c_c++\dll\sqlmanager\testerdialog.cpp
 	"TesterDialog.h"
 	<wx/intl.h>
 	<wx/string.h>

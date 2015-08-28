@@ -13,10 +13,9 @@ const long CParams::ID_STATICTEXT2 = wxNewId();
 const long CParams::ID_STATICTEXT3 = wxNewId();
 const long CParams::ID_TEXTCTRL1 = wxNewId();
 const long CParams::ID_CHOICE1 = wxNewId();
-const long CParams::ID_TEXTCTRL2 = wxNewId();
 const long CParams::ID_OK = wxNewId();
+const long CParams::ID_TEXTCTRL2 = wxNewId();
 const long CParams::ID_CHECKBOX1 = wxNewId();
-const long CParams::ID_TEXTCTRL3 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(CParams,wxDialog)
@@ -29,7 +28,6 @@ CParams::CParams(wxWindow* parent,wxWindowID id)
 	//(*Initialize(CParams)
 	Create(parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
 	SetClientSize(wxSize(462,126));
-	Button2 = new wxButton(this, wxID_CANCEL, _("Cancel"), wxPoint(368,80), wxDefaultSize, 0, wxDefaultValidator, _T("wxID_CANCEL"));
 	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Name"), wxPoint(16,16), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
 	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _("Type"), wxPoint(152,16), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
 	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _("Default value"), wxPoint(288,16), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
@@ -39,19 +37,18 @@ CParams::CParams(wxWindow* parent,wxWindowID id)
 	Choice1->SetSelection( Choice1->Append(_("int")) );
 	Choice1->Append(_("double"));
 	Choice1->Append(_("char*"));
+	Choice1->Append(_("int*"));
+	Choice1->Append(_("double*"));
+	Button2 = new wxButton(this, wxID_CANCEL, _("Cancel"), wxPoint(368,80), wxDefaultSize, 0, wxDefaultValidator, _T("wxID_CANCEL"));
+	Button1 = new wxButton(this, ID_OK, _("Ok"), wxPoint(280,80), wxDefaultSize, 0, wxDefaultValidator, _T("ID_OK"));
 	TextCtrl2 = new wxTextCtrl(this, ID_TEXTCTRL2, wxEmptyString, wxPoint(288,40), wxSize(136,21), wxTE_RICH, wxDefaultValidator, _T("ID_TEXTCTRL2"));
 	TextCtrl2->SetMaxLength(30);
-	Button1 = new wxButton(this, ID_OK, _("Ok"), wxPoint(280,80), wxDefaultSize, 0, wxDefaultValidator, _T("ID_OK"));
 	CheckBox1 = new wxCheckBox(this, ID_CHECKBOX1, _("array"), wxPoint(16,80), wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX1"));
 	CheckBox1->SetValue(false);
-	TextCtrl3 = new wxTextCtrl(this, ID_TEXTCTRL3, wxEmptyString, wxPoint(72,80), wxSize(32,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
-	TextCtrl3->SetMaxLength(3);
 
 	Connect(ID_OK,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&CParams::OnButton2Click);
 	Connect(ID_CHECKBOX1,wxEVT_COMMAND_CHECKBOX_CLICKED,(wxObjectEventFunction)&CParams::OnCheckBox1Click);
-	Connect(ID_TEXTCTRL3,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&CParams::OnTextCtrl3Text);
 	//*)
-	TextCtrl3->Enable(0);
 }
 
 CParams::~CParams()
@@ -82,10 +79,7 @@ void CParams::SetDefault(string Default)
 void CParams::SetArray(bool status)
 {
      CheckBox1->SetValue(status);
-         if(status)
-        TextCtrl3->Enable(1);
-    else
-        TextCtrl3->Enable(0);
+
 }
 void CParams::SetName(string Name)
 {
@@ -160,10 +154,7 @@ void CParams::OnTextCtrl1Text(wxCommandEvent& event)
 
 void CParams::OnCheckBox1Click(wxCommandEvent& event)
 {
-    if(CheckBox1->GetValue())
-        TextCtrl3->Enable(1);
-    else
-        TextCtrl3->Enable(0);
+
 
 }
 

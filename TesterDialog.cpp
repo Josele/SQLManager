@@ -121,10 +121,14 @@ string TesterDialog::funccallers()
 {
     int row=0;
     int col=0;
+    string typecont;
+    string retcont;
+    string cont;
     std::list<FuncDescr> lol=ListOfList;
     const char* countingst="       begin = high_resolution_clock::now();\n" ;
     const char* countingen="       end = high_resolution_clock::now();\n";
-    const char* countingen2="       ticks = duration_cast<microseconds>(end-begin);\n      myfile<<ticks.count()<<\"\\n\";\n\n" ;
+    const char* countingen2="       ticks = duration_cast<microseconds>(end-begin);\n      myfile<<ticks.count()<<\"\";\n" ;
+    const char* fin="      myfile<<\"\\n\";\n\n" ;
     string funchp;
     while(!lol.empty())
     {
@@ -133,16 +137,35 @@ string TesterDialog::funccallers()
 
         while(!lol.front().mytypes.empty())
         {
-            funchp=funchp+(lol.front().mytypes.front()=="char*"?"\""+Grid1->GetCellValue(row,col)+"\"":Grid1->GetCellValue(row,col))+",";
+            typecont=lol.front().mytypes.front();
+            if(typecont=="char*")
+            {
+
+                funchp=funchp+"\""+Grid1->GetCellValue(row,col)+"\""+",";
+            }
+            if(typecont=="double*"||typecont=="int*")
+            {
+                cont="cont"+toString(col)+toString(row);
+                funchp=typecont.substr(0,typecont.length()-1)+" "+cont+";\n"+cont+"="+Grid1->GetCellValue(row,col)+";\n"+funchp+"&"+cont+",";
+                retcont=retcont+"myfile<< \",,\"<< "+cont+";\n";
+            }
+            else if (typecont.substr(typecont.length()-2,2)=="[]")
+                {
+                    cont="cont"+toString(col)+toString(row);
+                    funchp=typecont.substr(0,typecont.length()-2)+" "+cont+"[]={"+Grid1->GetCellValue(row,col)+"};\n"+funchp+cont+",";
+                }
+            else
+                funchp=funchp+Grid1->GetCellValue(row,col)+",";
             lol.front().mytypes.pop_front();
             col++;
         }
-        funchp=funchp.substr(0,funchp.length()-1)+")"+(lol.front().ret!="void"?"<<\",,\"":"")+";\n"+countingen+(row==0?"auto":"")+countingen2;
+        funchp=funchp.substr(0,funchp.length()-1)+")"+(lol.front().ret!="void"?"<<\",,\"":"")+";\n"+countingen+(row==0?"auto":"")+countingen2+retcont+fin;
         lol.pop_front();
+        row++;
         row++;
         col=0;
     }
-return funchp;
+    return funchp;
 }
 void TesterDialog::FileName(string file)
 {
@@ -166,31 +189,36 @@ void TesterDialog::GenerateGrid(int col,int row)
     this->row=row;
     this->col=col;
 
-    Grid1->CreateGrid(row,col+2);
+    Grid1->CreateGrid(row,col+1);
     for(n=0;n<col;n++)
         Grid1->SetColLabelValue(n,"P"+toString(n));
-    Grid1->SetColLabelValue(n,"Return");
-    Grid1->SetColLabelValue(n+1,"Time");
+    Grid1->SetColLabelValue(n,"Result1");
+    //Grid1->SetColLabelValue(n+1,"Time");
 	Grid1->EnableEditing(true);
 	Grid1->EnableGridLines(true);
 	Grid1->SetDefaultCellFont( Grid1->GetFont() );
 	Grid1->SetDefaultCellTextColour( Grid1->GetForegroundColour() );
+
 	//Grid1->EnableEditing(false);
 }
 
 void TesterDialog::RowName(string name,int row)
 {
        Grid1->SetRowLabelValue(row,name);
+       Grid1->SetRowLabelSize(wxGRID_AUTOSIZE);
 }
 void TesterDialog::ColorSet(FuncDescr descriptor,int row )
 {
-    ListOfList.push_back(descriptor);
+    if(!descriptor.mytypes.empty())
+        ListOfList.push_back(descriptor);
     string temp;
     int n=0;
-    while( !descriptor.mytypes.empty() )
+    while( n<col)
     {
         //Grid1->SetReadOnly(row,n,false);
-        temp=descriptor.mytypes.front();
+        if(!descriptor.mytypes.empty())
+            temp=descriptor.mytypes.front();
+        else temp="";
 
             if("int"==temp)
                 Grid1->SetCellBackgroundColour(row,n,wxColour(255,0,0));
@@ -199,11 +227,24 @@ void TesterDialog::ColorSet(FuncDescr descriptor,int row )
 
             else if("char*"==temp)
                 Grid1->SetCellBackgroundColour(row,n,wxColour(0,255,0));
+            else if("int[]"==temp)
+                            Grid1->SetCellBackgroundColour(row,n,wxColour(255,100,100));
+            else if("double[]"==temp)
+                            Grid1->SetCellBackgroundColour(row,n,wxColour(100,100,255));
+            else if("int*"==temp)
+                            Grid1->SetCellBackgroundColour(row,n,wxColour(240,200,150));
+            else if("double*"==temp)
+                            Grid1->SetCellBackgroundColour(row,n,wxColour(200,150,240));
+            else if("char*[]"==temp)
+                            Grid1->SetCellBackgroundColour(row,n,wxColour(100,255,100));
 
+            else
+                    Grid1->SetReadOnly(row,n);
 
 
         n++;
-        descriptor.mytypes.pop_front();
+        if(!descriptor.mytypes.empty())
+            descriptor.mytypes.pop_front();
     }
 
     }
@@ -211,12 +252,16 @@ void TesterDialog::ColorSet(FuncDescr descriptor,int row )
 
 void TesterDialog::OnLaunchClick(wxCommandEvent& event)
 {
-    int offset=0;
-    int i=0;
+    double average=0;
+    bool checker=true;
+    unsigned int i=0;
     int j=0;
+    unsigned int offset=0;
+    int coltotal=0;
     int addcol=atoi(TextCtrl1->GetLineText(0).ToStdString().c_str());
+    Result myResult[ListOfList.size()];
+    Result extraparams[ListOfList.size()];
     string line;
-    boolean skip=false;
     string container;
     string delimiters = ",";
     size_t current;
@@ -231,10 +276,8 @@ void TesterDialog::OnLaunchClick(wxCommandEvent& event)
     const char* C_file="#include <iostream>\n#include <windows.h>\n#include <fstream>\n#include <stdio.h>\n#include <chrono>\nusing namespace std;\nusing namespace std::chrono;\nHINSTANCE histDLL;\n";
     myfile.open (cont);
     myfile << C_file<< funcpointer()<<"int main(int argc,char **argv)\n{\n"<<funcdecl()<<funcoutstream<<autodecl<<open_dll<<funccallers()<<"      FreeLibrary(histDLL);\n      }\nreturn 0;\n}";
-
-
     myfile.close();
-    int n=system(" (g++ -std=c++11 -O2 -c -o  Dll_release\\tester.o  Dll_release\\tester.cpp ||(exit 1) )& g++ -o Dll_release\\tester.exe Dll_release\\tester.o ||(exit 1)");
+    int n=system(" (g++ -std=c++11 -O2 -c -o  Dll_release\\tester.o  Dll_release\\tester.cpp ||(exit 1) )& g++ -o Dll_release\\tester.exe Dll_release\\tester.o ||(exit 1)&&pause");
     if(n!=0)
         {
         wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Check if all parameters are fill"),
@@ -242,21 +285,24 @@ void TesterDialog::OnLaunchClick(wxCommandEvent& event)
         dial->ShowModal();
         return;
         }
+    AllResult.clear();
     system("Dll_release\\tester.exe");
-
     std::ifstream infile;
-    if(Grid1->GetNumberCols()>(col+2))
-        Grid1->DeleteCols(col+2,(Grid1->GetNumberCols()-2));
+    if(Grid1->GetNumberCols()>(col+1))
+        Grid1->DeleteCols(col+1,(Grid1->GetNumberCols()-2));
 
-     if(addcol>2)
-        Grid1->AppendCols((addcol-1)*2);
+     if(addcol>=1)
+        Grid1->AppendCols((addcol));
     i++;
-    for(n=(col+2);n<((col+1)+addcol*2);n=n+2)
-        {   i++;
-            Grid1->SetColLabelValue(n,"Return"+toString(i));
-            Grid1->SetColLabelValue(n+1,"Time"+toString(i));
+    for(n=(col+1);n<((col+2)+addcol);n++)
+        {
+            i++;
+            Grid1->SetColLabelValue(n,"Result"+toString(i));
+
         }
-i=0;
+        coltotal=col+1+addcol;
+        Grid1->SetColLabelValue(coltotal-1,"Average");
+    i=0;
     do{
 
         infile.open("output.txt");
@@ -264,9 +310,11 @@ i=0;
         {
             while ( infile.good() )
                 {
+
                     getline (infile,line);
                     if(line=="")
                         break;
+                    extraparams[i].Value.clear();
                     cuter= next + 1;
                     do{
                         current = next + 1;
@@ -275,34 +323,63 @@ i=0;
                             {
 
                                 container=line.substr( cuter, next - cuter );
-                               // if(!(skip&&((j)==0)))
+                                if(j==0)myResult[i].Value.push_back(container);
+                                else if(j==1)  myResult[i].Time.push_back(container);
+                                else
+                                    extraparams[i].Value.push_back(container);
                                //Grid1->SetCellValue(i,col+j+offset,container);
-                                Grid1->SetCellValue(i,col+j+offset,container);
                                 j++;
                                 next=(next==-1)?-1:next++;
                                 cuter=next+2;
                             }
-                            //skip=false;
                          }while (next != string::npos);
                      next=-1;
                      j=0;
-                    // j=offset;
                      i++;
-
-
                 }
-                 skip=true;
             infile.close();
-
-        offset++;
-        offset++;
         addcol--;
         i=0;
         system("Dll_release\\tester.exe");
+        }
+        }while((addcol)>0);
+        j=0;
+        i=0;
+        container=std::string();
+        while(i<ListOfList.size())
+        {
+            while(!myResult[i].Value.empty())
+            {
+
+
+
+                if(myResult[i].Value.front()!=container&&j!=0)
+                    checker=false;
+
+                    Grid1->SetCellValue(2*i,col+j,myResult[i].Value.front());
+                    Grid1->SetCellValue(2*i+1,col+j,myResult[i].Time.front());
+                    container=myResult[i].Value.front();
+                    if(!extraparams[i].Value.empty())
+                        Grid1->SetCellValue(2*i+1,j,extraparams[i].Value.front());
+                average=average+atoi(myResult[i].Time.front().c_str());
+                myResult[i].Time.pop_front();
+                myResult[i].Value.pop_front();
+                 if(!extraparams[i].Value.empty())
+                extraparams[i].Value.pop_front();
+                j++;
+
+            }
+            average=average/j;
+
+            Grid1->SetCellValue(2*i,col+j,checker?"same results":"different results");
+            Grid1->SetCellValue(2*i+1,col+j,toString(average));
+            average=0;
+            j=0;
+            offset=0;
+            i++;
+            container=std::string();
 
         }
-
-        }while((addcol)>0);
 
 
    // wxGridTableBase* portablas=Grid1->GetTable();

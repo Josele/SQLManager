@@ -34,7 +34,6 @@ class CParams: public wxDialog
 		wxCheckBox* CheckBox1;
 		wxTextCtrl* TextCtrl2;
 		wxTextCtrl* TextCtrl1;
-		wxTextCtrl* TextCtrl3;
 		wxChoice* Choice1;
 		//*)
 
@@ -46,10 +45,9 @@ class CParams: public wxDialog
 		static const long ID_STATICTEXT3;
 		static const long ID_TEXTCTRL1;
 		static const long ID_CHOICE1;
-		static const long ID_TEXTCTRL2;
 		static const long ID_OK;
+		static const long ID_TEXTCTRL2;
 		static const long ID_CHECKBOX1;
-		static const long ID_TEXTCTRL3;
 		//*)
 
 	private:

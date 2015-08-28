@@ -17,6 +17,7 @@
 #include <wx/radiobox.h>
 #include <wx/menu.h>
 #include <wx/textctrl.h>
+#include <wx/checkbox.h>
 #include <wx/listbox.h>
 #include <wx/statline.h>
 #include <wx/panel.h>
@@ -109,6 +110,7 @@ class SQLManagerFrame: public wxFrame
         static const long ID_LISTCTRL;
         static const long ID_STATICTEXT5;
         static const long ID_RADIOBOX;
+        static const long ID_CHECKBOX1;
         static const long ID_STATICTEXT2;
         static const long ID_BigBox;
         static const long ID_deleteitem;
@@ -137,6 +139,7 @@ class SQLManagerFrame: public wxFrame
         wxStaticText* StaticText3;
         wxRadioBox* RadioBox;
         wxButton* Save;
+        wxCheckBox* CheckBox1;
         wxButton* Delete;
         wxMenuItem* MenuItem3;
         wxStaticText* StaticText5;
