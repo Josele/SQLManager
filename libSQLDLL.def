@@ -1,0 +1,15 @@
+EXPORTS
+    CreateDatabase @1
+    CreateTable @2
+    DllMain@12 @3
+    add_item @4
+    add_params @5
+    add_text @6
+    add_text_v2 @7
+    del_item @8
+    del_item_v2 @9
+    get_item @10
+    id_row @11
+    max_parms @12
+    n_row @13
+    row @14

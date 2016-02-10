@@ -1,0 +1,6 @@
+sep=;
+ ; P0 ; P1 ; P2 ; P3 ; P4 ; Result1 ; Result2 ; Result3 ; Result4 ; Result5 ; Average
+function1(value) ; 12 ; 1.23 ; blue ; "red","yellow","blue","gray" ; 4 ; 2 ; 2 ; 2 ; 2 ; 2 ; same results ; 
+function1(time) ; 24 ; 2.04939 ;  ;  ;  ; 24753 ; 24670 ; 25818 ; 24945 ; 25025 ; 25042.2 ; 
+function2(value) ; 15823 ;  ;  ;  ;  ; void ; void ; void ; void ; void ; same results ; 
+function2(time) ;  ;  ;  ;  ;  ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 

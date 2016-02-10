@@ -8,6 +8,7 @@
 #include <wx/textctrl.h>
 #include <wx/panel.h>
 #include <wx/button.h>
+#include <wx/dirdlg.h>
 #include <wx/dialog.h>
 //*)
 using std::string;
@@ -24,6 +25,7 @@ class ConfigDialog: public wxDialog
 		wxStaticText* StaticText1;
 		wxRadioBox* RadioBoxCC;
 		wxButton* Cancel;
+		wxDirDialog* DirDialog1;
 		wxTextCtrl* TextCtrl1;
 		wxButton* Ok;
 		//*)
@@ -50,6 +52,9 @@ class ConfigDialog: public wxDialog
 		void OnOkClick(wxCommandEvent& event);
 		void OnRadioBoxCCSelect(wxCommandEvent& event);
 		void OnRadioBoxCCSelect1(wxCommandEvent& event);
+		void OnNotebook1PageChanged(wxNotebookEvent& event);
+		void OnButton1Click(wxCommandEvent& event);
+		void OnCheckBoxCompilerClick(wxCommandEvent& event);
 		//*)
         bool str_controler(string String);
 

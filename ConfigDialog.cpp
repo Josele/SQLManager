@@ -28,6 +28,7 @@ ConfigDialog::ConfigDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	Notebook1 = new wxNotebook(this, ID_NOTEBOOK1, wxPoint(0,0), wxSize(232,216), 0, _T("ID_NOTEBOOK1"));
 	Panel1 = new wxPanel(Notebook1, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL1"));
 	TextCtrl1 = new wxTextCtrl(Panel1, ID_TEXTCTRL1, _("Text"), wxPoint(8,32), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+	TextCtrl1->SetMaxLength(64);
 	StaticText1 = new wxStaticText(Panel1, ID_STATICTEXT1, _("Output file:"), wxPoint(8,8), wxSize(80,13), 0, _T("ID_STATICTEXT1"));
 	wxString __wxRadioBoxChoices_1[3] =
 	{
@@ -39,9 +40,12 @@ ConfigDialog::ConfigDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	Notebook1->AddPage(Panel1, _("Basic"), false);
 	Ok = new wxButton(this, ID_OK, _("Ok"), wxPoint(40,240), wxDefaultSize, 0, wxDefaultValidator, _T("ID_OK"));
 	Cancel = new wxButton(this, wxID_CANCEL, _("Cancel"), wxPoint(136,240), wxDefaultSize, 0, wxDefaultValidator, _T("wxID_CANCEL"));
+	DirDialog1 = new wxDirDialog(this, _("Select directory"), wxEmptyString, wxDD_DEFAULT_STYLE, wxDefaultPosition, wxDefaultSize, _T("wxDirDialog"));
 
+	Connect(ID_NOTEBOOK1,wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGED,(wxObjectEventFunction)&ConfigDialog::OnNotebook1PageChanged);
 	Connect(ID_OK,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ConfigDialog::OnOkClick);
 	//*)
+
 }
 
 ConfigDialog::~ConfigDialog()
@@ -58,10 +62,12 @@ void ConfigDialog::SetCC(string sel)
     RadioBoxCC->SetStringSelection(sel);
 }
 
+
 string ConfigDialog::GetName()
 {
 return TextCtrl1->GetLineText(0).ToStdString();
 }
+
 string ConfigDialog::GetCC()
 {
 return RadioBoxCC->GetStringSelection().ToStdString();
@@ -111,3 +117,9 @@ void ConfigDialog::OnOkClick(wxCommandEvent& event)
 void ConfigDialog::OnRadioBoxCCSelect1(wxCommandEvent& event)
 {
 }
+
+void ConfigDialog::OnNotebook1PageChanged(wxNotebookEvent& event)
+{
+}
+
+

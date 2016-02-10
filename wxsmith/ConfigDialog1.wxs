@@ -6,10 +6,12 @@
 		<object class="wxNotebook" name="ID_NOTEBOOK1" variable="Notebook1" member="yes">
 			<pos>0,0</pos>
 			<size>232,216</size>
+			<handler function="OnNotebook1PageChanged" entry="EVT_NOTEBOOK_PAGE_CHANGED" />
 			<object class="notebookpage">
 				<object class="wxPanel" name="ID_PANEL1" variable="Panel1" member="yes">
 					<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl1" member="yes">
 						<value>Text</value>
+						<maxlength>64</maxlength>
 						<pos>8,32</pos>
 					</object>
 					<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
@@ -40,6 +42,9 @@
 		<object class="wxButton" name="wxID_CANCEL" variable="Cancel" member="yes">
 			<label>Cancel</label>
 			<pos>136,240</pos>
+		</object>
+		<object class="wxDirDialog" variable="DirDialog1" member="yes">
+			<message>Select directory</message>
 		</object>
 	</object>
 </wxsmith>

@@ -31,6 +31,7 @@ class TesterDialog: public wxDialog
 		wxButton* Button1;
 		wxStaticText* StaticText1;
 		wxGrid* Grid1;
+		wxButton* Button2;
 		wxStaticLine* StaticLine2;
 		wxStaticLine* StaticLine1;
 		wxTextCtrl* TextCtrl1;
@@ -53,6 +54,7 @@ class TesterDialog: public wxDialog
 		static const long ID_GRID1;
 		static const long ID_SPLITTERWINDOW1;
 		static const long ID_STATICLINE2;
+		static const long ID_BUTTON1;
 		static const long ID_Launch;
 		//*)
 
@@ -65,6 +67,7 @@ class TesterDialog: public wxDialog
         };
 		//(*Handlers(TesterDialog)
 		void OnLaunchClick(wxCommandEvent& event);
+		void OnButton2Click(wxCommandEvent& event);
 		//*)
 		template<class T>
         string toString(T data);

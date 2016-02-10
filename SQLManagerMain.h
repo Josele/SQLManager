@@ -69,7 +69,6 @@ class SQLManagerFrame: public wxFrame
         void OnRunClick(wxCommandEvent& event);
         void OnPanel1Paint(wxPaintEvent& event);
         void OnPanel1Paint1(wxPaintEvent& event);
-        void LoadFile(wxCommandEvent& event);
         void OnClose1(wxCloseEvent& event);
         void OnRun_AllClick(wxCommandEvent& event);
         void OnLibrariesText(wxCommandEvent& event);
@@ -80,6 +79,7 @@ class SQLManagerFrame: public wxFrame
         void OnlistCtrlItemRClick(wxListEvent& event);
         void OnMenuLibrariesSelected(wxCommandEvent& event);
         void OnMenuConfigSelected(wxCommandEvent& event);
+        void OnPointerBoxClick(wxCommandEvent& event);
         //*)
         void OnPopupClick(wxCommandEvent &evt);
         template<class T>
@@ -92,6 +92,7 @@ class SQLManagerFrame: public wxFrame
         string lb_reload(const char* tbname,const char* tcname, int id );
         int cont_col(string tbname);
         bool str_controler(string String);
+        bool ispointer(string String);
         void LoadDll();
         void FreeDll();
         string get_file_contents(const char *filename);
@@ -139,7 +140,6 @@ class SQLManagerFrame: public wxFrame
         wxStaticText* StaticText3;
         wxRadioBox* RadioBox;
         wxButton* Save;
-        wxCheckBox* CheckBox1;
         wxButton* Delete;
         wxMenuItem* MenuItem3;
         wxStaticText* StaticText5;
@@ -150,10 +150,12 @@ class SQLManagerFrame: public wxFrame
         wxButton* Run;
         wxMultiChoiceDialog* MultiChoiceDialog1;
         wxListBox* ListBox;
+        wxCheckBox* PointerBox;
         //*)
         bool retstatus;
         std::thread first;
-        wxString MultiChoiceDialogChoices_1[13];
+        wxString MultiChoiceDialogChoices_1[22];
+        string GppPath;
         DECLARE_EVENT_TABLE()
 };
 

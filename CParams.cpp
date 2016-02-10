@@ -104,6 +104,9 @@ void CParams::OnButton2Click(wxCommandEvent& event)
     std::string text=TextCtrl1->GetLineText(0).ToStdString();
      if (text==std::string()||Choice1->GetSelection()==-1)
                 return;
+
+    if((Choice1->GetString(Choice1->GetSelection())=="int*"||Choice1->GetString(Choice1->GetSelection())=="double*")&&CheckBox1->GetValue())
+    TextCtrl2->Clear();
     while(text.length()>0)
         {
         if(text.substr(0,1)==" ")

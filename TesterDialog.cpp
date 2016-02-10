@@ -10,7 +10,8 @@
 #include <fstream>
 #include <wx/progdlg.h>
 #include <wx/msgdlg.h>
-
+#include <iostream>
+#include <ctime>
 //(*IdInit(TesterDialog)
 const long TesterDialog::ID_STATICTEXT1 = wxNewId();
 const long TesterDialog::ID_TEXTCTRL1 = wxNewId();
@@ -18,6 +19,7 @@ const long TesterDialog::ID_STATICLINE1 = wxNewId();
 const long TesterDialog::ID_GRID1 = wxNewId();
 const long TesterDialog::ID_SPLITTERWINDOW1 = wxNewId();
 const long TesterDialog::ID_STATICLINE2 = wxNewId();
+const long TesterDialog::ID_BUTTON1 = wxNewId();
 const long TesterDialog::ID_Launch = wxNewId();
 //*)
 
@@ -63,6 +65,8 @@ TesterDialog::TesterDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	StaticLine2 = new wxStaticLine(this, ID_STATICLINE2, wxDefaultPosition, wxSize(10,-1), wxLI_HORIZONTAL, _T("ID_STATICLINE2"));
 	FlexGridSizer1->Add(StaticLine2, 0, wxALL|wxEXPAND|wxALIGN_LEFT|wxALIGN_TOP, 5);
 	BoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
+	Button2 = new wxButton(this, ID_BUTTON1, _("Save in excel"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	BoxSizer2->Add(Button2, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	Launch = new wxButton(this, ID_Launch, _("Launch"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_Launch"));
 	BoxSizer2->Add(Launch, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	Button1 = new wxButton(this, wxID_CANCEL, _("Close"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("wxID_CANCEL"));
@@ -72,6 +76,7 @@ TesterDialog::TesterDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,con
 	SetSizer(FlexGridSizer1);
 	Layout();
 
+	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&TesterDialog::OnButton2Click);
 	Connect(ID_Launch,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&TesterDialog::OnLaunchClick);
 	//*)
 }
@@ -97,7 +102,7 @@ string TesterDialog::funcpointer()
         funchp=funchp+" typedef "+lol.front().ret+"(*"+lol.front().name+") ( ";
         while(!lol.front().mytypes.empty())
         {
-            funchp=funchp+" "+lol.front().mytypes.front()+",";
+            funchp=funchp+" "+((lol.front().mytypes.front()=="int*[]"||lol.front().mytypes.front()=="double*[]")?lol.front().mytypes.front().substr(0,lol.front().mytypes.front().length()-2):lol.front().mytypes.front())+",";
             lol.front().mytypes.pop_front();
         }
         funchp=funchp.substr(0,funchp.length()-1)+");\n";
@@ -143,12 +148,17 @@ string TesterDialog::funccallers()
 
                 funchp=funchp+"\""+Grid1->GetCellValue(row,col)+"\""+",";
             }
-            if(typecont=="double*"||typecont=="int*")
+            else if(typecont=="double*"||typecont=="int*")
             {
                 cont="cont"+toString(col)+toString(row);
                 funchp=typecont.substr(0,typecont.length()-1)+" "+cont+";\n"+cont+"="+Grid1->GetCellValue(row,col)+";\n"+funchp+"&"+cont+",";
                 retcont=retcont+"myfile<< \",,\"<< "+cont+";\n";
             }
+            else if (typecont=="double*[]"||typecont=="int*[]")
+                {
+                    cont="cont"+toString(col)+toString(row);
+                    funchp=typecont.substr(0,typecont.length()-3)+" "+cont+"[]={"+Grid1->GetCellValue(row,col)+"};\n"+funchp+cont+""+",";
+                }
             else if (typecont.substr(typecont.length()-2,2)=="[]")
                 {
                     cont="cont"+toString(col)+toString(row);
@@ -171,6 +181,7 @@ void TesterDialog::FileName(string file)
 {
  this->file=file;
 }
+
 string TesterDialog::funcretdecl()
 {
     std::list<FuncDescr> lol=ListOfList;
@@ -237,6 +248,10 @@ void TesterDialog::ColorSet(FuncDescr descriptor,int row )
                             Grid1->SetCellBackgroundColour(row,n,wxColour(200,150,240));
             else if("char*[]"==temp)
                             Grid1->SetCellBackgroundColour(row,n,wxColour(100,255,100));
+            else if("int*[]"==temp)
+                            Grid1->SetCellBackgroundColour(row,n,wxColour(240,150,100));
+            else if("double*[]"==temp)
+                            Grid1->SetCellBackgroundColour(row,n,wxColour(150,100,240));
 
             else
                     Grid1->SetReadOnly(row,n);
@@ -256,7 +271,6 @@ void TesterDialog::OnLaunchClick(wxCommandEvent& event)
     bool checker=true;
     unsigned int i=0;
     int j=0;
-    unsigned int offset=0;
     int coltotal=0;
     int addcol=atoi(TextCtrl1->GetLineText(0).ToStdString().c_str());
     Result myResult[ListOfList.size()];
@@ -271,13 +285,14 @@ void TesterDialog::OnLaunchClick(wxCommandEvent& event)
     const char* funcoutstream="const char* cont=\"output.txt\";\nstd::ofstream myfile;\nmyfile.open(cont);\n";
     const char* autodecl="auto  begin = high_resolution_clock::now();\nauto end = high_resolution_clock::now();\nauto   ticks = duration_cast<microseconds>(end-begin);\n";
     char* open_dll=(char*) malloc(120*sizeof(char));
+    string gpp_path="g++";
     sprintf(open_dll,"histDLL= LoadLibrary(\"%s.dll\");\n    if (histDLL != NULL){\n",file.c_str());
     std::ofstream myfile;
     const char* C_file="#include <iostream>\n#include <windows.h>\n#include <fstream>\n#include <stdio.h>\n#include <chrono>\nusing namespace std;\nusing namespace std::chrono;\nHINSTANCE histDLL;\n";
     myfile.open (cont);
     myfile << C_file<< funcpointer()<<"int main(int argc,char **argv)\n{\n"<<funcdecl()<<funcoutstream<<autodecl<<open_dll<<funccallers()<<"      FreeLibrary(histDLL);\n      }\nreturn 0;\n}";
     myfile.close();
-    int n=system(" (g++ -std=c++11 -O2 -c -o  Dll_release\\tester.o  Dll_release\\tester.cpp ||(exit 1) )& g++ -o Dll_release\\tester.exe Dll_release\\tester.o ||(exit 1)&&pause");
+    int n=system(std::string(" ("+gpp_path+" -std=c++11 -O2 -c -o  Dll_release\\tester.o  Dll_release\\tester.cpp || (exit 1) )& "+gpp_path+" -o Dll_release\\tester.exe Dll_release\\tester.o ||(exit 1)").c_str());
     if(n!=0)
         {
         wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Check if all parameters are fill"),
@@ -356,16 +371,18 @@ void TesterDialog::OnLaunchClick(wxCommandEvent& event)
                 if(myResult[i].Value.front()!=container&&j!=0)
                     checker=false;
 
-                    Grid1->SetCellValue(2*i,col+j,myResult[i].Value.front());
-                    Grid1->SetCellValue(2*i+1,col+j,myResult[i].Time.front());
-                    container=myResult[i].Value.front();
-                    if(!extraparams[i].Value.empty())
+                Grid1->SetCellValue(2*i,col+j,myResult[i].Value.front());
+                Grid1->SetCellValue(2*i+1,col+j,myResult[i].Time.front());
+                container=myResult[i].Value.front();
+                if(!extraparams[i].Value.empty()&&((Grid1->GetCellBackgroundColour(2*i,j)==wxColour(240,200,150)||Grid1->GetCellBackgroundColour(2*i,j)==wxColour(200,150,240)||Grid1->GetCellBackgroundColour(2*i,j)==wxColour(150,100,240)||Grid1->GetCellBackgroundColour(2*i,j)==wxColour(240,150,100))))
+                    {
                         Grid1->SetCellValue(2*i+1,j,extraparams[i].Value.front());
+                        extraparams[i].Value.pop_front();
+                    }
                 average=average+atoi(myResult[i].Time.front().c_str());
                 myResult[i].Time.pop_front();
                 myResult[i].Value.pop_front();
-                 if(!extraparams[i].Value.empty())
-                extraparams[i].Value.pop_front();
+
                 j++;
 
             }
@@ -375,7 +392,6 @@ void TesterDialog::OnLaunchClick(wxCommandEvent& event)
             Grid1->SetCellValue(2*i+1,col+j,toString(average));
             average=0;
             j=0;
-            offset=0;
             i++;
             container=std::string();
 
@@ -384,6 +400,9 @@ void TesterDialog::OnLaunchClick(wxCommandEvent& event)
 
    // wxGridTableBase* portablas=Grid1->GetTable();
    remove("Dll_release\\tester.exe");
+   remove("Dll_release\\tester.cpp");
+   remove("Dll_release\\tester.o");
+   remove("output.txt");
    // remove("Dll_release\\tester.cpp");
 
     /** int n=0;
@@ -399,4 +418,37 @@ void TesterDialog::OnLaunchClick(wxCommandEvent& event)
         Sleep(10);
 
         }*/
+}
+
+void TesterDialog::OnButton2Click(wxCommandEvent& event)
+{
+
+    std::ofstream myfile;
+    time_t     now = time(0);
+    struct tm  tstruct;
+    char       buf[80];
+    tstruct = *localtime(&now);
+    strftime(buf, sizeof(buf), "%Y-%m-%d(%M-%S)", &tstruct);
+    myfile.open ("Dll_release\\results"+string(buf)+".csv");
+    myfile << "sep=;"<<std::endl;
+    for(int m=0;m<Grid1->GetNumberCols();m++)
+        myfile <<" ; " +Grid1->GetColLabelValue(m).ToStdString();
+    myfile<<std::endl;
+    for(int i=0;i<Grid1->GetNumberRows();i++)
+        {
+
+            for(int j=0;j<Grid1->GetNumberCols();j++)
+                {
+                    if(j==0)
+                    myfile << Grid1->GetRowLabelValue(i).ToStdString()+" ; ";
+
+                    myfile << Grid1->GetCellValue(i,j).ToStdString()+" ; ";
+                }
+            myfile<<std::endl;
+        }
+myfile.close();
+ wxMessageDialog *dial = new wxMessageDialog(NULL, wxT("Result were save in Dll_release folder"),
+                         wxT("Done"), wxOK | wxICON_INFORMATION);
+        dial->ShowModal();
+
 }

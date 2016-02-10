@@ -9,9 +9,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
- char* __cdecl FUNCTION_DLL function2(int size);
-int __cdecl FUNCTION_DLL function1(int n);
-void __cdecl FUNCTION_DLL jaja(int* var2,int* varsdvs,double* varsdaa);
+ int  FUNCTION_DLL function1(int* var,double* var_double,char* foo_string,char* container [],int size);
+void  FUNCTION_DLL function2(int n);
 
 #ifdef __cplusplus
 }

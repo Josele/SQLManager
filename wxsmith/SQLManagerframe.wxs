@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <wxsmith>
 	<object class="wxFrame" name="SQLManagerFrame">
-		<title>Dll__Manager</title>
+		<title>Fast Script Running Dll Application</title>
 		<icon>icon_128.png</icon>
 		<size>600,550</size>
 		<minsize>-1,-1</minsize>
@@ -102,6 +102,14 @@
 											<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 											<border>1</border>
 											<option>3</option>
+										</object>
+										<object class="sizeritem">
+											<object class="wxCheckBox" name="ID_CHECKBOX1" variable="PointerBox" member="yes">
+												<label>Pointer</label>
+											</object>
+											<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+											<border>5</border>
+											<option>1</option>
 										</object>
 									</object>
 									<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
@@ -270,6 +278,15 @@
 				<item>time.h</item>
 				<item>wchar.h</item>
 				<item>windows.h</item>
+				<item>fstream</item>
+				<item>iostream</item>
+				<item>list</item>
+				<item>ostream</item>
+				<item>set</item>
+				<item>sstream</item>
+				<item>stack</item>
+				<item>thread</item>
+				<item>vector</item>
 			</content>
 		</object>
 	</object>
